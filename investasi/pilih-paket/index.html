@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestasiUMKM - Penyaluran Modal & Pendanaan</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           COMPACT CORPORATE PALETTE (EMERALD & NAVY)
+           ========================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-base: #f1f5f4;
+            --bg-surface: #ffffff;
+            --bg-surface-elevated: #e8f2ee;
+            --border-color: #cbd5e1;
+            --border-subtle: #e2e8f0;
+            
+            --text-main: #0f172a;
+            --text-muted: #334155;
+            --text-subtle: #64748b;
+            
+            --primary-navy: #091e3a;
+            --primary-navy-light: #132f52;
+            
+            --primary-emerald: #064e3b;
+            --primary-emerald-bg: #ecfdf5;
+            --primary-emerald-hover: #022c22;
+            
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            line-height: 1.4;
+            font-size: 0.75rem;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .max-w-container {
+            max-width: 650px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 0.875rem;
+            padding-right: 0.875rem;
+        }
+
+        main.max-w-container {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* HEADER / NAVIGATION */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: var(--radius-sm);
+            background-color: var(--primary-emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.75rem;
+        }
+
+        .brand-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            letter-spacing: -0.02em;
+        }
+
+        .brand-title span {
+            color: var(--primary-emerald);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-decoration: none;
+            background-color: var(--bg-base);
+            padding: 0.35rem 0.65rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.15s;
+        }
+
+        .btn-back:hover {
+            background-color: var(--border-subtle);
+        }
+
+        /* PANEL CARD */
+        .panel-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary-emerald);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            box-shadow: 0 4px 12px rgba(9, 30, 58, 0.03);
+        }
+
+        .panel-header {
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .panel-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .panel-subtitle {
+            font-size: 0.625rem;
+            color: var(--text-subtle);
+            font-weight: 500;
+            margin-top: 0.15rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.85rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* Paket Pendanaan */
+        .package-selector-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .package-card-option {
+            position: relative;
+            display: block;
+            cursor: pointer;
+        }
+
+        .package-card-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .package-card-content {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            background-color: var(--bg-surface);
+            transition: all 0.15s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .package-card-option:hover .package-card-content {
+            border-color: var(--primary-emerald);
+            background-color: var(--bg-surface-elevated);
+        }
+
+        .package-card-option input[type="radio"]:checked + .package-card-content {
+            border: 2px solid var(--primary-emerald);
+            background-color: var(--primary-emerald-bg);
+        }
+
+        .pkg-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pkg-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .pkg-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+        }
+
+        .pkg-silver-icon { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .pkg-platinum-icon { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .pkg-investor-icon { background-color: #ecfdf5; color: #064e3b; border: 1px solid #a7f3d0; }
+
+        .pkg-name {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .pkg-badge {
+            font-size: 0.525rem;
+            font-weight: 700;
+            padding: 0.1rem 0.35rem;
+            border-radius: var(--radius-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .badge-starter { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .badge-popular { background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+        .badge-vip { background-color: #ecfdf5; color: #064e3b; border: 1px solid #a7f3d0; }
+
+        .pkg-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 0.35rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .pkg-deposit-amount {
+            font-size: 0.9rem;
+            font-weight: 800;
+            font-family: 'Inter', monospace;
+            color: var(--text-main);
+        }
+
+        .pkg-return-info {
+            text-align: right;
+        }
+
+        .pkg-daily-yield {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--primary-emerald);
+        }
+
+        .pkg-duration {
+            font-size: 0.575rem;
+            color: var(--text-subtle);
+            font-weight: 500;
+        }
+
+        /* Preview Box */
+        .preview-box {
+            padding: 0.75rem;
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .preview-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.65rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .preview-row:last-child { margin-bottom: 0; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.7rem 0;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            background-color: var(--primary-emerald);
+            color: #ffffff;
+            transition: background-color 0.15s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-emerald-hover);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 0.75rem;
+            font-size: 0.625rem;
+            color: var(--text-subtle);
+            text-align: center;
+        }
+
+        /* TOAST NOTIFICATION */
+        #toastNotification {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 100;
+            max-width: 18rem;
+            width: calc(100% - 2rem);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-emerald);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 0.875rem;
+            box-shadow: 0 8px 20px -4px rgba(9, 30, 58, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            transform: translateY(3rem);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #toastNotification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .font-mono { font-family: 'Inter', monospace; }
+        .text-emerald { color: var(--primary-emerald); }
+        .font-bold { font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="max-w-container header-content">
+            <a href="#" class="brand-logo-group">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div>
+                    <span class="brand-title">Investasi <span>UMKM</span></span>
+                </div>
+            </a>
+            <a href="index.html" class="btn-back">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-container">
+        <div class="panel-card">
+            <div class="panel-header">
+                <h1 class="panel-title">
+                    <i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Penyaluran Modal
+                </h1>
+                <p class="panel-subtitle">Pilih alokasi paket pendanaan UMKM terverifikasi</p>
+            </div>
+
+            <!-- Funding Form -->
+            <form id="depositForm" onsubmit="handleDeposit(event)">
+                <div class="form-group">
+                    <label class="form-label">Pilihan Paket Pendanaan</label>
+                    
+                    <div class="package-selector-grid">
+                        <!-- Option 1: Silver -->
+                        <label class="package-card-option">
+                            <input type="radio" name="investPackage" value="silver" data-deposit="100000" data-daily="30000" data-duration="5" checked onchange="calculateROIPreview()">
+                            <div class="package-card-content">
+                                <div class="pkg-header">
+                                    <div class="pkg-title-group">
+                                        <div class="pkg-icon pkg-silver-icon">
+                                            <i class="fa-solid fa-shield"></i>
+                                        </div>
+                                        <span class="pkg-name">Paket Silver</span>
+                                    </div>
+                                    <span class="pkg-badge badge-starter">Kelas Pemula</span>
+                                </div>
+                                <div class="pkg-body">
+                                    <div>
+                                        <span style="font-size:0.55rem; color:var(--text-subtle);">Modal:</span>
+                                        <div class="pkg-deposit-amount">Rp 100.000</div>
+                                    </div>
+                                    <div class="pkg-return-info">
+                                        <div class="pkg-daily-yield">+Rp 30.000 / hr</div>
+                                        <div class="pkg-duration">Masa Aktif: 5 Hari</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Option 2: Platinum -->
+                        <label class="package-card-option">
+                            <input type="radio" name="investPackage" value="platinum" data-deposit="300000" data-daily="50000" data-duration="7" onchange="calculateROIPreview()">
+                            <div class="package-card-content">
+                                <div class="pkg-header">
+                                    <div class="pkg-title-group">
+                                        <div class="pkg-icon pkg-platinum-icon">
+                                            <i class="fa-solid fa-gem"></i>
+                                        </div>
+                                        <span class="pkg-name">Paket Platinum</span>
+                                    </div>
+                                    <span class="pkg-badge badge-popular">Terpopuler</span>
+                                </div>
+                                <div class="pkg-body">
+                                    <div>
+                                        <span style="font-size:0.55rem; color:var(--text-subtle);">Modal:</span>
+                                        <div class="pkg-deposit-amount">Rp 300.000</div>
+                                    </div>
+                                    <div class="pkg-return-info">
+                                        <div class="pkg-daily-yield">+Rp 50.000 / hr</div>
+                                        <div class="pkg-duration">Masa Aktif: 7 Hari</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Option 3: Investor -->
+                        <label class="package-card-option">
+                            <input type="radio" name="investPackage" value="investor" data-deposit="450000" data-daily="100000" data-duration="7" onchange="calculateROIPreview()">
+                            <div class="package-card-content">
+                                <div class="pkg-header">
+                                    <div class="pkg-title-group">
+                                        <div class="pkg-icon pkg-investor-icon">
+                                            <i class="fa-solid fa-award"></i>
+                                        </div>
+                                        <span class="pkg-name">Paket Investor</span>
+                                    </div>
+                                    <span class="pkg-badge badge-vip">Prioritas Utama</span>
+                                </div>
+                                <div class="pkg-body">
+                                    <div>
+                                        <span style="font-size:0.55rem; color:var(--text-subtle);">Modal:</span>
+                                        <div class="pkg-deposit-amount">Rp 450.000</div>
+                                    </div>
+                                    <div class="pkg-return-info">
+                                        <div class="pkg-daily-yield">+Rp 100.000 / hr</div>
+                                        <div class="pkg-duration">Masa Aktif: 7 Hari</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Preview Box -->
+                <div class="preview-box">
+                    <div class="preview-row">
+                        <span style="color:var(--text-subtle); font-weight: 600;">Keuntungan Estimasi / Hari:</span>
+                        <span class="text-emerald font-mono font-bold" id="previewDaily">Rp 0</span>
+                    </div>
+                    <div class="preview-row">
+                        <span style="color:var(--text-subtle); font-weight: 600;">Masa Aktif Kontrak:</span>
+                        <span class="font-mono font-bold" style="color:var(--text-main);" id="previewDuration">0 Hari</span>
+                    </div>
+                    <div class="preview-row" style="border-top: 1px solid var(--border-subtle); padding-top: 0.35rem; margin-top: 0.25rem;">
+                        <span style="color:var(--text-main); font-weight: 700;">Total Keuntungan Bersih:</span>
+                        <span class="text-emerald font-mono font-bold" id="previewTotalProfit">Rp 0</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Konfirmasi Disalurkan
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div style="font-weight:700; color:var(--primary-navy); margin-bottom: 0.2rem; display:flex; align-items:center; justify-content:center; gap:0.3rem;">
+            <i class="fa-solid fa-shield-halved text-emerald"></i>
+            <span>PT InvestasiUMKM Indonesia Technologies</span>
+        </div>
+        <p>© 2026 InvestasiUMKM Indonesia. Seluruh Hak Cipta Dilindungi Undang-Undang.</p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification">
+        <div id="toastIcon" style="color:var(--primary-emerald); font-size:1rem;">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+            <h4 id="toastTitle" style="font-size:0.6875rem; font-weight:700; color:var(--text-main);">Notifikasi Sistem</h4>
+            <p id="toastMessage" style="font-size:0.6rem; color:var(--text-subtle);">Pesan transaksi sukses.</p>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playChimeSound() {
+            try {
+                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            } catch (e) {}
+        }
+
+        function formatIDR(amount) {
+            return 'Rp ' + Math.floor(amount).toLocaleString('id-ID');
+        }
+
+        function getSelectedPackageElement() {
+            return document.querySelector('input[name="investPackage"]:checked');
+        }
+
+        function calculateROIPreview() {
+            const selectedOption = getSelectedPackageElement();
+            if(!selectedOption) return;
+
+            const daily = parseFloat(selectedOption.getAttribute('data-daily')) || 0;
+            const duration = parseInt(selectedOption.getAttribute('data-duration')) || 0;
+
+            document.getElementById('previewDaily').innerText = formatIDR(daily);
+            document.getElementById('previewDuration').innerText = duration + ' Hari';
+            document.getElementById('previewTotalProfit').innerText = formatIDR(daily * duration);
+        }
+
+        function handleDeposit(e) {
+            e.preventDefault();
+            const selectedOption = getSelectedPackageElement();
+            if(!selectedOption) return;
+
+            const amount = parseFloat(selectedOption.getAttribute('data-deposit'));
+            const duration = parseInt(selectedOption.getAttribute('data-duration'));
+            
+            const packageNames = {
+                silver: 'Paket Silver',
+                platinum: 'Paket Platinum',
+                investor: 'Paket Investor'
+            };
+            const chosenName = packageNames[selectedOption.value] || 'Paket Investasi';
+
+            playChimeSound();
+            showToast('Pendanaan Berhasil', `${formatIDR(amount)} berhasil disalurkan ke ${chosenName} (${duration} Hari).`);
+        }
+
+        function showToast(title, message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+
+            toastTitle.innerText = title;
+            toastMessage.innerText = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        window.onload = function () {
+            calculateROIPreview();
+        };
+    </script>
+</body>
+</html>
