@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestasiUMKM - Portal Pendanaan & Portofolio Investasi Resmi</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           COMPACT CORPORATE PALETTE (EMERALD & NAVY)
+           ========================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-base: #f1f5f4;
+            --bg-surface: #ffffff;
+            --bg-surface-elevated: #e8f2ee;
+            --border-color: #cbd5e1;
+            --border-subtle: #e2e8f0;
+            
+            --text-main: #0f172a;
+            --text-muted: #334155;
+            --text-subtle: #64748b;
+            
+            --primary-navy: #091e3a;
+            --primary-navy-light: #132f52;
+            
+            --primary-emerald: #064e3b;
+            --primary-emerald-bg: #ecfdf5;
+            --primary-emerald-hover: #022c22;
+            
+            --accent-blue: #1d4ed8;
+            --accent-amber: #b45309;
+            
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            line-height: 1.4;
+            font-size: 0.75rem;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .max-w-container {
+            max-width: 1100px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 0.875rem;
+            padding-right: 0.875rem;
+        }
+
+        main.max-w-container {
+            padding-top: 1rem;
+            padding-bottom: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* ==========================================
+           HEADER / NAVIGATION
+           ========================================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: var(--radius-sm);
+            background-color: var(--primary-emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.75rem;
+        }
+
+        .brand-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            letter-spacing: -0.02em;
+        }
+
+        .brand-title span {
+            color: var(--primary-emerald);
+        }
+
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.4rem 0.25rem 0.6rem;
+            background-color: var(--bg-base);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-name {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: right;
+        }
+
+        .user-avatar-img {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        /* ==========================================
+           HERO PORTFOLIO CARD
+           ========================================== */
+        .summary-hero-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--primary-emerald);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(9, 30, 58, 0.03);
+        }
+
+        .summary-hero-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-bottom: 0.85rem;
+            margin-bottom: 0.85rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        @media (min-width: 640px) {
+            .summary-hero-header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .main-balance-title {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .main-balance-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Inter', monospace;
+            color: var(--primary-navy);
+            margin-top: 0.1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .btn-hero-withdraw {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            background-color: var(--primary-emerald);
+            color: #ffffff;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            padding: 0.45rem 0.85rem;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            transition: background-color 0.15s;
+        }
+
+        .btn-hero-withdraw:hover {
+            background-color: var(--primary-emerald-hover);
+        }
+
+        .sub-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 0.625rem;
+        }
+
+        @media (min-width: 640px) {
+            .sub-metrics-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .sub-metric-card {
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sub-metric-label {
+            font-size: 0.5875rem;
+            font-weight: 700;
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .sub-metric-value {
+            font-size: 1rem;
+            font-weight: 800;
+            font-family: 'Inter', monospace;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .sub-metric-footer {
+            font-size: 0.5875rem;
+            color: var(--text-subtle);
+            padding-top: 0.35rem;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* ==========================================
+           WORKSPACES & PANELS
+           ========================================== */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        @media (min-width: 1024px) {
+            .workspace-grid { grid-template-columns: 1fr 1.35fr; }
+        }
+
+        .panel-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(9, 30, 58, 0.02);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.625rem;
+            margin-bottom: 0.875rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .panel-title {
+            font-size: 0.775rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .panel-subtitle {
+            font-size: 0.6rem;
+            color: var(--text-subtle);
+            font-weight: 500;
+            text-transform: none;
+            margin-top: 0.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.85rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* Form Controls */
+        .form-select, .form-input {
+            width: 100%;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.5rem 0.6rem;
+            font-size: 0.725rem;
+            color: var(--text-main);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-select:focus, .form-input:focus {
+            border-color: var(--primary-emerald);
+            box-shadow: 0 0 0 2px rgba(6, 78, 59, 0.1);
+        }
+
+        .input-prefix-wrapper {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 0.6rem;
+            top: 0.5rem;
+            font-size: 0.725rem;
+            color: var(--text-subtle);
+            font-weight: 700;
+        }
+
+        .input-with-prefix {
+            padding-left: 2.1rem;
+            font-family: 'Inter', monospace;
+            font-weight: 700;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.625rem 0;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.15s;
+        }
+
+        .btn-submit-emerald {
+            background-color: var(--primary-emerald);
+            color: #ffffff;
+        }
+
+        .btn-submit-emerald:hover { background-color: var(--primary-emerald-hover); }
+
+        .btn-submit-navy {
+            background-color: var(--primary-navy);
+            color: #ffffff;
+        }
+
+        .btn-submit-navy:hover { background-color: var(--primary-navy-light); }
+
+        .btn-back-link {
+            background: none;
+            border: none;
+            color: var(--primary-emerald);
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.75rem;
+            padding: 0;
+        }
+
+        .btn-back-link:hover { text-decoration: underline; }
+
+        /* ==========================================
+           TABLE STYLES
+           ========================================== */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-surface);
+        }
+
+        table {
+            width: 100%;
+            text-align: left;
+            font-size: 0.6875rem;
+            border-collapse: collapse;
+            min-width: 420px;
+        }
+
+        th {
+            padding: 0.625rem 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background-color: var(--bg-base);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-size: 0.575rem;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 0.625rem 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .col-type { width: 24%; }
+        .col-note { width: 36%; }
+        .col-time { width: 18%; }
+        .col-amount { width: 22%; text-align: right; }
+
+        th.col-amount { text-align: right; }
+
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) td { background-color: #fafbfc; }
+
+        .badge-tx {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.575rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .badge-tx-deposit {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .badge-tx-withdraw {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .hidden { display: none !important; }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 0.75rem;
+            margin-top: 1.5rem;
+            font-size: 0.625rem;
+            color: var(--text-subtle);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* TOAST NOTIFICATION */
+        #toastNotification {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 100;
+            max-width: 18rem;
+            width: calc(100% - 2rem);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-emerald);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 0.875rem;
+            box-shadow: 0 8px 20px -4px rgba(9, 30, 58, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            transform: translateY(3rem);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #toastNotification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .font-mono { font-family: 'Inter', monospace; }
+        .text-emerald { color: var(--primary-emerald); }
+        .text-navy { color: var(--primary-navy); }
+        .text-amber { color: var(--accent-amber); }
+        .font-bold { font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="max-w-container header-content">
+            <a href="#" class="brand-logo-group">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div>
+                    <span class="brand-title">Investasi <span>UMKM</span></span>
+                </div>
+            </a>
+
+            <!-- Profile Badge -->
+            <div class="user-profile-badge">
+                <span class="user-name">Budi Santoso</span>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Budi Santoso" class="user-avatar-img">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="max-w-container">
+
+        <!-- HERO SUMMARY CARD -->
+        <section class="summary-hero-card">
+            <div class="summary-hero-header">
+                <div>
+                    <span class="main-balance-title">
+                        <i class="fa-solid fa-vault text-emerald"></i> Ringkasan Portofolio Korporat
+                    </span>
+                    <div class="main-balance-value" id="displayTotalBalance">Rp 0</div>
+                </div>
+
+                <!-- Tombol Pencairan Keuntungan -->
+                <button class="btn-hero-withdraw" onclick="navigateToWithdraw()">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                    <span>Tarik Keuntungan</span>
+                </button>
+            </div>
+
+            <!-- Sub Metrics Row -->
+            <div class="sub-metrics-grid">
+                <!-- Metrik 1: Total Keuntungan -->
+                <div class="sub-metric-card">
+                    <span class="sub-metric-label">
+                        <i class="fa-solid fa-chart-line text-emerald"></i> Total Keuntungan
+                    </span>
+                    <div class="sub-metric-value text-emerald" id="displayTotalProfit">Rp 0</div>
+                    <div class="sub-metric-footer">
+                        <span>Laju Akumulasi:</span>
+                        <span class="text-emerald font-bold" id="tickerRate">+Rp 0.00/dtk</span>
+                    </div>
+                </div>
+
+                <!-- Metrik 2: Modal Disalurkan -->
+                <div class="sub-metric-card">
+                    <span class="sub-metric-label">
+                        <i class="fa-solid fa-briefcase text-navy"></i> Modal Aktif
+                    </span>
+                    <div class="sub-metric-value text-navy" id="displayActiveDeposit">Rp 0</div>
+                    <div class="sub-metric-footer">
+                        <span>Mitra Usaha:</span>
+                        <span class="font-bold text-navy" id="displayActiveCount">0 Usaha</span>
+                    </div>
+                </div>
+
+                <!-- Metrik 3: Est. Keuntungan Harian -->
+                <div class="sub-metric-card">
+                    <span class="sub-metric-label">
+                        <i class="fa-solid fa-percent" style="color:var(--primary-emerald);"></i> Proyeksi Harian
+                    </span>
+                    <div class="sub-metric-value text-emerald" id="displayEstDaily">Rp 0</div>
+                    <div class="sub-metric-footer">
+                        <span>Imbal Hasil Rata-rata:</span>
+                        <span class="font-bold text-emerald" id="displayAvgYield">0.00% / Hari</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORKSPACE GRID -->
+        <section class="workspace-grid">
+
+            <!-- LEFT COLUMN: FORM PANEL -->
+            <div class="panel-card" id="transactionPanel">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title" id="panelTitleText">
+                            <i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Penyaluran Modal
+                        </h2>
+                        <p class="panel-subtitle" id="panelSubtitleText">Pilih alokasi paket pendanaan UMKM terverifikasi</p>
+                    </div>
+                </div>
+
+                <!-- Action View / Redirect Panel -->
+                <div id="depositActionSection" style="padding: 1rem 0; text-align: center;">
+                    <p style="color: var(--text-subtle); margin-bottom: 1rem; font-size: 0.7rem;">
+                        Klik tombol di bawah untuk membuka halaman formulir penyaluran modal dan memilih paket pendanaan UMKM secara interaktif.
+                    </p>
+                    <a href="Deposit.html" class="btn-submit btn-submit-emerald" style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; text-decoration: none;">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Mulai Deposit
+                    </a>
+                </div>
+
+                <!-- Form Penarikan -->
+                <form id="withdrawForm" class="hidden" onsubmit="handleWithdrawal(event)">
+                    <button type="button" class="btn-back-link" onclick="showDepositDashboard()">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Menu Utama
+                    </button>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nominal Pencairan</label>
+                        <div class="input-prefix-wrapper">
+                            <span class="input-prefix">Rp</span>
+                            <input type="number" id="withdrawAmount" class="form-input input-with-prefix" placeholder="0" min="10000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Bank / Rekening Tujuan</label>
+                        <select id="withdrawBank" class="form-select" required>
+                            <option value="bca">Bank BCA - 8830xxxxxx</option>
+                            <option value="mandiri">Bank Mandiri - 13700xxxxxx</option>
+                            <option value="bri">Bank BRI - 0341xxxxxx</option>
+                            <option value="bni">Bank BNI - 0238xxxxxx</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit btn-submit-navy">
+                        Proses Pencairan Dana
+                    </button>
+                </form>
+            </div>
+
+            <!-- RIGHT COLUMN: TRANSACTION HISTORY -->
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">
+                            <i class="fa-solid fa-clock-rotate-left text-navy"></i> Riwayat Transaksi
+                        </h2>
+                        <p class="panel-subtitle">Catatan audit aktivitas keuangan</p>
+                    </div>
+                    <button onclick="clearTransactionLogs()" style="background-color:var(--bg-base); border:1px solid var(--border-color); color:var(--text-muted); padding:0.3rem 0.5rem; border-radius:var(--radius-sm); font-size:0.6rem; cursor:pointer; font-weight:700;">
+                        Bersihkan Log
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-type">Tipe</th>
+                                <th class="col-note">Keterangan Aktivitas</th>
+                                <th class="col-time">Waktu</th>
+                                <th class="col-amount">Nominal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionHistoryBody">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer Resmi -->
+    <footer>
+        <div class="footer-content max-w-container">
+            <div style="font-weight:700; color:var(--primary-navy); display:flex; align-items:center; gap:0.3rem;">
+                <i class="fa-solid fa-shield-halved text-emerald"></i>
+                <span>PT InvestasiUMKM Indonesia Technologies</span>
+            </div>
+            <p>© 2026 InvestasiUMKM Indonesia. Seluruh Hak Cipta Dilindungi Undang-Undang.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification">
+        <div id="toastIcon" style="color:var(--primary-emerald); font-size:1rem;">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+            <h4 id="toastTitle" style="font-size:0.6875rem; font-weight:700; color:var(--text-main);">Notifikasi Sistem</h4>
+            <p id="toastMessage" style="font-size:0.6rem; color:var(--text-subtle);">Pesan transaksi sukses.</p>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           STATE MANAGEMENT & ENGINE
+           ========================================================================== */
+        const state = {
+            totalBalance: 3500000,
+            totalProfit: 0,
+            activeDeposit: 3500000,
+            packages: [
+                {
+                    id: 1,
+                    name: 'Paket Silver',
+                    principal: 3500000,
+                    dailyRate: 0.012,
+                    accumulatedProfit: 0,
+                    startDate: new Date()
+                }
+            ],
+            transactions: []
+        };
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playChimeSound(type = 'withdraw') {
+            try {
+                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(349.23, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            } catch (e) {}
+        }
+
+        function formatIDR(amount) {
+            return 'Rp ' + Math.floor(amount).toLocaleString('id-ID');
+        }
+
+        function formatIDRPrecise(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function formatTime(date) {
+            return new Date(date).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+
+        function tickRealtimeInvestment() {
+            const SECONDS_IN_DAY = 86400;
+            let currentTickGain = 0;
+
+            state.packages.forEach(pkg => {
+                const secondGain = (pkg.principal * pkg.dailyRate) / SECONDS_IN_DAY;
+                pkg.accumulatedProfit += secondGain;
+                currentTickGain += secondGain;
+            });
+
+            state.totalProfit += currentTickGain;
+            state.totalBalance += currentTickGain;
+
+            updateDashboardUI(currentTickGain);
+        }
+
+        function updateDashboardUI(currentTickGain) {
+            document.getElementById('displayTotalBalance').innerText = formatIDRPrecise(state.totalBalance);
+            document.getElementById('displayTotalProfit').innerText = formatIDRPrecise(state.totalProfit);
+            document.getElementById('displayActiveDeposit').innerText = formatIDR(state.activeDeposit);
+            document.getElementById('displayActiveCount').innerText = `${state.packages.length} Usaha`;
+            document.getElementById('tickerRate').innerText = `+${formatIDRPrecise(currentTickGain)}/dtk`;
+
+            let totalWeightedRate = 0;
+            let estDailyGain = 0;
+
+            if (state.activeDeposit > 0) {
+                state.packages.forEach(pkg => {
+                    estDailyGain += (pkg.principal * pkg.dailyRate);
+                });
+                totalWeightedRate = (estDailyGain / state.activeDeposit) * 100;
+            }
+
+            document.getElementById('displayAvgYield').innerText = `${totalWeightedRate.toFixed(2)}% / Hari`;
+            document.getElementById('displayEstDaily').innerText = formatIDR(estDailyGain);
+        }
+
+        function addTransactionRecord(type, amount, note) {
+            const newTx = {
+                id: 'TX-UMKM-' + Math.floor(100000 + Math.random() * 900000),
+                type: type,
+                amount: amount,
+                note: note,
+                time: new Date()
+            };
+
+            state.transactions.unshift(newTx);
+            renderTransactionHistory();
+        }
+
+        function renderTransactionHistory() {
+            const tbody = document.getElementById('transactionHistoryBody');
+            tbody.innerHTML = '';
+
+            if (state.transactions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="padding:1rem; text-align:center; color:var(--text-subtle);">Belum ada riwayat transaksi.</td></tr>`;
+                return;
+            }
+
+            state.transactions.slice(0, 10).forEach(tx => {
+                const isPositive = tx.type === 'Pendanaan' || tx.type === 'Bagi Hasil';
+                const badgeClass = isPositive ? 'badge-tx-deposit' : 'badge-tx-withdraw';
+                const badgeIcon = isPositive ? 'fa-arrow-down' : 'fa-arrow-up';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="col-type">
+                        <span class="badge-tx ${badgeClass}">
+                            <i class="fa-solid ${badgeIcon}"></i> ${tx.type}
+                        </span>
+                    </td>
+                    <td class="col-note" style="color:var(--text-main); font-size:0.6875rem;" title="${tx.note}">${tx.note}</td>
+                    <td class="col-time" style="color:var(--text-subtle); font-size:0.625rem;">${formatTime(tx.time)}</td>
+                    <td class="col-amount font-mono ${isPositive ? 'text-emerald' : 'text-amber'}" style="font-weight:700;">
+                        ${isPositive ? '+' : '-'}${formatIDR(tx.amount)}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearTransactionLogs() {
+            state.transactions = [];
+            renderTransactionHistory();
+            showToast('Informasi Sistem', 'Log transaksi audit berhasil dibersihkan.');
+        }
+
+        function handleWithdrawal(e) {
+            e.preventDefault();
+
+            const amountInput = document.getElementById('withdrawAmount');
+            const amount = parseFloat(amountInput.value);
+
+            if (isNaN(amount) || amount < 10000) {
+                showToast('Peringatan', 'Nominal minimal pencairan adalah Rp 10.000', 'error');
+                return;
+            }
+
+            if (amount > state.totalBalance) {
+                showToast('Saldo Tidak Cukup', 'Saldo portofolio Anda tidak mencukupi.', 'error');
+                return;
+            }
+
+            state.totalBalance -= amount;
+
+            const bankSelect = document.getElementById('withdrawBank');
+            const selectedBank = bankSelect.options[bankSelect.selectedIndex].text;
+
+            addTransactionRecord('Penarikan', amount, `Pencairan ke ${selectedBank}`);
+            playChimeSound('withdraw');
+            showToast('Pencairan Diproses', `${formatIDR(amount)} dalam proses pengiriman.`);
+
+            amountInput.value = '';
+            showDepositDashboard();
+        }
+
+        function navigateToWithdraw() {
+            const depositActionSection = document.getElementById('depositActionSection');
+            const withdrawForm = document.getElementById('withdrawForm');
+            const panelTitleText = document.getElementById('panelTitleText');
+            const panelSubtitleText = document.getElementById('panelSubtitleText');
+
+            depositActionSection.classList.add('hidden');
+            withdrawForm.classList.remove('hidden');
+
+            panelTitleText.innerHTML = `<i class="fa-solid fa-money-bill-transfer text-emerald"></i> Pencairan Keuntungan`;
+            panelSubtitleText.innerText = `Pilih nominal dan rekening tujuan pencairan dana`;
+
+            const panel = document.getElementById('transactionPanel');
+            if (panel) {
+                panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function showDepositDashboard() {
+            const depositActionSection = document.getElementById('depositActionSection');
+            const withdrawForm = document.getElementById('withdrawForm');
+            const panelTitleText = document.getElementById('panelTitleText');
+            const panelSubtitleText = document.getElementById('panelSubtitleText');
+
+            depositActionSection.classList.remove('hidden');
+            withdrawForm.classList.add('hidden');
+
+            panelTitleText.innerHTML = `<i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Penyaluran Modal`;
+            panelSubtitleText.innerText = `Pilih alokasi paket pendanaan UMKM terverifikasi`;
+        }
+
+        function showToast(title, message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastTitle.innerText = title;
+            toastMessage.innerText = message;
+
+            if (type === 'error') {
+                toastIcon.style.color = "#dc2626";
+                toastIcon.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i>`;
+                toast.style.borderLeftColor = "#dc2626";
+            } else {
+                toastIcon.style.color = "var(--primary-emerald)";
+                toastIcon.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+                toast.style.borderLeftColor = "var(--primary-emerald)";
+            }
+
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        window.onload = function () {
+            addTransactionRecord('Pendanaan', 3500000, 'Pendanaan Awal Mitra Kopi Nusantara Jaya');
+
+            setInterval(() => {
+                tickRealtimeInvestment();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
