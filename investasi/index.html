@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Inter & Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         /* ==========================================
@@ -60,7 +62,7 @@
             flex-direction: column;
             justify-content: space-between;
             line-height: 1.5;
-            font-size: 0.8125rem; /* Ukuran teks ideal dan nyaman dibaca */
+            font-size: 0.8125rem;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -351,7 +353,6 @@
             letter-spacing: 0.03em;
         }
 
-        /* Form Controls */
         .form-select, .form-input {
             width: 100%;
             background-color: var(--bg-surface);
@@ -579,8 +580,8 @@
 
             <!-- Profile Badge -->
             <div class="user-profile-badge">
-                <span class="user-name">Budi Santoso</span>
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Budi Santoso" class="user-avatar-img">
+                <span class="user-name" id="profileName">Memuat...</span>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Profil User" class="user-avatar-img" id="profileAvatar">
             </div>
         </div>
     </header>
@@ -760,22 +761,18 @@
 
     <script>
         /* ==========================================================================
-           STATE MANAGEMENT & ENGINE
+           SUPABASE CONFIGURATION & INTEGRATION
            ========================================================================== */
+        const SUPABASE_URL = 'https://oeezyhygpuucgdjedhve.supabase.co'; // Contoh: 'https://xxxx.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lZXp5aHlncHV1Y2dkamVkaHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4Mjk1NTgsImV4cCI6MjEwNzQwNTU1OH0.rMmoyfx2r6VdOfXrEIDI2DX5F39yX2p8QNX5NC0uFhs'; 
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         const state = {
-            totalBalance: 3500000,
+            userId: null,
+            totalBalance: 0,
             totalProfit: 0,
-            activeDeposit: 3500000,
-            packages: [
-                {
-                    id: 1,
-                    name: 'Paket Silver',
-                    principal: 3500000,
-                    dailyRate: 0.012,
-                    accumulatedProfit: 0,
-                    startDate: new Date()
-                }
-            ],
+            activeDeposit: 0,
+            packages: [],
             transactions: []
         };
 
@@ -811,6 +808,73 @@
             return new Date(date).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         }
 
+        async function loadUserDataFromSupabase() {
+            // Mengambil data user yang sedang aktif tersimpan di localStorage (ID atau Email)
+            const activeEmail = localStorage.getItem('umkm_current_email');
+            
+            if (!activeEmail) {
+                // Jika belum login/daftar, arahkan ke halaman daftar
+                window.location.href = 'daftar.html';
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from('users')
+                .select('*')
+                .eq('email', activeEmail)
+                .single();
+
+            if (error || !data) {
+                showToast('Kesalahan Sesi', 'Data pengguna tidak ditemukan di database.', 'error');
+                return;
+            }
+
+            state.userId = data.id;
+            state.totalBalance = parseFloat(data.balance) || 0;
+            state.totalProfit = parseFloat(data.total_profit) || 0;
+            state.activeDeposit = parseFloat(data.active_deposit) || 0;
+
+            // Update UI Profile
+            document.getElementById('profileName').innerText = data.name;
+            if (data.avatar_url) {
+                document.getElementById('profileAvatar').src = data.avatar_url;
+            }
+
+            updateDashboardUI(0);
+            loadTransactionsFromSupabase();
+        }
+
+        async function loadTransactionsFromSupabase() {
+            const { data, error } = await supabaseClient
+                .from('transactions')
+                .select('*')
+                .eq('user_id', state.userId)
+                .order('created_at', { ascending: false });
+
+            if (!error && data) {
+                state.transactions = data.map(tx => ({
+                    id: tx.id,
+                    type: tx.type,
+                    amount: tx.amount,
+                    note: tx.note,
+                    time: new Date(tx.created_at)
+                }));
+                renderTransactionHistory();
+            }
+        }
+
+        async function updateSupabaseUserData() {
+            if (!state.userId) return;
+            await supabaseClient
+                .from('users')
+                .update({
+                    balance: state.totalBalance,
+                    total_profit: state.totalProfit,
+                    active_deposit: state.activeDeposit
+                })
+                .eq('id', state.userId);
+        }
+
         function tickRealtimeInvestment() {
             const SECONDS_IN_DAY = 86400;
             let currentTickGain = 0;
@@ -827,7 +891,7 @@
             updateDashboardUI(currentTickGain);
         }
 
-        function updateDashboardUI(currentTickGain) {
+        function updateDashboardUI(currentTickGain = 0) {
             document.getElementById('displayTotalBalance').innerText = formatIDRPrecise(state.totalBalance);
             document.getElementById('displayTotalProfit').innerText = formatIDRPrecise(state.totalProfit);
             document.getElementById('displayActiveDeposit').innerText = formatIDR(state.activeDeposit);
@@ -848,17 +912,30 @@
             document.getElementById('displayEstDaily').innerText = formatIDR(estDailyGain);
         }
 
-        function addTransactionRecord(type, amount, note) {
+        async function addTransactionRecord(type, amount, note) {
             const newTx = {
-                id: 'TX-UMKM-' + Math.floor(100000 + Math.random() * 900000),
+                user_id: state.userId,
                 type: type,
                 amount: amount,
-                note: note,
-                time: new Date()
+                note: note
             };
 
-            state.transactions.unshift(newTx);
-            renderTransactionHistory();
+            const { data, error } = await supabaseClient
+                .from('transactions')
+                .insert([newTx])
+                .select()
+                .single();
+
+            if (!error && data) {
+                state.transactions.unshift({
+                    id: data.id,
+                    type: data.type,
+                    amount: data.amount,
+                    note: data.note,
+                    time: new Date(data.created_at)
+                });
+                renderTransactionHistory();
+            }
         }
 
         function renderTransactionHistory() {
@@ -892,13 +969,18 @@
             });
         }
 
-        function clearTransactionLogs() {
+        async function clearTransactionLogs() {
+            await supabaseClient
+                .from('transactions')
+                .delete()
+                .eq('user_id', state.userId);
+
             state.transactions = [];
             renderTransactionHistory();
             showToast('Informasi Sistem', 'Log transaksi audit berhasil dibersihkan.');
         }
 
-        function handleWithdrawal(e) {
+        async function handleWithdrawal(e) {
             e.preventDefault();
 
             const amountInput = document.getElementById('withdrawAmount');
@@ -915,11 +997,12 @@
             }
 
             state.totalBalance -= amount;
+            await updateSupabaseUserData();
 
             const bankSelect = document.getElementById('withdrawBank');
             const selectedBank = bankSelect.options[bankSelect.selectedIndex].text;
 
-            addTransactionRecord('Penarikan', amount, `Pencairan ke ${selectedBank}`);
+            await addTransactionRecord('Penarikan', amount, `Pencairan ke ${selectedBank}`);
             playChimeSound('withdraw');
             showToast('Pencairan Diproses', `${formatIDR(amount)} dalam proses pengiriman.`);
 
@@ -985,7 +1068,7 @@
         }
 
         window.onload = function () {
-            addTransactionRecord('Pendanaan', 3500000, 'Pendanaan Awal Mitra Kopi Nusantara Jaya');
+            loadUserDataFromSupabase();
 
             setInterval(() => {
                 tickRealtimeInvestment();
