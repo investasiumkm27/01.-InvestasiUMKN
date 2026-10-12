@@ -6,8 +6,8 @@
     <title>InvestasiUMKM - Platform Pendanaan & Pertumbuhan UMKM Berizin Resmi</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================
@@ -20,30 +20,34 @@
         }
 
         :root {
-            --bg-base: #fcfcfd;
+            --bg-base: #f4f6f8;
             --bg-surface: #ffffff;
-            --bg-surface-elevated: #f8fafc;
+            --bg-surface-elevated: #f0fdf4;
             
-            --border-color: #e2e8f0;
-            --border-subtle: #edf2f7;
+            --border-color: #cbd5e1;
+            --border-subtle: #e2e8f0;
             
-            --text-main: #0f172a;
-            --text-muted: #475569;
+            --text-main: #0b1329;
+            --text-muted: #334155;
             --text-subtle: #64748b;
             
-            --primary-navy: #090d16;
-            --primary-navy-light: #1e293b;
-            --primary-emerald: #065f46;
-            --primary-emerald-bg: #f0fdf4;
+            --primary-navy: #091e3a;
+            --primary-navy-light: #132f52;
+            --primary-emerald: #047857;
+            --primary-emerald-bg: #ecfdf5;
+            --primary-emerald-hover: #065f46;
             
-            --accent-blue: #1e40af;
-            --accent-blue-hover: #1d4ed8;
-            --accent-blue-subtle: #f8fafc;
+            --accent-blue: #1d4ed8;
+            --accent-blue-hover: #1e40af;
+            --accent-blue-subtle: #eff6ff;
             
-            --radius-sm: 0.25rem;
-            --radius-md: 0.375rem;
-            --radius-lg: 0.5rem;
-            --radius-xl: 0.75rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            
+            --shadow-subtle: 0 1px 3px rgba(9, 30, 58, 0.05);
+            --shadow-card: 0 4px 6px -1px rgba(9, 30, 58, 0.05), 0 2px 4px -2px rgba(9, 30, 58, 0.05);
         }
 
         html {
@@ -55,7 +59,7 @@
             background-color: var(--bg-base);
             color: var(--text-main);
             line-height: 1.5;
-            font-size: 0.8125rem; /* Direduksi untuk kesan kompak & profesional */
+            font-size: 0.8125rem;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -78,7 +82,8 @@
             background-color: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
-            padding: 0.75rem 0;
+            padding: 0.875rem 0;
+            box-shadow: var(--shadow-subtle);
         }
 
         .header-content {
@@ -95,31 +100,32 @@
         }
 
         .brand-icon {
-            width: 2rem;
-            height: 2rem;
+            width: 2.25rem;
+            height: 2.25rem;
             border-radius: var(--radius-sm);
-            background-color: var(--primary-navy);
+            background-color: var(--primary-emerald);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(4, 120, 87, 0.2);
         }
 
         .brand-title {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 800;
             color: var(--primary-navy);
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
 
         .brand-title span {
-            color: var(--accent-blue);
+            color: var(--primary-emerald);
         }
 
         .nav-links {
             display: none;
-            gap: 1.75rem;
+            gap: 2rem;
             list-style: none;
             align-items: center;
         }
@@ -131,60 +137,62 @@
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.8125rem;
             transition: color 0.15s ease;
         }
 
         .nav-links a:hover {
-            color: var(--accent-blue);
+            color: var(--primary-emerald);
         }
 
         .header-cta-group {
             display: flex;
             align-items: center;
-            gap: 0.625rem;
+            gap: 0.75rem;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.375rem;
+            gap: 0.4rem;
             font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
+            font-weight: 700;
+            padding: 0.55rem 1.1rem;
             border-radius: var(--radius-md);
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.15s ease;
-            letter-spacing: 0.01em;
+            transition: all 0.2s ease;
+            letter-spacing: 0.02em;
             border: 1px solid transparent;
         }
 
         .btn-outline {
-            background-color: transparent;
+            background-color: var(--bg-surface);
             color: var(--primary-navy);
             border-color: var(--border-color);
         }
 
         .btn-outline:hover {
-            background-color: var(--bg-surface-elevated);
+            background-color: var(--bg-base);
             border-color: var(--text-subtle);
         }
 
         .btn-primary {
-            background-color: var(--accent-blue);
+            background-color: var(--primary-emerald);
             color: #ffffff;
+            box-shadow: 0 2px 4px rgba(4, 120, 87, 0.2);
         }
 
         .btn-primary:hover {
-            background-color: var(--accent-blue-hover);
+            background-color: var(--primary-emerald-hover);
         }
 
         .btn-navy {
             background-color: var(--primary-navy);
             color: #ffffff;
+            box-shadow: 0 2px 4px rgba(9, 30, 58, 0.2);
         }
 
         .btn-navy:hover {
@@ -195,58 +203,58 @@
            HERO SECTION
            ========================================== */
         .hero-section {
-            padding: 4rem 0 3rem 0;
+            padding: 4.5rem 0 3.5rem 0;
             background-color: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
             text-align: center;
         }
 
         .hero-container {
-            max-width: 760px;
+            max-width: 780px;
             margin: 0 auto;
         }
 
         .trust-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.375rem;
-            padding: 0.3125rem 0.75rem;
+            gap: 0.5rem;
+            padding: 0.35rem 0.875rem;
             background-color: var(--primary-emerald-bg);
             border: 1px solid #a7f3d0;
             border-radius: 9999px;
             color: var(--primary-emerald);
-            font-size: 0.6875rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             margin-bottom: 1.25rem;
             letter-spacing: 0.02em;
         }
 
         .hero-title {
-            font-size: 2.125rem;
-            font-weight: 700;
-            line-height: 1.25;
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.2;
             color: var(--primary-navy);
             letter-spacing: -0.02em;
             margin-bottom: 1rem;
         }
 
         @media (min-width: 768px) {
-            .hero-title { font-size: 2.75rem; }
+            .hero-title { font-size: 2.85rem; }
         }
 
         .hero-description {
             font-size: 0.9375rem;
             color: var(--text-muted);
-            margin-bottom: 1.75rem;
-            line-height: 1.6;
+            margin-bottom: 2rem;
+            line-height: 1.65;
         }
 
         .hero-actions {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.75rem;
-            margin-bottom: 3rem;
+            gap: 0.875rem;
+            margin-bottom: 3.5rem;
         }
 
         .hero-stats-row {
@@ -257,22 +265,24 @@
             background-color: var(--bg-surface-elevated);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-subtle);
         }
 
         .hero-stat-item .stat-value {
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 1.35rem;
+            font-weight: 800;
+            font-family: 'Inter', monospace;
             color: var(--primary-navy);
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
 
         .hero-stat-item .stat-label {
             font-size: 0.6875rem;
             color: var(--text-subtle);
             text-transform: uppercase;
-            font-weight: 600;
-            margin-top: 0.125rem;
-            letter-spacing: 0.03em;
+            font-weight: 700;
+            margin-top: 0.2rem;
+            letter-spacing: 0.04em;
         }
 
         /* ==========================================
@@ -281,14 +291,14 @@
         .compliance-bar {
             background-color: var(--bg-surface-elevated);
             border-bottom: 1px solid var(--border-color);
-            padding: 1.125rem 0;
+            padding: 1.25rem 0;
         }
 
         .compliance-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.875rem;
+            gap: 1rem;
             text-align: center;
         }
 
@@ -301,8 +311,8 @@
         }
 
         .compliance-title {
-            font-size: 0.6875rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             color: var(--text-subtle);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -319,44 +329,44 @@
         .compliance-item {
             display: flex;
             align-items: center;
-            gap: 0.375rem;
-            font-weight: 600;
+            gap: 0.4rem;
+            font-weight: 700;
             font-size: 0.75rem;
             color: var(--text-muted);
         }
 
         .compliance-item i {
-            color: var(--accent-blue);
+            color: var(--primary-emerald);
         }
 
         /* ==========================================
            FEATURES SECTION
            ========================================== */
         .section-padding {
-            padding: 4rem 0;
+            padding: 4.5rem 0;
         }
 
         .section-header {
             text-align: center;
-            max-width: 580px;
+            max-width: 600px;
             margin: 0 auto 3rem auto;
         }
 
         .section-subtitle {
-            font-size: 0.6875rem;
-            font-weight: 600;
-            color: var(--accent-blue);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--primary-emerald);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 0.375rem;
+            margin-bottom: 0.5rem;
             display: block;
         }
 
         .section-title {
-            font-size: 1.625rem;
-            font-weight: 700;
+            font-size: 1.75rem;
+            font-weight: 800;
             color: var(--primary-navy);
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
 
         .features-grid {
@@ -373,31 +383,33 @@
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 1.75rem;
-            transition: border-color 0.15s ease;
+            padding: 2rem;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-card);
         }
 
         .feature-card:hover {
-            border-color: var(--text-subtle);
+            border-color: var(--primary-emerald);
+            transform: translateY(-2px);
         }
 
         .feature-icon {
-            width: 2.75rem;
-            height: 2.75rem;
+            width: 3rem;
+            height: 3rem;
             border-radius: var(--radius-md);
-            background-color: var(--accent-blue-subtle);
-            color: var(--accent-blue);
+            background-color: var(--primary-emerald-bg);
+            color: var(--primary-emerald);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.125rem;
+            font-size: 1.2rem;
             margin-bottom: 1.25rem;
-            border: 1px solid var(--border-subtle);
+            border: 1px solid #a7f3d0;
         }
 
         .feature-card-title {
-            font-size: 0.9375rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 800;
             color: var(--primary-navy);
             margin-bottom: 0.5rem;
         }
@@ -405,7 +417,7 @@
         .feature-card-desc {
             font-size: 0.78125rem;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         /* ==========================================
@@ -431,48 +443,50 @@
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 1.75rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: var(--shadow-subtle);
         }
 
         .testimonial-text {
             font-size: 0.8125rem;
             color: var(--text-muted);
             font-style: italic;
-            margin-bottom: 1.25rem;
-            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
 
         .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.875rem;
         }
 
         .author-avatar {
-            width: 2.375rem;
-            height: 2.375rem;
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 50%;
             background-color: var(--primary-navy);
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.75rem;
         }
 
         .author-info h4 {
             font-size: 0.8125rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--primary-navy);
         }
 
         .author-info p {
             font-size: 0.6875rem;
             color: var(--text-subtle);
+            font-weight: 500;
         }
 
         /* ==========================================
@@ -481,25 +495,27 @@
         .cta-banner {
             background-color: var(--primary-navy);
             color: #ffffff;
-            border-radius: var(--radius-lg);
-            padding: 3rem 1.5rem;
+            border-radius: var(--radius-xl);
+            padding: 3.5rem 2rem;
             text-align: center;
-            margin: 3.5rem 0;
+            margin: 4rem 0;
+            box-shadow: 0 10px 25px -5px rgba(9, 30, 58, 0.2);
+            border-top: 4px solid var(--primary-emerald);
         }
 
         .cta-title {
-            font-size: 1.625rem;
-            font-weight: 700;
+            font-size: 1.85rem;
+            font-weight: 800;
             margin-bottom: 0.75rem;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
 
         .cta-desc {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: #94a3b8;
-            max-width: 520px;
-            margin: 0 auto 1.75rem auto;
-            line-height: 1.6;
+            max-width: 540px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.65;
         }
 
         /* ==========================================
@@ -508,7 +524,7 @@
         footer {
             background-color: var(--bg-surface);
             border-top: 1px solid var(--border-color);
-            padding: 3.5rem 0 1.75rem 0;
+            padding: 4rem 0 2rem 0;
             font-size: 0.75rem;
             color: var(--text-subtle);
         }
@@ -516,8 +532,8 @@
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            gap: 2rem;
-            margin-bottom: 2.5rem;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         @media (min-width: 768px) {
@@ -525,44 +541,45 @@
         }
 
         .footer-brand-desc {
-            margin-top: 0.75rem;
+            margin-top: 0.875rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            max-width: 300px;
+            line-height: 1.65;
+            max-width: 320px;
         }
 
         .footer-column-title {
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary-navy);
             text-transform: uppercase;
-            margin-bottom: 1rem;
-            letter-spacing: 0.04em;
+            margin-bottom: 1.125rem;
+            letter-spacing: 0.05em;
         }
 
         .footer-menu {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.625rem;
+            gap: 0.75rem;
         }
 
         .footer-menu a, .footer-menu li {
             text-decoration: none;
             color: var(--text-muted);
+            font-weight: 500;
             transition: color 0.15s ease;
         }
 
         .footer-menu a:hover {
-            color: var(--accent-blue);
+            color: var(--primary-emerald);
         }
 
         .footer-bottom {
-            padding-top: 1.5rem;
+            padding-top: 1.75rem;
             border-top: 1px solid var(--border-subtle);
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 1rem;
             align-items: center;
             text-align: center;
         }
@@ -620,10 +637,10 @@
                     InvestasiUMKM menghubungkan investor institusi dan ritel secara langsung dengan sektor riil potensial melalui tata kelola pembiayaan yang transparan dan akuntabel.
                 </p>
                 <div class="hero-actions">
-                    <a href="index.html" class="btn btn-navy" style="padding: 0.625rem 1.25rem;">
+                    <a href="index.html" class="btn btn-navy" style="padding: 0.65rem 1.35rem;">
                         <i class="fa-solid fa-chart-pie"></i> Buka Portofolio
                     </a>
-                    <a href="#fitur" class="btn btn-outline" style="padding: 0.625rem 1.25rem;">
+                    <a href="#fitur" class="btn btn-outline" style="padding: 0.65rem 1.35rem;">
                         Pelajari Layanan
                     </a>
                 </div>
@@ -720,7 +737,7 @@
         <div class="max-w-container">
             <div class="section-header">
                 <span class="section-subtitle">Kepercayaan Investor</span>
-                    <h2 class="section-title">Testimoni Klien & Mitra Institusi</h2>
+                <h2 class="section-title">Testimoni Klien & Mitra Institusi</h2>
             </div>
 
             <div class="testimonials-grid">
@@ -739,7 +756,7 @@
 
                 <div class="testimonial-card">
                     <p class="testimonial-text">
-                        "Setelah berinvestasi di sini, Saya tidak hanya mendapatkan keutungan, tetapi juga membantu umkm"
+                        "Setelah berinvestasi di sini, Saya tidak hanya mendapatkan keuntungan, tetapi juga turut memberdayakan pertumbuhan sektor UMKM secara nyata."
                     </p>
                     <div class="testimonial-author">
                         <div class="author-avatar">AP</div>
@@ -760,7 +777,7 @@
             <p class="cta-desc">
                 Ambil bagian dalam penguatan ekonomi kerakyatan melalui instrumen pembiayaan UMKM yang transparan dan terukur.
             </p>
-            <a href="index.html" class="btn btn-primary" style="padding: 0.625rem 1.5rem;">
+            <a href="index.html" class="btn btn-primary" style="padding: 0.75rem 1.75rem; font-size: 0.8125rem;">
                 Akses Dashboard Portal <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
@@ -813,7 +830,7 @@
 
             <div class="footer-bottom">
                 <p>© 2026 PT InvestasiUMKM Indonesia Technologies. Seluruh Hak Cipta Dilindungi.</p>
-                <div style="display:flex; gap:1.25rem;">
+                <div style="display:flex; gap:1.5rem;">
                     <a href="#" style="color:var(--text-subtle); text-decoration:none;">Kebijakan Privasi</a>
                     <a href="#" style="color:var(--text-subtle); text-decoration:none;">Ketentuan Layanan</a>
                 </div>
