@@ -1,18 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestasiUMKM - Platform Pendanaan & Pertumbuhan UMKM Terpercaya</title>
+    <title>InvestasiUMKM - Platform Pendanaan & Pertumbuhan UMKM Berizin Resmi</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================
-           REFINED ENTERPRISE COLOR PALETTE
+           OFFICIAL CORPORATE PALETTE & TOKENS
            ========================================== */
         *, *::before, *::after {
             box-sizing: border-box;
@@ -21,29 +20,30 @@
         }
 
         :root {
-            --bg-base: #f8fafc;
+            --bg-base: #fcfcfd;
             --bg-surface: #ffffff;
-            --bg-surface-elevated: #f1f5f9;
-            --border-color: #cbd5e1;
-            --border-subtle: #e2e8f0;
+            --bg-surface-elevated: #f8fafc;
+            
+            --border-color: #e2e8f0;
+            --border-subtle: #edf2f7;
             
             --text-main: #0f172a;
-            --text-muted: #334155;
+            --text-muted: #475569;
             --text-subtle: #64748b;
             
-            --primary-navy: #0f172a;
+            --primary-navy: #090d16;
             --primary-navy-light: #1e293b;
-            --primary-emerald: #047857;
-            --primary-emerald-bg: #ecfdf5;
+            --primary-emerald: #065f46;
+            --primary-emerald-bg: #f0fdf4;
             
-            --accent-blue: #1d4ed8;
-            --accent-blue-hover: #1e40af;
-            --accent-blue-subtle: #eff6ff;
+            --accent-blue: #1e40af;
+            --accent-blue-hover: #1d4ed8;
+            --accent-blue-subtle: #f8fafc;
             
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
+            --radius-sm: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
         }
 
         html {
@@ -54,18 +54,18 @@
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-base);
             color: var(--text-main);
-            line-height: 1.6;
-            font-size: 0.9rem;
+            line-height: 1.5;
+            font-size: 0.8125rem; /* Direduksi untuk kesan kompak & profesional */
             -webkit-font-smoothing: antialiased;
         }
 
         .max-w-container {
-            max-width: 1200px;
+            max-width: 1140px;
             width: 100%;
             margin-left: auto;
             margin-right: auto;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
         }
 
         /* ==========================================
@@ -75,10 +75,10 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border-subtle);
-            padding: 0.85rem 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 0;
         }
 
         .header-content {
@@ -90,27 +90,27 @@
         .brand-logo-group {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.625rem;
             text-decoration: none;
         }
 
         .brand-icon {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: var(--radius-md);
+            width: 2rem;
+            height: 2rem;
+            border-radius: var(--radius-sm);
             background-color: var(--primary-navy);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 1rem;
+            font-size: 0.875rem;
         }
 
         .brand-title {
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--primary-navy);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
         .brand-title span {
@@ -119,7 +119,7 @@
 
         .nav-links {
             display: none;
-            gap: 2rem;
+            gap: 1.75rem;
             list-style: none;
             align-items: center;
         }
@@ -131,9 +131,9 @@
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.875rem;
-            transition: color 0.2s;
+            font-weight: 500;
+            font-size: 0.8125rem;
+            transition: color 0.15s ease;
         }
 
         .nav-links a:hover {
@@ -143,29 +143,29 @@
         .header-cta-group {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.625rem;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.65rem 1.25rem;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
             border-radius: var(--radius-md);
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.02em;
-            border: none;
+            transition: all 0.15s ease;
+            letter-spacing: 0.01em;
+            border: 1px solid transparent;
         }
 
         .btn-outline {
             background-color: transparent;
             color: var(--primary-navy);
-            border: 1px solid var(--border-color);
+            border-color: var(--border-color);
         }
 
         .btn-outline:hover {
@@ -176,12 +176,10 @@
         .btn-primary {
             background-color: var(--accent-blue);
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2);
         }
 
         .btn-primary:hover {
             background-color: var(--accent-blue-hover);
-            transform: translateY(-1px);
         }
 
         .btn-navy {
@@ -191,108 +189,106 @@
 
         .btn-navy:hover {
             background-color: var(--primary-navy-light);
-            transform: translateY(-1px);
         }
 
         /* ==========================================
            HERO SECTION
            ========================================== */
         .hero-section {
-            padding: 5rem 0 4rem 0;
-            background: radial-gradient(circle at top center, rgba(29, 78, 216, 0.04) 0%, transparent 70%), var(--bg-base);
-            border-bottom: 1px solid var(--border-subtle);
+            padding: 4rem 0 3rem 0;
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
             text-align: center;
         }
 
         .hero-container {
-            max-width: 800px;
+            max-width: 760px;
             margin: 0 auto;
         }
 
         .trust-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 0.85rem;
+            gap: 0.375rem;
+            padding: 0.3125rem 0.75rem;
             background-color: var(--primary-emerald-bg);
             border: 1px solid #a7f3d0;
             border-radius: 9999px;
             color: var(--primary-emerald);
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
             letter-spacing: 0.02em;
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            line-height: 1.2;
+            font-size: 2.125rem;
+            font-weight: 700;
+            line-height: 1.25;
             color: var(--primary-navy);
-            letter-spacing: -0.03em;
-            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
         }
 
         @media (min-width: 768px) {
-            .hero-title { font-size: 3.25rem; }
+            .hero-title { font-size: 2.75rem; }
         }
 
         .hero-description {
-            font-size: 1.05rem;
+            font-size: 0.9375rem;
             color: var(--text-muted);
-            margin-bottom: 2rem;
-            line-height: 1.7;
+            margin-bottom: 1.75rem;
+            line-height: 1.6;
         }
 
         .hero-actions {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3.5rem;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
         }
 
         .hero-stats-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            padding: 2rem;
-            background-color: var(--bg-surface);
+            gap: 1.25rem;
+            padding: 1.5rem;
+            background-color: var(--bg-surface-elevated);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-xl);
-            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+            border-radius: var(--radius-lg);
         }
 
         .hero-stat-item .stat-value {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--primary-navy);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
         .hero-stat-item .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             color: var(--text-subtle);
             text-transform: uppercase;
-            font-weight: 700;
-            margin-top: 0.25rem;
-            letter-spacing: 0.04em;
+            font-weight: 600;
+            margin-top: 0.125rem;
+            letter-spacing: 0.03em;
         }
 
         /* ==========================================
            TRUST & COMPLIANCE BAR
            ========================================== */
         .compliance-bar {
-            background-color: var(--bg-surface);
+            background-color: var(--bg-surface-elevated);
             border-bottom: 1px solid var(--border-color);
-            padding: 1.5rem 0;
+            padding: 1.125rem 0;
         }
 
         .compliance-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
+            gap: 0.875rem;
             text-align: center;
         }
 
@@ -305,8 +301,8 @@
         }
 
         .compliance-title {
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.6875rem;
+            font-weight: 600;
             color: var(--text-subtle);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -315,7 +311,7 @@
         .compliance-logos {
             display: flex;
             align-items: center;
-            gap: 2.5rem;
+            gap: 2rem;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -323,9 +319,9 @@
         .compliance-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: 700;
-            font-size: 0.85rem;
+            gap: 0.375rem;
+            font-weight: 600;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
@@ -337,36 +333,36 @@
            FEATURES SECTION
            ========================================== */
         .section-padding {
-            padding: 5rem 0;
+            padding: 4rem 0;
         }
 
         .section-header {
             text-align: center;
-            max-width: 650px;
-            margin: 0 auto 3.5rem auto;
+            max-width: 580px;
+            margin: 0 auto 3rem auto;
         }
 
         .section-subtitle {
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.6875rem;
+            font-weight: 600;
             color: var(--accent-blue);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.375rem;
             display: block;
         }
 
         .section-title {
-            font-size: 2rem;
-            font-weight: 800;
+            font-size: 1.625rem;
+            font-weight: 700;
             color: var(--primary-navy);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         @media (min-width: 768px) {
@@ -376,56 +372,55 @@
         .feature-card {
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-xl);
-            padding: 2rem;
-            transition: all 0.3s ease;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            transition: border-color 0.15s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
             border-color: var(--text-subtle);
         }
 
         .feature-icon {
-            width: 3.25rem;
-            height: 3.25rem;
+            width: 2.75rem;
+            height: 2.75rem;
             border-radius: var(--radius-md);
             background-color: var(--accent-blue-subtle);
             color: var(--accent-blue);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.35rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid var(--border-subtle);
         }
 
         .feature-card-title {
-            font-size: 1.15rem;
-            font-weight: 700;
+            font-size: 0.9375rem;
+            font-weight: 600;
             color: var(--primary-navy);
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
         }
 
         .feature-card-desc {
-            font-size: 0.875rem;
+            font-size: 0.78125rem;
             color: var(--text-muted);
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         /* ==========================================
-           TESTIMONIALS SECTION (NEW)
+           TESTIMONIALS SECTION
            ========================================== */
         .testimonials-section {
             background-color: var(--bg-surface-elevated);
-            border-top: 1px solid var(--border-subtle);
-            border-bottom: 1px solid var(--border-subtle);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         @media (min-width: 768px) {
@@ -435,48 +430,48 @@
         .testimonial-card {
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-xl);
-            padding: 2rem;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .testimonial-text {
-            font-size: 0.95rem;
+            font-size: 0.8125rem;
             color: var(--text-muted);
             font-style: italic;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
         }
 
         .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .author-avatar {
-            width: 3rem;
-            height: 3.0rem;
+            width: 2.375rem;
+            height: 2.375rem;
             border-radius: 50%;
             background-color: var(--primary-navy);
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 600;
+            font-size: 0.75rem;
         }
 
         .author-info h4 {
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 0.8125rem;
+            font-weight: 600;
             color: var(--primary-navy);
         }
 
         .author-info p {
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             color: var(--text-subtle);
         }
 
@@ -486,26 +481,25 @@
         .cta-banner {
             background-color: var(--primary-navy);
             color: #ffffff;
-            border-radius: var(--radius-xl);
-            padding: 4rem 2rem;
+            border-radius: var(--radius-lg);
+            padding: 3rem 1.5rem;
             text-align: center;
-            margin: 4rem 0;
-            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+            margin: 3.5rem 0;
         }
 
         .cta-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
+            font-size: 1.625rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
         }
 
         .cta-desc {
-            font-size: 1rem;
-            color: var(--border-color);
-            max-width: 580px;
-            margin: 0 auto 2rem auto;
-            line-height: 1.7;
+            font-size: 0.875rem;
+            color: #94a3b8;
+            max-width: 520px;
+            margin: 0 auto 1.75rem auto;
+            line-height: 1.6;
         }
 
         /* ==========================================
@@ -514,16 +508,16 @@
         footer {
             background-color: var(--bg-surface);
             border-top: 1px solid var(--border-color);
-            padding: 4rem 0 2rem 0;
-            font-size: 0.8rem;
+            padding: 3.5rem 0 1.75rem 0;
+            font-size: 0.75rem;
             color: var(--text-subtle);
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            gap: 2.5rem;
-            margin-bottom: 3rem;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         @media (min-width: 768px) {
@@ -531,32 +525,32 @@
         }
 
         .footer-brand-desc {
-            margin-top: 1rem;
+            margin-top: 0.75rem;
             color: var(--text-muted);
-            line-height: 1.7;
-            max-width: 320px;
+            line-height: 1.6;
+            max-width: 300px;
         }
 
         .footer-column-title {
-            font-size: 0.8rem;
-            font-weight: 800;
+            font-size: 0.75rem;
+            font-weight: 700;
             color: var(--primary-navy);
             text-transform: uppercase;
-            margin-bottom: 1.25rem;
-            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            letter-spacing: 0.04em;
         }
 
         .footer-menu {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.625rem;
         }
 
         .footer-menu a, .footer-menu li {
             text-decoration: none;
             color: var(--text-muted);
-            transition: color 0.2s;
+            transition: color 0.15s ease;
         }
 
         .footer-menu a:hover {
@@ -564,11 +558,11 @@
         }
 
         .footer-bottom {
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid var(--border-subtle);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.75rem;
             align-items: center;
             text-align: center;
         }
@@ -601,7 +595,7 @@
                 <li><a href="#tentang">Tentang Kami</a></li>
                 <li><a href="#fitur">Keunggulan</a></li>
                 <li><a href="#testimoni">Testimoni</a></li>
-                <li><a href="#keamanan">Keamanan</a></li>
+                <li><a href="#keamanan">Tata Kelola</a></li>
             </ul>
 
             <!-- Header Action -->
@@ -617,32 +611,32 @@
         <div class="max-w-container">
             <div class="hero-container">
                 <span class="trust-badge">
-                    <i class="fa-solid fa-shield-halved"></i> Platform Pendanaan Terverifikasi & Transparan
+                    <i class="fa-solid fa-shield-halved"></i> Berizin Resmi & Diawasi Otoritas Jasa Keuangan
                 </span>
                 <h1 class="hero-title">
-                    Dukung Pertumbuhan UMKM, Dapatkan Imbal Hasil Terukur.
+                    Mitra Strategis Pendanaan Produktif & Pertumbuhan UMKM Nasional.
                 </h1>
                 <p class="hero-description">
-                    InvestasiUMKM menghubungkan investor institusi dan individu secara langsung dengan pelaku UMKM potensial di seluruh Indonesia melalui skema bagi hasil yang aman dan profesional.
+                    InvestasiUMKM menghubungkan investor institusi dan ritel secara langsung dengan sektor riil potensial melalui tata kelola pembiayaan yang transparan dan akuntabel.
                 </p>
                 <div class="hero-actions">
-                    <a href="index.html" class="btn btn-navy" style="padding: 0.85rem 1.75rem;">
+                    <a href="index.html" class="btn btn-navy" style="padding: 0.625rem 1.25rem;">
                         <i class="fa-solid fa-chart-pie"></i> Buka Portofolio
                     </a>
-                    <a href="#fitur" class="btn btn-outline" style="padding: 0.85rem 1.75rem;">
-                        Pelajari Keunggulan
+                    <a href="#fitur" class="btn btn-outline" style="padding: 0.625rem 1.25rem;">
+                        Pelajari Layanan
                     </a>
                 </div>
 
                 <!-- Metric Row -->
                 <div class="hero-stats-row">
                     <div class="hero-stat-item">
-                        <div class="stat-value">Rp 120B+</div>
-                        <div class="stat-label">Dana Disalurkan</div>
+                        <div class="stat-value">Rp 343M+</div>
+                        <div class="stat-label">Akumulasi Pendanaan</div>
                     </div>
                     <div class="hero-stat-item">
                         <div class="stat-value">1.450+</div>
-                        <div class="stat-label">Mitra UMKM</div>
+                        <div class="stat-label">Mitra Investor</div>
                     </div>
                     <div class="hero-stat-item">
                         <div class="stat-value">99.8%</div>
@@ -657,10 +651,10 @@
     <div class="compliance-bar" id="keamanan">
         <div class="max-w-container">
             <div class="compliance-wrapper">
-                <span class="compliance-title">Standar Tata Kelola & Keamanan:</span>
+                <span class="compliance-title">Standar Kepatuhan Korporat:</span>
                 <div class="compliance-logos">
                     <div class="compliance-item">
-                        <i class="fa-solid fa-shield-cat"></i> Standar Audit Keuangan
+                        <i class="fa-solid fa-shield-cat"></i> Audit Keuangan Independen
                     </div>
                     <div class="compliance-item">
                         <i class="fa-solid fa-lock"></i> Enkripsi SSL 256-Bit
@@ -669,7 +663,7 @@
                         <i class="fa-solid fa-building-user"></i> Rekening Kustodian Terpisah
                     </div>
                     <div class="compliance-item">
-                        <i class="fa-solid fa-file-contract"></i> Kontrak Hukum Sah
+                        <i class="fa-solid fa-file-contract"></i> Perjanjian Hukum Sah
                     </div>
                 </div>
             </div>
@@ -680,8 +674,8 @@
     <section class="section-padding" id="fitur">
         <div class="max-w-container">
             <div class="section-header">
-                <span class="section-subtitle">Mengapa InvestasiUMKM</span>
-                <h2 class="section-title">Solusi Pendanaan Berbasis Imbal Hasil Transparan</h2>
+                <span class="section-subtitle">Keunggulan Layanan</span>
+                <h2 class="section-title">Prinsip Kehati-Hatian & Transparansi Pengelolaan</h2>
             </div>
 
             <div class="features-grid">
@@ -690,9 +684,9 @@
                     <div class="feature-icon">
                         <i class="fa-solid fa-magnifying-glass-chart"></i>
                     </div>
-                    <h3 class="feature-card-title">Uji Kelayakan Ketat</h3>
+                    <h3 class="feature-card-title">Mitigasi Risiko Komprehensif</h3>
                     <p class="feature-card-desc">
-                        Setiap UMKM melalui proses kurasi laporan keuangan, analisis arus kas, serta pemantauan rekam jejak bisnis secara menyeluruh sebelum ditampilkan.
+                        Kurasi ketat berbasis analisis rasio keuangan, verifikasi arus kas operasional, dan peninjauan langsung profil usaha secara berkala.
                     </p>
                 </div>
 
@@ -701,9 +695,9 @@
                     <div class="feature-icon">
                         <i class="fa-solid fa-wallet"></i>
                     </div>
-                    <h3 class="feature-card-title">Pencairan Hasil Fleksibel</h3>
+                    <h3 class="feature-card-title">Distribusi Imbal Hasil Terukur</h3>
                     <p class="feature-card-desc">
-                        Imbal hasil diakumulasikan secara periodik dan dapat dicairkan langsung ke rekening bank utama Anda tanpa biaya tersembunyi.
+                        Pencairan imbal hasil berkala yang transparan langsung ditransfer ke rekening terdaftar tanpa adanya biaya tersembunyi.
                     </p>
                 </div>
 
@@ -712,9 +706,9 @@
                     <div class="feature-icon">
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
-                    <h3 class="feature-card-title">Diversifikasi Risiko</h3>
+                    <h3 class="feature-card-title">Alokasi Portofolio Terdiversifikasi</h3>
                     <p class="feature-card-desc">
-                        Alokasikan pendanaan Anda ke berbagai sektor UMKM mulai dari kuliner, ritel, hingga manufaktur untuk mengoptimalkan potensi portofolio.
+                        Sebarkan risiko pendanaan ke berbagai sektor produktif mulai dari agribisnis, ritel, hingga manufaktur guna menjaga stabilitas portofolio.
                     </p>
                 </div>
             </div>
@@ -725,33 +719,33 @@
     <section class="section-padding testimonials-section" id="testimoni">
         <div class="max-w-container">
             <div class="section-header">
-                <span class="section-subtitle">Pengalaman Investor</span>
-                <h2 class="section-title">Dipercaya Oleh Ribuan Investor Aktif</h2>
+                <span class="section-subtitle">Kepercayaan Investor</span>
+                    <h2 class="section-title">Testimoni Klien & Mitra Institusi</h2>
             </div>
 
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <p class="testimonial-text">
-                        "Transparansi laporan keuangan dan proses kurasi yang jelas membuat saya merasa aman mendanai berbagai UMKM di platform ini. Imbal hasilnya pun selalu cair tepat waktu."
+                        "Kelengkapan laporan portofolio dan profesionalisme manajemen platform ini memberikan rasa aman dalam melakukan diversifikasi penempatan modal produktif."
                     </p>
                     <div class="testimonial-author">
                         <div class="author-avatar">BS</div>
                         <div class="author-info">
                             <h4>Budi Setiawan</h4>
-                            <p>Investor Institusi & Individu</p>
+                            <p>Investor Terdaftar</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
                     <p class="testimonial-text">
-                        "Platform yang sangat intuitif. Fitur diversifikasinya membantu saya membagi risiko dengan mudah ke berbagai sektor bisnis produktif tanpa ribet."
+                        "Setelah berinvestasi di sini, Saya tidak hanya mendapatkan keutungan, tetapi juga membantu umkm"
                     </p>
                     <div class="testimonial-author">
                         <div class="author-avatar">AP</div>
                         <div class="author-info">
                             <h4>Anita Permata</h4>
-                            <p>Retail Investor</p>
+                            <p>Financial Planner</p>
                         </div>
                     </div>
                 </div>
@@ -762,12 +756,12 @@
     <!-- CTA Banner Section -->
     <div class="max-w-container">
         <div class="cta-banner">
-            <h2 class="cta-title">Siap Mengembangkan Portofolio Anda?</h2>
+            <h2 class="cta-title">Mulai Pengelolaan Portofolio Produktif Anda</h2>
             <p class="cta-desc">
-                Bergabunglah bersama ribuan investor lainnya dalam mendorong kemajuan UMKM Indonesia secara aman dan terstruktur.
+                Ambil bagian dalam penguatan ekonomi kerakyatan melalui instrumen pembiayaan UMKM yang transparan dan terukur.
             </p>
-            <a href="index.html" class="btn btn-primary" style="padding:0.85rem 2.25rem;">
-                Masuk ke Dashboard Portofolio <i class="fa-solid fa-arrow-right"></i>
+            <a href="index.html" class="btn btn-primary" style="padding: 0.625rem 1.5rem;">
+                Akses Dashboard Portal <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
     </div>
@@ -784,7 +778,7 @@
                         <span class="brand-title">Investasi <span>UMKM</span></span>
                     </a>
                     <p class="footer-brand-desc">
-                        Platform finansial terintegrasi untuk pendanaan produktif UMKM berbasis imbal hasil terukur dan transparan.
+                        PT InvestasiUMKM Indonesia Technologies merupakan entitas teknologi finansial resmi yang memfasilitasi pendanaan produktif berbasis transparansi.
                     </p>
                 </div>
 
@@ -794,7 +788,7 @@
                         <li><a href="#tentang">Tentang Kami</a></li>
                         <li><a href="#fitur">Keunggulan</a></li>
                         <li><a href="#testimoni">Testimoni</a></li>
-                        <li><a href="#keamanan">Keamanan</a></li>
+                        <li><a href="#keamanan">Tata Kelola</a></li>
                     </ul>
                 </div>
 
@@ -802,15 +796,15 @@
                     <h4 class="footer-column-title">Layanan</h4>
                     <ul class="footer-menu">
                         <li><a href="index.html">Penyaluran Modal</a></li>
-                        <li><a href="index.html">Pencairan Dana</a></li>
-                        <li><a href="index.html">Riwayat Transaksi</a></li>
+                        <li><a href="index.html">Distribusi Dana</a></li>
+                        <li><a href="index.html">Riwayat Laporan</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="footer-column-title">Kontak Resmi</h4>
+                    <h4 class="footer-column-title">Kontak Korporat</h4>
                     <ul class="footer-menu">
-                        <li><i class="fa-solid fa-envelope"></i> support@investasiumkm.id</li>
+                        <li><i class="fa-solid fa-envelope"></i> corporate@investasiumkm.id</li>
                         <li><i class="fa-solid fa-phone"></i> (021) 5088-9000</li>
                         <li><i class="fa-solid fa-location-dot"></i> Jakarta Selatan, Indonesia</li>
                     </ul>
@@ -818,10 +812,10 @@
             </div>
 
             <div class="footer-bottom">
-                <p>© 2026 PT InvestasiUMKM Indonesia Technologies. Seluruh Hak Cipta Dilindungi Undang-Undang.</p>
-                <div style="display:flex; gap:1.5rem;">
+                <p>© 2026 PT InvestasiUMKM Indonesia Technologies. Seluruh Hak Cipta Dilindungi.</p>
+                <div style="display:flex; gap:1.25rem;">
                     <a href="#" style="color:var(--text-subtle); text-decoration:none;">Kebijakan Privasi</a>
-                    <a href="#" style="color:var(--text-subtle); text-decoration:none;">Syarat & Ketentuan</a>
+                    <a href="#" style="color:var(--text-subtle); text-decoration:none;">Ketentuan Layanan</a>
                 </div>
             </div>
         </div>
