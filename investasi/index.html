@@ -929,7 +929,7 @@
         </div>
     </div>
 
-    <script>
+      <script>
         /* ==========================================================================
            SUPABASE CONFIGURATION & INTEGRATION
            ========================================================================== */
@@ -978,11 +978,15 @@
             return new Date(date).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         }
 
+        /* ==========================================================================
+           SESSION CHECK & USER AUTHENTICATION GUARD
+           ========================================================================== */
         async function loadUserDataFromSupabase() {
             const activeEmail = localStorage.getItem('umkm_current_email');
             
+            // Jika user belum memiliki sesi login aktif, paksa arahkan ke halaman login
             if (!activeEmail) {
-                window.location.href = 'https://akun.investasiumkm.my.id/login';
+                window.location.href = 'https://akun.investasiumkm.my.id/login'; // Sesuaikan path login Anda jika berada di file lokal (misal: 'login.html')
                 return;
             }
 
@@ -993,7 +997,9 @@
                 .single();
 
             if (error || !data) {
-                showToast('Kesalahan Sesi', 'Data pengguna tidak ditemukan di database.', 'error');
+                // Jika data tidak valid atau email sudah dihapus dari database, hapus sesi & redirect ke login
+                localStorage.removeItem('umkm_current_email');
+                window.location.href = 'https://akun.investasiumkm.my.id/login';
                 return;
             }
 
@@ -1232,7 +1238,7 @@
             localStorage.removeItem('umkm_current_email');
             showToast('Ganti Akun', 'Keluar dari sesi saat ini...');
             setTimeout(() => {
-                window.location.href = 'https://akun.investasiumkm.my.id';
+                window.location.href = 'https://akun.investasiumkm.my.id/login'; // Ganti ke file 'login.html' jika dijalankan secara lokal
             }, 1000);
         }
 
@@ -1270,5 +1276,6 @@
             }, 1000);
         };
     </script>
+
 </body>
 </html>
