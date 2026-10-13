@@ -1090,7 +1090,7 @@ function showSupabaseError(error, fallbackMessage) {
                 return false;
             }
             if (!sessionData.session) {
-                window.location.href = 'login.html';
+                window.location.href = 'https://akun.investasiumkm.my.id/login';
                 return false;
             }
 
@@ -1378,7 +1378,7 @@ function showSupabaseError(error, fallbackMessage) {
                     showToast('Keluar Gagal', showSupabaseError(error, 'Supabase gagal mengakhiri sesi.'), 'error');
                     return;
                 }
-                window.location.href = 'login.html';
+                window.location.href = 'https://akun.investasiumkm.my.id/login';
             }).catch(error => {
                 showToast('Keluar Gagal', showSupabaseError(error, 'Supabase gagal mengakhiri sesi.'), 'error');
             });
