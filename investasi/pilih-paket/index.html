@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestasiUMKM - Penyaluran Modal & Pendanaan Resmi</title>
+    <title>InvestasiUMKM - Pilih Paket Simulasi</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Inter & Plus Jakarta Sans -->
@@ -392,7 +392,7 @@
     <!-- Header Navigation -->
     <header>
         <div class="max-w-container header-content">
-            <a href="index.html" class="brand-logo-group">
+            <a href="investasi.html" class="brand-logo-group">
                 <div class="brand-icon">
                     <i class="fa-solid fa-building-columns"></i>
                 </div>
@@ -400,7 +400,7 @@
                     <span class="brand-title">Investasi <span>UMKM</span></span>
                 </div>
             </a>
-            <a href="index.html" class="btn-back">
+            <a href="investasi.html" class="btn-back">
                 <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
             </a>
         </div>
@@ -411,9 +411,9 @@
         <div class="panel-card">
             <div class="panel-header">
                 <h1 class="panel-title">
-                    <i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Penyaluran Modal
+                    <i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Pilih Paket Simulasi
                 </h1>
-                <p class="panel-subtitle">Pilih alokasi paket pendanaan UMKM terverifikasi</p>
+                <p class="panel-subtitle">Paket dimuat dari Supabase; simulasi ini tidak memindahkan uang sungguhan.</p>
             </div>
 
             <!-- Funding Form -->
@@ -421,84 +421,8 @@
                 <div class="form-group">
                     <label class="form-label">Pilihan Paket Pendanaan</label>
                     
-                    <div class="package-selector-grid">
-                        <!-- Option 1: Silver -->
-                        <label class="package-card-option">
-                            <input type="radio" name="investPackage" value="silver" data-deposit="100000" data-daily="30000" data-duration="5" checked onchange="calculateROIPreview()">
-                            <div class="package-card-content">
-                                <div class="pkg-header">
-                                    <div class="pkg-title-group">
-                                        <div class="pkg-icon pkg-silver-icon">
-                                            <i class="fa-solid fa-shield"></i>
-                                        </div>
-                                        <span class="pkg-name">Paket Silver</span>
-                                    </div>
-                                    <span class="pkg-badge badge-starter">Kelas Pemula</span>
-                                </div>
-                                <div class="pkg-body">
-                                    <div>
-                                        <span style="font-size:0.6rem; color:var(--text-subtle);">Modal:</span>
-                                        <div class="pkg-deposit-amount">Rp 100.000</div>
-                                    </div>
-                                    <div class="pkg-return-info">
-                                        <div class="pkg-daily-yield">+Rp 30.000 / hr</div>
-                                        <div class="pkg-duration">Masa Aktif: 5 Hari</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-
-                        <!-- Option 2: Platinum -->
-                        <label class="package-card-option">
-                            <input type="radio" name="investPackage" value="platinum" data-deposit="300000" data-daily="50000" data-duration="7" onchange="calculateROIPreview()">
-                            <div class="package-card-content">
-                                <div class="pkg-header">
-                                    <div class="pkg-title-group">
-                                        <div class="pkg-icon pkg-platinum-icon">
-                                            <i class="fa-solid fa-gem"></i>
-                                        </div>
-                                        <span class="pkg-name">Paket Platinum</span>
-                                    </div>
-                                    <span class="pkg-badge badge-popular">Terpopuler</span>
-                                </div>
-                                <div class="pkg-body">
-                                    <div>
-                                        <span style="font-size:0.6rem; color:var(--text-subtle);">Modal:</span>
-                                        <div class="pkg-deposit-amount">Rp 300.000</div>
-                                    </div>
-                                    <div class="pkg-return-info">
-                                        <div class="pkg-daily-yield">+Rp 50.000 / hr</div>
-                                        <div class="pkg-duration">Masa Aktif: 7 Hari</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-
-                        <!-- Option 3: Investor -->
-                        <label class="package-card-option">
-                            <input type="radio" name="investPackage" value="investor" data-deposit="450000" data-daily="100000" data-duration="7" onchange="calculateROIPreview()">
-                            <div class="package-card-content">
-                                <div class="pkg-header">
-                                    <div class="pkg-title-group">
-                                        <div class="pkg-icon pkg-investor-icon">
-                                            <i class="fa-solid fa-award"></i>
-                                        </div>
-                                        <span class="pkg-name">Paket Investor</span>
-                                    </div>
-                                    <span class="pkg-badge badge-vip">Prioritas Utama</span>
-                                </div>
-                                <div class="pkg-body">
-                                    <div>
-                                        <span style="font-size:0.6rem; color:var(--text-subtle);">Modal:</span>
-                                        <div class="pkg-deposit-amount">Rp 450.000</div>
-                                    </div>
-                                    <div class="pkg-return-info">
-                                        <div class="pkg-daily-yield">+Rp 100.000 / hr</div>
-                                        <div class="pkg-duration">Masa Aktif: 7 Hari</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
+                    <div class="package-selector-grid" id="packageSelectorGrid" aria-live="polite">
+                        <p>Memuat paket dari Supabase...</p>
                     </div>
                 </div>
 
@@ -519,7 +443,7 @@
                 </div>
 
                 <button type="submit" class="btn-submit">
-                    Konfirmasi Disalurkan
+                    Lanjut ke Pembayaran QRIS
                 </button>
             </form>
         </div>
@@ -529,9 +453,9 @@
     <footer>
         <div style="font-weight:700; color:var(--primary-navy); margin-bottom: 0.3rem; display:flex; align-items:center; justify-content:center; gap:0.4rem; font-size:0.75rem;">
             <i class="fa-solid fa-shield-halved text-emerald"></i>
-            <span>PT InvestasiUMKM Indonesia Technologies</span>
+            <span>InvestasiUMKM — Simulasi Portofolio</span>
         </div>
-        <p>© 2026 InvestasiUMKM Indonesia. Seluruh Hak Cipta Dilindungi Undang-Undang.</p>
+        <p>Demo simulasi; bukan layanan keuangan atau transaksi uang sungguhan.</p>
     </footer>
 
     <!-- Toast Notification -->
@@ -545,11 +469,114 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const submitButton = document.querySelector('#depositForm button[type="submit"]');
+        submitButton.disabled = true;
+
+        async function initializePackages() {
+            try {
+            const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+            if (sessionError) {
+                showToast('Sesi Gagal Diperiksa', showSupabaseError(sessionError, 'Tidak dapat memeriksa sesi Supabase.'), 'error');
+                return;
+            }
+            if (!sessionData.session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const { data: packages, error } = await supabaseClient
+                .from('demo_funding_packages')
+                .select('package_key, name, badge, icon, principal, daily_gain, duration_days')
+                .eq('is_active', true)
+                .order('principal', { ascending: true });
+            if (error) {
+                showToast('Paket Gagal Dimuat', showSupabaseError(error, 'Gagal mengambil paket dari Supabase.'), 'error');
+                return;
+            }
+
+            const grid = document.getElementById('packageSelectorGrid');
+            grid.replaceChildren();
+            (packages || []).forEach((pkg, index) => {
+                const label = document.createElement('label');
+                label.className = 'package-card-option';
+
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'investPackage';
+                input.value = pkg.package_key;
+                input.dataset.deposit = pkg.principal;
+                input.dataset.daily = pkg.daily_gain;
+                input.dataset.duration = pkg.duration_days;
+                input.checked = index === 0;
+                input.addEventListener('change', calculateROIPreview);
+
+                const card = document.createElement('div');
+                card.className = 'package-card-content';
+                const header = document.createElement('div');
+                header.className = 'pkg-header';
+                const titleGroup = document.createElement('div');
+                titleGroup.className = 'pkg-title-group';
+                const iconBox = document.createElement('div');
+                iconBox.className = `pkg-icon ${pkg.package_key === 'platinum' ? 'pkg-platinum-icon' : pkg.package_key === 'investor' ? 'pkg-investor-icon' : 'pkg-silver-icon'}`;
+                const icon = document.createElement('i');
+                const iconClass = /^fa-[a-z0-9-]+$/.test(pkg.icon) ? pkg.icon : 'fa-box';
+                icon.className = `fa-solid ${iconClass}`;
+                iconBox.appendChild(icon);
+
+                const name = document.createElement('span');
+                name.className = 'pkg-name';
+                name.textContent = pkg.name;
+                titleGroup.append(iconBox, name);
+
+                const badge = document.createElement('span');
+                badge.className = `pkg-badge ${pkg.package_key === 'platinum' ? 'badge-popular' : pkg.package_key === 'investor' ? 'badge-vip' : 'badge-starter'}`;
+                badge.textContent = pkg.badge;
+                header.append(titleGroup, badge);
+
+                const body = document.createElement('div');
+                body.className = 'pkg-body';
+                const principalGroup = document.createElement('div');
+                const principalLabel = document.createElement('span');
+                principalLabel.style.cssText = 'font-size:0.6rem; color:var(--text-subtle);';
+                principalLabel.textContent = 'Modal:';
+                const principal = document.createElement('div');
+                principal.className = 'pkg-deposit-amount';
+                principal.textContent = formatIDR(pkg.principal);
+                principalGroup.append(principalLabel, principal);
+
+                const returnInfo = document.createElement('div');
+                returnInfo.className = 'pkg-return-info';
+                const daily = document.createElement('div');
+                daily.className = 'pkg-daily-yield';
+                daily.textContent = `+${formatIDR(pkg.daily_gain)} / hr`;
+                const duration = document.createElement('div');
+                duration.className = 'pkg-duration';
+                duration.textContent = `Masa Aktif: ${pkg.duration_days} Hari`;
+                returnInfo.append(daily, duration);
+                body.append(principalGroup, returnInfo);
+                card.append(header, body);
+                label.append(input, card);
+                grid.appendChild(label);
+            });
+            if (!packages || packages.length === 0) {
+                grid.textContent = 'Belum ada paket simulasi aktif di Supabase.';
+            }
+            submitButton.disabled = !packages || packages.length === 0;
+            calculateROIPreview();
+            } catch (error) {
+                showToast('Paket Gagal Dimuat', showSupabaseError(error, 'Tidak dapat terhubung ke Supabase.'), 'error');
+            }
+        }
+
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioContextClass ? new AudioContextClass() : null;
         
         function playChimeSound() {
             try {
+                if (!audioCtx) return;
                 if (audioCtx.state === 'suspended') { audioCtx.resume(); }
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
@@ -585,32 +612,53 @@
             document.getElementById('previewTotalProfit').innerText = formatIDR(daily * duration);
         }
 
-        function handleDeposit(e) {
+        async function handleDeposit(e) {
             e.preventDefault();
             const selectedOption = getSelectedPackageElement();
-            if(!selectedOption) return;
+            if (!selectedOption) {
+                showToast('Paket Belum Dipilih', 'Pilih paket demo terlebih dahulu.', 'error');
+                return;
+            }
 
-            const amount = parseFloat(selectedOption.getAttribute('data-deposit'));
-            const duration = parseInt(selectedOption.getAttribute('data-duration'));
-            
-            const packageNames = {
-                silver: 'Paket Silver',
-                platinum: 'Paket Platinum',
-                investor: 'Paket Investor'
-            };
-            const chosenName = packageNames[selectedOption.value] || 'Paket Investasi';
+            submitButton.disabled = true;
+            try {
+                const { data, error } = await supabaseClient.rpc('demo_create_deposit_request', {
+                    p_package_key: selectedOption.value
+                });
+                if (error) {
+                    showToast('Permintaan Gagal', showSupabaseError(error, 'Supabase gagal membuat permintaan pembayaran.'), 'error');
+                    return;
+                }
 
-            playChimeSound();
-            showToast('Pendanaan Berhasil', `${formatIDR(amount)} berhasil disalurkan ke ${chosenName} (${duration} Hari).`);
+                if (!data || !data.request_id) {
+                    showToast('Permintaan Gagal', 'Supabase tidak mengembalikan ID permintaan pembayaran.', 'error');
+                    return;
+                }
+                window.location.href = `pembayaran.html?id=${encodeURIComponent(data.request_id)}`;
+            } catch (error) {
+                showToast('Permintaan Gagal', showSupabaseError(error, 'Supabase gagal membuat permintaan pembayaran.'), 'error');
+            } finally {
+                submitButton.disabled = false;
+            }
         }
 
         function showToast(title, message, type = 'success') {
             const toast = document.getElementById('toastNotification');
             const toastTitle = document.getElementById('toastTitle');
             const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
 
             toastTitle.innerText = title;
             toastMessage.innerText = message;
+            if (type === 'error') {
+                toastIcon.style.color = '#dc2626';
+                toastIcon.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+                toast.style.borderLeftColor = '#dc2626';
+            } else {
+                toastIcon.style.color = 'var(--primary-emerald)';
+                toastIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+                toast.style.borderLeftColor = 'var(--primary-emerald)';
+            }
             toast.classList.add('show');
 
             setTimeout(() => {
@@ -618,9 +666,7 @@
             }, 3500);
         }
 
-        window.onload = function () {
-            calculateROIPreview();
-        };
+        initializePackages();
     </script>
 </body>
 </html>
