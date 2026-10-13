@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - InvestasiUMKM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root { --navy:#172b4d; --green:#07856f; --muted:#6b778c; --line:#e6eaf0; --surface:#fff; --base:#f5f7fb; --red:#c9372c; --blue:#0c66e4; }
+        * { box-sizing:border-box; }
+        body { margin:0; background:var(--base); color:var(--navy); font-family:Inter,sans-serif; }
+        a { color:inherit; text-decoration:none; }
+        .admin-shell { min-height:100vh; }
+        .sidebar { position:fixed; inset:0 auto 0 0; z-index:3; display:flex; width:15.5rem; flex-direction:column; padding:1.3rem 1rem; background:#172b4d; color:#e9eff9; }
+        .brand { display:flex; align-items:center; gap:.7rem; padding:.25rem .65rem 1.8rem; font-weight:700; font-size:.93rem; }
+        .brand-icon { display:grid; width:2.25rem; height:2.25rem; place-items:center; border-radius:.65rem; background:#07856f; color:#fff; }
+        .nav-label { padding:.5rem .75rem; color:#9fb0ca; font-size:.64rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+        .side-link { display:flex; align-items:center; gap:.7rem; margin:.15rem 0; padding:.72rem .8rem; border-radius:.5rem; color:#d7e0ee; font-size:.78rem; font-weight:600; }
+        .side-link.active,.side-link:hover { background:#263e64; color:#fff; }
+        .side-link i { width:1rem; text-align:center; }
+        .sidebar-footer { margin-top:auto; padding:.8rem; border-top:1px solid #ffffff20; color:#aab8cd; font-size:.68rem; line-height:1.6; }
+        .workspace { min-height:100vh; margin-left:15.5rem; }
+        .topbar { display:flex; min-height:4.2rem; align-items:center; justify-content:space-between; gap:1rem; padding:.75rem 2rem; border-bottom:1px solid var(--line); background:#fff; }
+        .topbar-title { font-size:.8rem; font-weight:700; }
+        .topbar-links { display:flex; gap:1rem; color:var(--muted); font-size:.75rem; font-weight:600; }
+        main { width:min(100%, 90rem); margin:auto; padding:2rem; }
+        .page-heading { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:1.6rem; }
+        h1 { margin:.2rem 0; font-size:1.6rem; letter-spacing:-.04em; }
+        h2 { margin:0; font-size:.98rem; }
+        p { color:var(--muted); font-size:.78rem; line-height:1.55; }
+        .eyebrow { color:var(--green); font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+        .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-bottom:1.15rem; }
+        .metric,.card { border:1px solid var(--line); border-radius:.7rem; background:var(--surface); box-shadow:0 2px 8px #172b4d08; }
+        .metric { display:flex; align-items:center; gap:.8rem; padding:1.05rem; }
+        .metric-icon { display:grid; width:2.5rem; height:2.5rem; flex:none; place-items:center; border-radius:.65rem; background:#e6f6f2; color:var(--green); }
+        .metric-value { font-size:1.25rem; font-weight:700; }
+        .metric-label { margin-top:.2rem; color:var(--muted); font-size:.68rem; }
+        .card { margin-top:1.15rem; overflow:hidden; }
+        .card-heading { display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1.15rem 1.3rem; border-bottom:1px solid var(--line); }
+        .card-subtitle { margin:.25rem 0 0; font-size:.7rem; }
+        .notice { padding:.9rem; border-radius:.6rem; background:#fff7ed; color:#9a3412; font-size:.8rem; line-height:1.6; }
+        .notice code { display:block; margin-top:.5rem; padding:.65rem; overflow-wrap:anywhere; background:#fff; border-radius:.4rem; color:var(--navy); }
+        .table-wrap { width:100%; overflow-x:auto; }
+        table { width:100%; min-width:48rem; border-collapse:separate; border-spacing:0; text-align:left; }
+        th { position:sticky; top:0; z-index:1; padding:.8rem 1rem; background:#f8f9fb; color:var(--muted); font-size:.62rem; font-weight:700; letter-spacing:.055em; text-transform:uppercase; white-space:nowrap; }
+        td { padding:.9rem 1rem; border-top:1px solid #edf0f4; color:#344563; font-size:.72rem; vertical-align:middle; }
+        tbody tr { transition:background-color .15s ease; }
+        tbody tr:hover { background:#f7f9fc; }
+        input,textarea { width:100%; min-width:0; padding:.58rem .65rem; border:1px solid #dfe3e8; border-radius:.4rem; font:inherit; font-size:.75rem; }
+        button { border:0; border-radius:.4rem; padding:.52rem .65rem; background:var(--green); color:#fff; font:inherit; font-size:.67rem; font-weight:700; cursor:pointer; white-space:nowrap; }
+        button:disabled { opacity:.5; cursor:wait; }
+        button.secondary { background:#475569; }
+        button.danger { background:#fff0ef; color:var(--red); }
+        button.approve { background:#e6f6f2; color:#067a63; }
+        .user-photo { display:block; width:2.5rem; height:2.5rem; border-radius:.5rem; object-fit:cover; background:#e8ecf2; }
+        .photo-placeholder { display:grid; width:2.5rem; height:2.5rem; place-items:center; border-radius:.5rem; background:#f0f2f5; color:#8993a4; }
+        .user-name { margin-bottom:.18rem; color:var(--navy); font-weight:700; }
+        .cell-muted { color:var(--muted); font-size:.67rem; line-height:1.55; overflow-wrap:anywhere; }
+        .balance-form { display:flex; min-width:10.5rem; gap:.35rem; }
+        .balance-form input { width:7rem; }
+        .actions { display:flex; justify-content:flex-end; gap:.35rem; }
+        .badge { display:inline-flex; align-items:center; gap:.3rem; padding:.3rem .55rem; border-radius:99px; background:#fff4d6; color:#8f5b00; font-size:.62rem; font-weight:700; white-space:nowrap; }
+        .badge-green { background:#e6f6f2; color:#067a63; }
+        .empty { padding:2rem 1rem; color:var(--muted); font-size:.75rem; text-align:center; }
+        #message { position:sticky; top:.5rem; z-index:5; display:none; margin:.5rem 0; padding:.75rem 1rem; border:1px solid #b3dfcc; border-radius:.5rem; background:#eaf7ef; color:#166534; font-size:.75rem; }
+        #message.error { border-color:#f5c2c0; background:#fff0ef; color:#991b1b; }
+        #accessPanel { max-width:42rem; margin:3rem auto; padding:1.5rem; }
+        #dashboard { display:none; }
+        @media(max-width:900px) { .sidebar { width:4.5rem; padding:.9rem .55rem; } .brand { justify-content:center; padding:.3rem 0 1.5rem; } .brand-name,.nav-label,.side-link span,.sidebar-footer { display:none; } .side-link { justify-content:center; padding:.8rem .4rem; } .side-link i { width:auto; } .workspace { margin-left:4.5rem; } main { padding:1.5rem; } .topbar {  padding:.75rem 1.5rem; } }
+        @media(max-width:600px) { .grid { grid-template-columns:1fr; gap:.65rem; } main { padding:1.15rem .8rem; } .topbar { padding:.7rem .9rem; } .page-heading { align-items:flex-start; flex-direction:column; } h1 { font-size:1.35rem; } th,td { padding:.68rem .65rem; } }
+    </style>
+</head>
+<body>
+    <div class="admin-shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-icon"><i class="fa-solid fa-shield-halved"></i></span><span class="brand-name">InvestasiUMKM</span></div>
+        <div class="nav-label">Menu Utama</div>
+        <a class="side-link active" href="#overview"><i class="fa-solid fa-chart-line"></i><span>Ringkasan</span></a>
+        <a class="side-link" href="#paymentRequests"><i class="fa-solid fa-money-check-dollar"></i><span>Persetujuan</span></a>
+        <a class="side-link" href="#userManagement"><i class="fa-solid fa-users"></i><span>Pengguna</span></a>
+        <div class="sidebar-footer">Panel admin<br>InvestasiUMKM</div>
+      </aside>
+      <div class="workspace">
+       <header class="topbar">
+         <div class="topbar-title"><i class="fa-solid fa-layer-group"></i> Panel Administrasi</div>
+         <nav class="topbar-links"><a href="investasi.html">Buka Dashboard</a><a href="login.html">Keluar / Masuk</a></nav>
+       </header>
+       <main>
+        <div id="message" role="status"></div>
+        <section id="accessPanel" class="card">
+            <h2 id="accessTitle">Memeriksa akses...</h2>
+            <p id="accessText">Panel admin memerlukan akun Supabase yang sudah diberi hak admin.</p>
+            <div id="adminGrant" class="notice" hidden></div>
+            <p><a href="login.html">Masuk ke akun Supabase</a></p>
+        </section>
+        <div id="dashboard">
+            <div class="page-heading" id="overview">
+                <div><div class="eyebrow">Ringkasan Sistem</div><h1>Dashboard Admin</h1><p>Kelola pembayaran dan akun pengguna dari satu tempat.</p></div>
+                <span class="badge badge-green"><i class="fa-solid fa-circle"></i> Data tersinkron otomatis</span>
+            </div>
+            <section class="grid" aria-label="Ringkasan">
+                <article class="metric"><span class="metric-icon"><i class="fa-solid fa-users"></i></span><div><div class="metric-value" id="userMetric">0</div><div class="metric-label">Total Pengguna</div></div></article>
+                <article class="metric"><span class="metric-icon"><i class="fa-solid fa-hourglass-half"></i></span><div><div class="metric-value" id="pendingMetric">0</div><div class="metric-label">Menunggu Persetujuan</div></div></article>
+                <article class="metric"><span class="metric-icon"><i class="fa-solid fa-wallet"></i></span><div><div class="metric-value" id="balanceMetric">Rp 0</div><div class="metric-label">Total Saldo Pengguna</div></div></article>
+            </section>
+
+            <section class="card" id="paymentRequests">
+                <div class="card-heading"><div><h2>Menunggu Persetujuan Admin <span id="pendingCount" class="badge">0</span></h2><p class="card-subtitle">Diperbarui otomatis setiap 3 detik; pengguna harus mengirim konfirmasi pembayaran.</p></div></div>
+                <div class="table-wrap"><table><thead><tr><th>Pengguna</th><th>Paket</th><th>Nominal</th><th>Waktu Pengajuan</th><th>Status</th><th style="text-align:right">Tindakan Admin</th></tr></thead><tbody id="requests" aria-live="polite"></tbody></table></div>
+            </section>
+
+            <section class="card" id="userManagement">
+                <div class="card-heading"><div><h2>Manajemen Pengguna</h2><p class="card-subtitle">Profil, email, saldo simulasi, dan tindakan akun.</p></div><span id="userCount" class="badge badge-green">0 pengguna</span></div>
+                <div class="table-wrap"><table><thead><tr><th>Foto</th><th>Nama &amp; Email</th><th>Kontak</th><th>Saldo</th><th>Total Profit</th><th>Bergabung</th><th>Tindakan</th></tr></thead><tbody id="users" aria-live="polite"></tbody></table></div>
+            </section>
+        </div>
+       </main>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+const SUPABASE_URL = 'https://akuvhkmwgwocjmazzrip.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFrdXZoa213Z3dvY2ptYXp6cmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4Mjk1MjksImV4cCI6MjEwNzQwNTUyOX0.iqjJu6fewgEJt7WRIAs0ghuN_2538NL_xZZcevWXpGA';
+
+if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+    throw new Error('Supabase SDK tidak berhasil dimuat. Periksa koneksi internet dan CDN.');
+}
+
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+    }
+});
+
+function showSupabaseError(error, fallbackMessage) {
+    console.error(fallbackMessage, error);
+    return error && error.message ? error.message : fallbackMessage;
+}
+    </script>
+    <script>
+        let adminEmail = '';
+        let refreshingAdminData = false;
+        let refreshErrorShown = false;
+        let lastAdminData = '';
+        const accessTitle = document.getElementById('accessTitle');
+        const accessText = document.getElementById('accessText');
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[character]);
+        }
+
+        function notify(message, isError = false) {
+            const el = document.getElementById('message');
+            el.textContent = message;
+            el.classList.toggle('error', isError);
+            el.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function statusLabel(status) {
+            return ({
+                awaiting_payment: 'Belum mengirim konfirmasi',
+                pending: 'Menunggu persetujuan admin',
+                approved: 'Disetujui',
+                rejected: 'Ditolak'
+            })[status] || status;
+        }
+
+        function newestFirst(records) {
+            return [...records].sort((first, second) =>
+                new Date(second.created_at).getTime() - new Date(first.created_at).getTime()
+            );
+        }
+
+        function renderRequests(requests) {
+            const container = document.getElementById('requests');
+            const pendingRequests = newestFirst(requests.filter(request => request.status === 'pending'));
+            document.getElementById('pendingCount').textContent = String(pendingRequests.length);
+            document.getElementById('pendingMetric').textContent = String(pendingRequests.length);
+            if (!pendingRequests.length) {
+                container.innerHTML = '<tr><td colspan="6" class="empty">Belum ada pembayaran yang menunggu persetujuan Anda.</td></tr>';
+                return;
+            }
+            container.innerHTML = pendingRequests.map(request => `
+                <tr>
+                    <td><div class="user-name">${escapeHTML(request.full_name || '(tanpa nama)')}</div><div class="cell-muted">${escapeHTML(request.email || '')}</div></td>
+                    <td>${escapeHTML(request.package_name)}</td>
+                    <td><strong>Rp ${Number(request.amount).toLocaleString('id-ID')}</strong></td>
+                    <td>${new Date(request.created_at).toLocaleString('id-ID')}</td>
+                    <td><span class="badge">Butuh keputusan admin</span></td>
+                    <td><div class="actions"><button class="approve" data-action="approve" data-id="${escapeHTML(request.id)}">Setujui</button><button class="danger" data-action="reject" data-id="${escapeHTML(request.id)}">Tolak</button></div></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderUsers(users) {
+            users = newestFirst(users);
+            document.getElementById('userCount').textContent = `${users.length} pengguna`;
+            document.getElementById('userMetric').textContent = String(users.length);
+            document.getElementById('balanceMetric').textContent = 'Rp ' + users.reduce((sum, user) => sum + Number(user.balance || 0), 0).toLocaleString('id-ID');
+            const container = document.getElementById('users');
+            if (!users.length) {
+                container.innerHTML = '<tr><td colspan="7" class="empty">Belum ada data pengguna.</td></tr>';
+                return;
+            }
+            container.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.avatar_url
+                        ? `<a href="${escapeHTML(user.avatar_url)}" target="_blank" rel="noopener noreferrer"><img class="user-photo" src="${escapeHTML(user.avatar_url)}" alt="Foto ${escapeHTML(user.full_name || user.email)}" loading="lazy"></a>`
+                        : '<span class="photo-placeholder"><i class="fa-solid fa-user"></i></span>'}</td>
+                    <td><div class="user-name">${escapeHTML(user.full_name || '(tanpa nama)')}</div><div class="cell-muted">${escapeHTML(user.email || '')}</div></td>
+                    <td><div>${escapeHTML(user.phone || '-')}</div><div class="cell-muted">${escapeHTML(user.address || '')}</div></td>
+                    <td><form class="balance-form" data-user="${escapeHTML(user.id)}"><input type="number" min="0" step="1" value="${escapeHTML(Math.floor(Number(user.balance)))}" aria-label="Saldo baru"><button type="submit">Simpan</button></form></td>
+                    <td>Rp ${Number(user.total_profit || 0).toLocaleString('id-ID')}</td>
+                    <td>${new Date(user.created_at).toLocaleDateString('id-ID')}</td>
+                    <td><button class="danger" data-action="delete-user" data-id="${escapeHTML(user.id)}"><i class="fa-solid fa-trash"></i> Hapus</button></td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadAdminData() {
+            if (refreshingAdminData) return;
+            refreshingAdminData = true;
+            try {
+                const { data, error } = await supabaseClient.rpc('admin_get_data');
+                if (error) throw error;
+                const currentAdminData = JSON.stringify(data);
+                if (currentAdminData !== lastAdminData) {
+                    renderRequests(data.requests || []);
+                    renderUsers(data.users || []);
+                    lastAdminData = currentAdminData;
+                }
+                refreshErrorShown = false;
+            } finally {
+                refreshingAdminData = false;
+            }
+        }
+
+        async function initializeAdmin() {
+            const { data, error } = await supabaseClient.auth.getSession();
+            if (error) {
+                accessTitle.textContent = 'Gagal memeriksa sesi';
+                accessText.textContent = showSupabaseError(error, 'Sesi Supabase tidak dapat diperiksa.');
+                return;
+            }
+            if (!data.session) {
+                accessTitle.textContent = 'Login diperlukan';
+                accessText.textContent = 'Masuk ke akun Supabase admin terlebih dahulu, lalu buka kembali halaman ini.';
+                return;
+            }
+            adminEmail = data.session.user.email || '';
+            const { data: isAdmin, error: roleError } = await supabaseClient.rpc('is_admin');
+            if (roleError) {
+                accessTitle.textContent = 'Konfigurasi admin belum tersedia';
+                accessText.textContent = showSupabaseError(roleError, 'Jalankan supabase-setup.sql terbaru di Supabase SQL Editor.');
+                return;
+            }
+            if (!isAdmin) {
+                accessTitle.textContent = 'Akun ini belum memiliki hak admin';
+                accessText.textContent = 'Jalankan perintah berikut di Supabase SQL Editor untuk memberikan akses admin kepada akun yang sedang masuk:';
+                const grant = document.getElementById('adminGrant');
+                const safeEmail = adminEmail.replace(/'/g, "''");
+                grant.innerHTML = '';
+                const code = document.createElement('code');
+                code.textContent = `insert into public.admin_users (user_id) select id from auth.users where email = '${safeEmail}' on conflict (user_id) do nothing;`;
+                grant.appendChild(code);
+                grant.hidden = false;
+                return;
+            }
+            document.getElementById('accessPanel').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            await loadAdminData();
+            window.setInterval(() => {
+                loadAdminData().catch(error => {
+                    if (refreshErrorShown) return;
+                    refreshErrorShown = true;
+                    notify(showSupabaseError(error, 'Daftar permintaan gagal diperbarui.'), true);
+                });
+            }, 3000);
+        }
+
+        document.getElementById('requests').addEventListener('click', async event => {
+            const button = event.target.closest('button[data-action]');
+            if (!button) return;
+            const decision = button.dataset.action === 'approve' ? 'approved' : 'rejected';
+            const confirmation = decision === 'approved'
+                ? 'Anda menyetujui pembayaran ini dan saldo/paket pengguna akan diperbarui. Lanjutkan?'
+                : 'Tolak permintaan pembayaran ini?';
+            if (!confirm(confirmation)) return;
+            button.disabled = true;
+            const { error } = await supabaseClient.rpc('admin_review_deposit', {
+                p_request_id: button.dataset.id,
+                p_decision: decision
+            });
+            if (error) {
+                notify(showSupabaseError(error, 'Gagal meninjau pembayaran.'), true);
+                button.disabled = false;
+                return;
+            }
+            notify(decision === 'approved' ? 'Pembayaran disetujui dan saldo diperbarui.' : 'Pembayaran ditolak.');
+            await loadAdminData();
+        });
+
+        document.getElementById('users').addEventListener('submit', async event => {
+            if (!event.target.matches('.balance-form')) return;
+            event.preventDefault();
+            const input = event.target.querySelector('input');
+            const balance = Number(input.value);
+            const { error } = await supabaseClient.rpc('admin_set_balance', {
+                p_user_id: event.target.dataset.user,
+                p_balance: balance
+            });
+            if (error) {
+                notify(showSupabaseError(error, 'Saldo gagal diperbarui.'), true);
+                return;
+            }
+            notify('Saldo berhasil diperbarui dan perubahan dicatat di riwayat.');
+            await loadAdminData();
+        });
+
+        document.getElementById('users').addEventListener('click', async event => {
+            const button = event.target.closest('button[data-action="delete-user"]');
+            if (!button) return;
+            if (!confirm('Hapus akun pengguna beserta profil, transaksi, paket, dan fotonya? Tindakan ini tidak dapat dibatalkan.')) return;
+            button.disabled = true;
+            const { error } = await supabaseClient.rpc('admin_delete_user', { p_user_id: button.dataset.id });
+            if (error) {
+                notify(showSupabaseError(error, 'Akun gagal dihapus.'), true);
+                button.disabled = false;
+                return;
+            }
+            notify('Akun pengguna telah dihapus.');
+            await loadAdminData();
+        });
+
+        initializeAdmin().catch(error => {
+            refreshErrorShown = true;
+            accessTitle.textContent = 'Panel gagal dimuat';
+            accessText.textContent = showSupabaseError(error, 'Terjadi kesalahan saat memuat panel admin.');
+        });
+    </script>
+</body>
+</html>
