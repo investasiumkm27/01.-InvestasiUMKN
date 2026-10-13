@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestasiUMKM - Portal Pendanaan & Portofolio Investasi Resmi</title>
+    <title>InvestasiUMKM - Portofolio Demo</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Inter & Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Supabase JS Client CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         /* ==========================================
@@ -167,6 +165,24 @@
             border: 1px solid var(--border-color);
         }
 
+        .user-avatar-placeholder {
+            width: 1.75rem;
+            height: 1.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-emerald-bg);
+            color: var(--primary-emerald);
+            font-size: 0.8rem;
+        }
+
+        .user-avatar-placeholder[hidden],
+        .modal-avatar-placeholder[hidden] {
+            display: none;
+        }
+
         /* ==========================================
            PROFILE POPUP MODAL
            ========================================== */
@@ -224,6 +240,20 @@
             border-radius: var(--radius-md);
             object-fit: cover;
             border: 2px solid var(--primary-emerald);
+        }
+
+        .modal-avatar-placeholder {
+            width: 3rem;
+            height: 3rem;
+            flex: 0 0 3rem;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--primary-emerald);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-emerald-bg);
+            color: var(--primary-emerald);
+            font-size: 1.35rem;
         }
 
         .modal-user-info h3 {
@@ -303,6 +333,21 @@
             padding: 1.25rem;
             box-shadow: var(--shadow-card);
         }
+
+        .demo-notice {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid #f2d28b;
+            border-radius: var(--radius-md);
+            background: #fff9e8;
+            color: #75520b;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .demo-notice i { color: #b7791f; }
 
         .summary-hero-header {
             display: flex;
@@ -641,6 +686,33 @@
             border: 1px solid #fde68a;
         }
 
+        .transaction-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .transaction-status-pending {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .transaction-status-completed {
+            background-color: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .transaction-status-failed {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
         .hidden { display: none !important; }
 
         /* FOOTER */
@@ -701,7 +773,7 @@
     <!-- Header Navigation -->
     <header>
         <div class="max-w-container header-content">
-            <a href="#" class="brand-logo-group">
+            <a href="index.html" class="brand-logo-group">
                 <div class="brand-icon">
                     <i class="fa-solid fa-building-columns"></i>
                 </div>
@@ -713,7 +785,8 @@
             <!-- Profile Badge (Klik untuk buka Modal Pop-up) -->
             <div class="user-profile-badge" onclick="toggleProfileModal()">
                 <span class="user-name" id="profileName">Memuat...</span>
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Profil User" class="user-avatar-img" id="profileAvatar">
+                <span class="user-avatar-placeholder" id="profileAvatarPlaceholder" aria-label="Ikon pengguna"><i class="fa-solid fa-user"></i></span>
+                <img alt="Foto profil pengguna" class="user-avatar-img" id="profileAvatar" hidden>
             </div>
         </div>
     </header>
@@ -722,7 +795,8 @@
     <div id="profileModal" onclick="handleModalOutsideClick(event)">
         <div class="modal-card">
             <div class="modal-header">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Profil User" class="modal-avatar" id="modalAvatarImg">
+                <span class="modal-avatar-placeholder" id="modalAvatarPlaceholder" aria-label="Ikon pengguna"><i class="fa-solid fa-user"></i></span>
+                <img alt="Foto profil pengguna" class="modal-avatar" id="modalAvatarImg" hidden>
                 <div class="modal-user-info">
                     <h3 id="modalUserName">Nama Pengguna</h3>
                     <p id="modalUserEmail">email@domain.com</p>
@@ -731,12 +805,12 @@
 
             <ul class="modal-menu-list">
                 <li class="modal-menu-item">
-                    <a href="https://investasiumkm.my.id/investasi">
+                    <a href="investasi.html">
                         <i class="fa-solid fa-house"></i> Halaman Utama
                     </a>
                 </li>
                 <li class="modal-menu-item">
-                    <a href="Deposit.html">
+                    <a href="pilihPaket.html">
                         <i class="fa-solid fa-wallet"></i> Deposit
                     </a>
                 </li>
@@ -759,12 +833,17 @@
     <!-- Main Content Workspace -->
     <main class="max-w-container">
 
+        <div class="demo-notice" role="note">
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            <span>Mode demo — tidak ada dana atau transaksi uang nyata.</span>
+        </div>
+
         <!-- HERO SUMMARY CARD -->
         <section class="summary-hero-card">
             <div class="summary-hero-header">
                 <div>
                     <span class="main-balance-title">
-                        <i class="fa-solid fa-vault text-emerald"></i> Ringkasan Portofolio Korporat
+                        <i class="fa-solid fa-vault text-emerald"></i> Portofolio
                     </span>
                     <div class="main-balance-value" id="displayTotalBalance">Rp 0</div>
                 </div>
@@ -772,7 +851,7 @@
                 <!-- Tombol Pencairan Keuntungan -->
                 <button class="btn-hero-withdraw" onclick="navigateToWithdraw()">
                     <i class="fa-solid fa-money-bill-transfer"></i>
-                    <span>Tarik Keuntungan</span>
+                    <span>Penarikan Demo</span>
                 </button>
             </div>
 
@@ -781,11 +860,11 @@
                 <!-- Metrik 1: Total Keuntungan -->
                 <div class="sub-metric-card">
                     <span class="sub-metric-label">
-                        <i class="fa-solid fa-chart-line text-emerald"></i> Total Keuntungan
+                        <i class="fa-solid fa-chart-line text-emerald"></i> Perubahan Nilai
                     </span>
                     <div class="sub-metric-value text-emerald" id="displayTotalProfit">Rp 0</div>
                     <div class="sub-metric-footer">
-                        <span>Laju Akumulasi:</span>
+                        <span>Perubahan per detik:</span>
                         <span class="text-emerald font-bold" id="tickerRate">+Rp 0.00/dtk</span>
                     </div>
                 </div>
@@ -797,7 +876,7 @@
                     </span>
                     <div class="sub-metric-value text-navy" id="displayActiveDeposit">Rp 0</div>
                     <div class="sub-metric-footer">
-                        <span>Mitra Usaha:</span>
+                        <span>Paket aktif:</span>
                         <span class="font-bold text-navy" id="displayActiveCount">0 Usaha</span>
                     </div>
                 </div>
@@ -805,11 +884,11 @@
                 <!-- Metrik 3: Est. Keuntungan Harian -->
                 <div class="sub-metric-card">
                     <span class="sub-metric-label">
-                        <i class="fa-solid fa-percent" style="color:var(--primary-emerald);"></i> Proyeksi Harian
+                        <i class="fa-solid fa-percent" style="color:var(--primary-emerald);"></i> Estimasi Harian
                     </span>
                     <div class="sub-metric-value text-emerald" id="displayEstDaily">Rp 0</div>
                     <div class="sub-metric-footer">
-                        <span>Imbal Hasil Rata-rata:</span>
+                        <span>Estimasi rata-rata:</span>
                         <span class="font-bold text-emerald" id="displayAvgYield">0.00% / Hari</span>
                     </div>
                 </div>
@@ -824,9 +903,9 @@
                 <div class="panel-header">
                     <div>
                         <h2 class="panel-title" id="panelTitleText">
-                            <i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Penyaluran Modal
+                            <i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Paket
                         </h2>
-                        <p class="panel-subtitle" id="panelSubtitleText">Pilih alokasi paket pendanaan UMKM terverifikasi</p>
+                        <p class="panel-subtitle" id="panelSubtitleText">Kelola paket dan lihat perubahan nilai.</p>
                     </div>
                 </div>
 
@@ -836,9 +915,9 @@
                         <i class="fa-solid fa-wallet"></i>
                     </div>
                     <p style="color: var(--text-subtle); margin-bottom: 1.25rem; font-size: 0.775rem; line-height: 1.6;">
-                        Salurkan modal pendanaan baru untuk mendukung pertumbuhan UMKM mitra terverifikasi dan dapatkan proyeksi imbal hasil harian yang transparan.
+                        Pilih paket untuk melihat perubahan nilai dan riwayat.
                     </p>
-                    <a href="Deposit.html" class="btn-submit btn-submit-emerald" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; padding: 0.85rem;">
+                    <a href="pilihPaket.html" class="btn-submit btn-submit-emerald" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; padding: 0.85rem;">
                         <i class="fa-solid fa-arrow-right-to-bracket"></i> Mulai Deposit
                     </a>
                 </div>
@@ -858,7 +937,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Bank / Rekening Tujuan</label>
+                        <label class="form-label">Bank Tujuan (Ilustrasi)</label>
                         <select id="withdrawBank" class="form-select" required>
                             <option value="bca">Bank BCA - 8830xxxxxx</option>
                             <option value="mandiri">Bank Mandiri - 13700xxxxxx</option>
@@ -894,6 +973,7 @@
                                 <th class="col-type">Tipe</th>
                                 <th class="col-note">Keterangan Aktivitas</th>
                                 <th class="col-time">Waktu</th>
+                                <th>Status</th>
                                 <th class="col-amount">Nominal</th>
                             </tr>
                         </thead>
@@ -912,9 +992,9 @@
         <div class="footer-content max-w-container">
             <div style="font-weight:700; color:var(--primary-navy); display:flex; align-items:center; gap:0.4rem; font-size:0.75rem;">
                 <i class="fa-solid fa-shield-halved text-emerald"></i>
-                <span>PT InvestasiUMKM Indonesia Technologies</span>
+                <span>InvestasiUMKM — Portofolio Demo</span>
             </div>
-            <p>© 2026 InvestasiUMKM Indonesia. Seluruh Hak Cipta Dilindungi Undang-Undang.</p>
+            <p>Demo saja; bukan layanan keuangan dan tidak memproses dana nyata.</p>
         </div>
     </footer>
 
@@ -929,13 +1009,12 @@
         </div>
     </div>
 
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <script src="supabase-client.js"></script>
       <script>
         /* ==========================================================================
-           SUPABASE CONFIGURATION & INTEGRATION
+           LOCAL DEMO STATE
            ========================================================================== */
-        const SUPABASE_URL = 'https://oeezyhygpuucgdjedhve.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9lZXp5aHlncHV1Y2dkamVkaHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4Mjk1NTgsImV4cCI6MjEwNzQwNTU1OH0.rMmoyfx2r6VdOfXrEIDI2DX5F39yX2p8QNX5NC0uFhs'; 
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const state = {
             userId: null,
@@ -943,13 +1022,16 @@
             totalProfit: 0,
             activeDeposit: 0,
             packages: [],
-            transactions: []
+            transactions: [],
+            dailyGain: 0
         };
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioContextClass ? new AudioContextClass() : null;
         
         function playChimeSound(type = 'withdraw') {
             try {
+                if (!audioCtx) return;
                 if (audioCtx.state === 'suspended') { audioCtx.resume(); }
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
@@ -981,108 +1063,144 @@
         /* ==========================================================================
            SESSION CHECK & USER AUTHENTICATION GUARD
            ========================================================================== */
-        async function loadUserDataFromSupabase() {
-            const activeEmail = localStorage.getItem('umkm_current_email');
-            
-            // Jika user belum memiliki sesi login aktif, paksa arahkan ke halaman login
-            if (!activeEmail) {
-                window.location.href = 'https://akun.investasiumkm.my.id/login'; // Sesuaikan path login Anda jika berada di file lokal (misal: 'login.html')
-                return;
+        async function loadUserData() {
+            const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+            if (sessionError) {
+                showToast('Sesi Tidak Tersedia', showSupabaseError(sessionError, 'Gagal memeriksa sesi Supabase.'), 'error');
+                return false;
+            }
+            if (!sessionData.session) {
+                window.location.href = 'login.html';
+                return false;
             }
 
-            const { data, error } = await supabaseClient
-                .from('users')
-                .select('*')
-                .eq('email', activeEmail)
+            state.userId = sessionData.session.user.id;
+            const { data: profile, error: profileError } = await supabaseClient
+                .from('profiles')
+                .select('id, full_name, avatar_url, balance, total_profit')
+                .eq('id', state.userId)
                 .single();
+            if (profileError) {
+                showToast('Profil Gagal Dimuat', showSupabaseError(profileError, 'Gagal mengambil profil dari Supabase.'), 'error');
+                return false;
+            }
 
-            if (error || !data) {
-                // Jika data tidak valid atau email sudah dihapus dari database, hapus sesi & redirect ke login
-                localStorage.removeItem('umkm_current_email');
-                window.location.href = 'https://akun.investasiumkm.my.id/login';
+            document.getElementById('profileName').innerText = profile.full_name || sessionData.session.user.email;
+            document.getElementById('modalUserName').innerText = profile.full_name || sessionData.session.user.email;
+            document.getElementById('modalUserEmail').innerText = sessionData.session.user.email;
+            setProfileAvatar(profile.avatar_url);
+
+            const { data: syncData, error: syncError } = await supabaseClient.rpc('demo_sync_portfolio');
+            if (syncError) {
+                showToast('Portofolio Gagal Disinkronkan', showSupabaseError(syncError, 'Gagal menyinkronkan portofolio Supabase.'), 'error');
+                return false;
+            }
+            applyPortfolio(syncData);
+            await loadPortfolioRecords();
+            return true;
+        }
+
+        function applyPortfolio(portfolio) {
+            state.totalBalance = Number(portfolio.balance) || 0;
+            state.totalProfit = Number(portfolio.total_profit) || 0;
+            state.activeDeposit = Number(portfolio.active_deposit) || 0;
+        }
+
+        function setProfileAvatar(avatarUrl) {
+            const profileAvatar = document.getElementById('profileAvatar');
+            const modalAvatar = document.getElementById('modalAvatarImg');
+            const profilePlaceholder = document.getElementById('profileAvatarPlaceholder');
+            const modalPlaceholder = document.getElementById('modalAvatarPlaceholder');
+
+            if (!avatarUrl) {
+                profileAvatar.hidden = true;
+                modalAvatar.hidden = true;
+                profilePlaceholder.hidden = false;
+                modalPlaceholder.hidden = false;
                 return;
             }
 
-            state.userId = data.id;
-            state.totalBalance = parseFloat(data.balance) || 0;
-            state.totalProfit = parseFloat(data.total_profit) || 0;
-            state.activeDeposit = parseFloat(data.active_deposit) || 0;
-
-            // Update UI Profile & Modal
-            document.getElementById('profileName').innerText = data.name;
-            document.getElementById('modalUserName').innerText = data.name;
-            document.getElementById('modalUserEmail').innerText = data.email;
-            
-            if (data.avatar_url) {
-                document.getElementById('profileAvatar').src = data.avatar_url;
-                document.getElementById('modalAvatarImg').src = data.avatar_url;
-            }
-
-            updateDashboardUI(0);
-            loadTransactionsFromSupabase();
+            profileAvatar.onload = () => {
+                profileAvatar.hidden = false;
+                profilePlaceholder.hidden = true;
+            };
+            modalAvatar.onload = () => {
+                modalAvatar.hidden = false;
+                modalPlaceholder.hidden = true;
+            };
+            profileAvatar.onerror = () => {
+                profileAvatar.hidden = true;
+                profilePlaceholder.hidden = false;
+            };
+            modalAvatar.onerror = () => {
+                modalAvatar.hidden = true;
+                modalPlaceholder.hidden = false;
+            };
+            profileAvatar.src = avatarUrl;
+            modalAvatar.src = avatarUrl;
         }
 
-        async function loadTransactionsFromSupabase() {
-            const { data, error } = await supabaseClient
-                .from('transactions')
-                .select('*')
-                .eq('user_id', state.userId)
-                .order('created_at', { ascending: false });
+        async function loadPortfolioRecords() {
+            const [packagesResult, transactionsResult] = await Promise.all([
+                supabaseClient
+                    .from('user_demo_packages')
+                    .select('*')
+                    .eq('user_id', state.userId)
+                    .order('starts_at', { ascending: false }),
+                supabaseClient
+                    .from('demo_transactions')
+                    .select('*')
+                    .eq('user_id', state.userId)
+                    .order('created_at', { ascending: false })
+                    .limit(100)
+            ]);
 
-            if (!error && data) {
-                state.transactions = data.map(tx => ({
-                    id: tx.id,
-                    type: tx.type,
-                    amount: tx.amount,
-                    note: tx.note,
-                    time: new Date(tx.created_at)
-                }));
-                renderTransactionHistory();
+            if (packagesResult.error) {
+                throw packagesResult.error;
             }
+            if (transactionsResult.error) {
+                throw transactionsResult.error;
+            }
+            state.packages = packagesResult.data || [];
+            state.transactions = transactionsResult.data || [];
+            state.dailyGain = state.packages.reduce((sum, pkg) => {
+                return sum + (new Date(pkg.expires_at).getTime() > Date.now() ? Number(pkg.daily_gain) : 0);
+            }, 0);
+            renderTransactionHistory();
+            updateDashboardUI();
         }
 
-        async function updateSupabaseUserData() {
-            if (!state.userId) return;
-            await supabaseClient
-                .from('users')
-                .update({
-                    balance: state.totalBalance,
-                    total_profit: state.totalProfit,
-                    active_deposit: state.activeDeposit
-                })
-                .eq('id', state.userId);
+        async function syncPortfolio() {
+            try {
+                const { data, error } = await supabaseClient.rpc('demo_sync_portfolio');
+                if (error) {
+                    showToast('Sinkronisasi Gagal', showSupabaseError(error, 'Tidak dapat memperbarui portofolio Supabase.'), 'error');
+                    return;
+                }
+                applyPortfolio(data);
+                await loadPortfolioRecords();
+            } catch (error) {
+                showToast('Sinkronisasi Gagal', showSupabaseError(error, 'Tidak dapat memperbarui portofolio Supabase.'), 'error');
+            }
         }
 
         function tickRealtimeInvestment() {
-            const SECONDS_IN_DAY = 86400;
-            let currentTickGain = 0;
-
-            state.packages.forEach(pkg => {
-                const secondGain = (pkg.principal * pkg.dailyRate) / SECONDS_IN_DAY;
-                pkg.accumulatedProfit += secondGain;
-                currentTickGain += secondGain;
-            });
-
-            state.totalProfit += currentTickGain;
-            state.totalBalance += currentTickGain;
-
-            updateDashboardUI(currentTickGain);
+            updateDashboardUI(state.dailyGain / 86400);
         }
 
         function updateDashboardUI(currentTickGain = 0) {
             document.getElementById('displayTotalBalance').innerText = formatIDRPrecise(state.totalBalance);
             document.getElementById('displayTotalProfit').innerText = formatIDRPrecise(state.totalProfit);
             document.getElementById('displayActiveDeposit').innerText = formatIDR(state.activeDeposit);
-            document.getElementById('displayActiveCount').innerText = `${state.packages.length} Usaha`;
+            const activeCount = state.packages.filter(pkg => new Date(pkg.expires_at).getTime() > Date.now()).length;
+            document.getElementById('displayActiveCount').innerText = `${activeCount} Usaha`;
             document.getElementById('tickerRate').innerText = `+${formatIDRPrecise(currentTickGain)}/dtk`;
 
             let totalWeightedRate = 0;
             let estDailyGain = 0;
 
             if (state.activeDeposit > 0) {
-                state.packages.forEach(pkg => {
-                    estDailyGain += (pkg.principal * pkg.dailyRate);
-                });
+                estDailyGain = state.dailyGain;
                 totalWeightedRate = (estDailyGain / state.activeDeposit) * 100;
             }
 
@@ -1090,45 +1208,23 @@
             document.getElementById('displayEstDaily').innerText = formatIDR(estDailyGain);
         }
 
-        async function addTransactionRecord(type, amount, note) {
-            const newTx = {
-                user_id: state.userId,
-                type: type,
-                amount: amount,
-                note: note
-            };
-
-            const { data, error } = await supabaseClient
-                .from('transactions')
-                .insert([newTx])
-                .select()
-                .single();
-
-            if (!error && data) {
-                state.transactions.unshift({
-                    id: data.id,
-                    type: data.type,
-                    amount: data.amount,
-                    note: data.note,
-                    time: new Date(data.created_at)
-                });
-                renderTransactionHistory();
-            }
-        }
-
         function renderTransactionHistory() {
             const tbody = document.getElementById('transactionHistoryBody');
             tbody.innerHTML = '';
 
             if (state.transactions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="padding:1.25rem; text-align:center; color:var(--text-subtle);">Belum ada riwayat transaksi.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="padding:1.25rem; text-align:center; color:var(--text-subtle);">Belum ada riwayat transaksi.</td></tr>`;
                 return;
             }
 
             state.transactions.slice(0, 10).forEach(tx => {
                 const isPositive = tx.type === 'Pendanaan' || tx.type === 'Bagi Hasil';
+                const status = tx.status || 'completed';
+                const statusLabels = { pending: 'Pending', completed: 'Selesai', failed: 'Gagal' };
+                const statusLabel = statusLabels[status] || 'Pending';
                 const badgeClass = isPositive ? 'badge-tx-deposit' : 'badge-tx-withdraw';
                 const badgeIcon = isPositive ? 'fa-arrow-down' : 'fa-arrow-up';
+                const amountSign = status === 'completed' ? isPositive ? '+' : '-' : '';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1137,25 +1233,39 @@
                             <i class="fa-solid ${badgeIcon}"></i> ${tx.type}
                         </span>
                     </td>
-                    <td class="col-note" style="color:var(--text-main); font-size:0.75rem;" title="${tx.note}">${tx.note}</td>
-                    <td class="col-time" style="color:var(--text-subtle); font-size:0.6875rem;">${formatTime(tx.time)}</td>
-                    <td class="col-amount font-mono ${isPositive ? 'text-emerald' : 'text-amber'}" style="font-weight:700;">
-                        ${isPositive ? '+' : '-'}${formatIDR(tx.amount)}
+                    <td class="col-note" style="color:var(--text-main); font-size:0.75rem;" title="${escapeHTML(tx.note)}">${escapeHTML(tx.note)}</td>
+                    <td class="col-time" style="color:var(--text-subtle); font-size:0.6875rem;">${formatTime(tx.created_at)}</td>
+                    <td><span class="transaction-status transaction-status-${escapeHTML(status)}">${statusLabel}</span></td>
+                    <td class="col-amount font-mono ${status === 'failed' ? 'text-amber' : isPositive ? 'text-emerald' : 'text-amber'}" style="font-weight:700;">
+                        ${amountSign}${formatIDR(tx.amount)}
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        async function clearTransactionLogs() {
-            await supabaseClient
-                .from('transactions')
-                .delete()
-                .eq('user_id', state.userId);
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[character]);
+        }
 
-            state.transactions = [];
-            renderTransactionHistory();
-            showToast('Informasi Sistem', 'Log transaksi audit berhasil dibersihkan.');
+        async function clearTransactionLogs() {
+            try {
+                const { error } = await supabaseClient
+                    .from('demo_transactions')
+                    .delete()
+                    .eq('user_id', state.userId);
+                if (error) {
+                    showToast('Gagal Menghapus Riwayat', showSupabaseError(error, 'Riwayat transaksi gagal dihapus.'), 'error');
+                    return;
+                }
+                state.transactions = [];
+                renderTransactionHistory();
+                showToast('Riwayat Dihapus', 'Riwayat berhasil dihapus.');
+            } catch (error) {
+                showToast('Gagal Menghapus Riwayat', showSupabaseError(error, 'Riwayat transaksi gagal dihapus.'), 'error');
+            }
         }
 
         async function handleWithdrawal(e) {
@@ -1174,18 +1284,26 @@
                 return;
             }
 
-            state.totalBalance -= amount;
-            await updateSupabaseUserData();
-
             const bankSelect = document.getElementById('withdrawBank');
             const selectedBank = bankSelect.options[bankSelect.selectedIndex].text;
-
-            await addTransactionRecord('Penarikan', amount, `Pencairan ke ${selectedBank}`);
-            playChimeSound('withdraw');
-            showToast('Pencairan Diproses', `${formatIDR(amount)} dalam proses pengiriman.`);
-
-            amountInput.value = '';
-            showDepositDashboard();
+            try {
+                const { data, error } = await supabaseClient.rpc('demo_create_withdrawal', {
+                    p_amount: amount,
+                    p_bank: selectedBank
+                });
+                if (error) {
+                    showToast('Penarikan Gagal', showSupabaseError(error, 'Penarikan tidak dapat diproses.'), 'error');
+                    return;
+                }
+                state.totalBalance = Number(data.balance) || 0;
+                await loadPortfolioRecords();
+                playChimeSound('withdraw');
+                showToast('Saldo Demo Diperbarui', `${formatIDR(amount)} berubah. Tidak ada transfer uang.`);
+                amountInput.value = '';
+                showDepositDashboard();
+            } catch (error) {
+                showToast('Penarikan Gagal', showSupabaseError(error, 'Penarikan tidak dapat diproses.'), 'error');
+            }
         }
 
         function navigateToWithdraw() {
@@ -1198,7 +1316,7 @@
             withdrawForm.classList.remove('hidden');
 
             panelTitleText.innerHTML = `<i class="fa-solid fa-money-bill-transfer text-emerald"></i> Pencairan Keuntungan`;
-            panelSubtitleText.innerText = `Pilih nominal dan rekening tujuan pencairan dana`;
+            panelSubtitleText.innerText = `Saldo demo berubah; tidak ada transfer bank.`;
 
             const panel = document.getElementById('transactionPanel');
             if (panel) {
@@ -1215,8 +1333,8 @@
             depositActionSection.classList.remove('hidden');
             withdrawForm.classList.add('hidden');
 
-            panelTitleText.innerHTML = `<i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Penyaluran Modal`;
-            panelSubtitleText.innerText = `Pilih alokasi paket pendanaan UMKM terverifikasi`;
+            panelTitleText.innerHTML = `<i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Paket`;
+            panelSubtitleText.innerText = `Kelola paket dan lihat perubahan nilai.`;
         }
 
         /* ==========================================
@@ -1235,11 +1353,15 @@
         }
 
         function handleLogout() {
-            localStorage.removeItem('umkm_current_email');
-            showToast('Ganti Akun', 'Keluar dari sesi saat ini...');
-            setTimeout(() => {
-                window.location.href = 'https://akun.investasiumkm.my.id/login'; // Ganti ke file 'login.html' jika dijalankan secara lokal
-            }, 1000);
+            supabaseClient.auth.signOut().then(({ error }) => {
+                if (error) {
+                    showToast('Keluar Gagal', showSupabaseError(error, 'Supabase gagal mengakhiri sesi.'), 'error');
+                    return;
+                }
+                window.location.href = 'login.html';
+            }).catch(error => {
+                showToast('Keluar Gagal', showSupabaseError(error, 'Supabase gagal mengakhiri sesi.'), 'error');
+            });
         }
 
         function showToast(title, message, type = 'success') {
@@ -1268,12 +1390,26 @@
             }, 3500);
         }
 
-        window.onload = function () {
-            loadUserDataFromSupabase();
-
-            setInterval(() => {
-                tickRealtimeInvestment();
-            }, 1000);
+        window.onload = async function () {
+            try {
+                if (!await loadUserData()) return;
+            } catch (error) {
+                showToast('Dashboard Gagal Dimuat', showSupabaseError(error, 'Tidak dapat memuat data Supabase.'), 'error');
+                return;
+            }
+            if (new URLSearchParams(window.location.search).get('profilePhoto') === 'failed') {
+                showToast(
+                    'Akun Berhasil, Foto Belum Tersimpan',
+                    'Akun sudah dibuat, tetapi foto gagal diunggah. Pastikan bucket profiles dan policy Storage pada supabase-setup.sql sudah diterapkan.',
+                    'error'
+                );
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            setInterval(tickRealtimeInvestment, 1000);
+            setInterval(syncPortfolio, 60000);
+            supabaseClient.auth.onAuthStateChange((event) => {
+                if (event === 'SIGNED_OUT') window.location.href = 'login.html';
+            });
         };
     </script>
 
