@@ -617,8 +617,8 @@
 
             <!-- Header Action -->
             <div class="header-cta-group">
-                <a href="login.html" class="btn btn-outline">Masuk Portal</a>
-                <a href="register.html" class="btn btn-primary">Mulai Investasi</a>
+                <button onclick="navigateTo('https://akun.investasiumkm.my.id/login')" class="btn btn-outline">Masuk Portal</button>
+                <button onclick="navigateTo('https://akun.investasiumkm.my.id/register')" class="btn btn-primary">Mulai Investasi</button>
             </div>
         </div>
     </header>
@@ -637,9 +637,9 @@
                     Demo ini menyimpan akun, paket, dan riwayat simulasi ke Supabase. Saldo dan imbal hasil hanya contoh, bukan penawaran investasi atau transfer dana.
                 </p>
                 <div class="hero-actions">
-                    <a href="login.html" class="btn btn-navy" style="padding: 0.65rem 1.35rem;">
+                    <button onclick="navigateTo('https://akun.investasiumkm.my.id/login')" class="btn btn-navy" style="padding: 0.65rem 1.35rem;">
                         <i class="fa-solid fa-chart-pie"></i> Buka Portofolio
-                    </a>
+                    </button>
                     <a href="#fitur" class="btn btn-outline" style="padding: 0.65rem 1.35rem;">
                         Pelajari Layanan
                     </a>
@@ -777,9 +777,9 @@
             <p class="cta-desc">
                 Coba alur dashboard dan paket tanpa transaksi uang sungguhan. Akun dan data demo tersimpan di Supabase.
             </p>
-            <a href="login.html" class="btn btn-primary" style="padding: 0.75rem 1.75rem; font-size: 0.8125rem;">
+            <button onclick="navigateTo('login.html')" class="btn btn-primary" style="padding: 0.75rem 1.75rem; font-size: 0.8125rem;">
                 Akses Dashboard Portal <i class="fa-solid fa-arrow-right"></i>
-            </a>
+            </button>
         </div>
     </div>
 
@@ -812,9 +812,9 @@
                 <div>
                     <h4 class="footer-column-title">Layanan</h4>
                     <ul class="footer-menu">
-                        <li><a href="pilihPaket.html">Penyaluran Modal</a></li>
-                        <li><a href="login.html">Distribusi Dana</a></li>
-                        <li><a href="login.html">Riwayat Laporan</a></li>
+                        <li><a href="#" onclick="navigateTo('pilihPaket.html'); return false;">Penyaluran Modal</a></li>
+                        <li><a href="#" onclick="navigateTo('https://akun.investasiumkm.my.id/login'); return false;">Distribusi Dana</a></li>
+                        <li><a href="#" onclick="navigateTo('https://akun.investasiumkm.my.id/login'); return false;">Riwayat Laporan</a></li>
                     </ul>
                 </div>
 
@@ -837,5 +837,12 @@
             </div>
         </div>
     </footer>
+
+    <!-- Script to handle window.location.replace navigation -->
+    <script>
+        function navigateTo(url) {
+            window.location.replace(url);
+        }
+    </script>
 </body>
 </html>
