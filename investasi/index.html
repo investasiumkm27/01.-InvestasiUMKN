@@ -1,1 +1,1431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="googlec273590b2addbf40">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5JR1ZYEYR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-M5JR1ZYEYR');
+    </script>
+    <meta name="description" content="Dashboard pribadi InvestasiUMKM untuk memantau portfolio, transaksi deposit, profit, dan penarikan saldo.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#059669">
+    <link rel="canonical" href="https://investasibengkulu.my.id/investasi/">
+    <title>Dashboard Investor | InvestasiUMKM</title>
+    
+    <style>
+        :root {
+            --bg-main: #f4f6f8;
+            --bg-card: #ffffff;
+            --bg-input: #f8fafc;
+            --border-color: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --accent-brand: #059669;
+            --accent-brand-hover: #047857;
+            --accent-brand-bg: #ecfdf5;
+            --accent-red: #dc2626;
+            --accent-red-hover: #b91c1c;
+            --accent-red-bg: #fef2f2;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+        }
 
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--bg-main);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 16px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            background-color: #0f172a;
+            color: #ffffff;
+            font-weight: 800;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            border-left: 3px solid var(--accent-brand);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .logo-text span {
+            color: var(--accent-brand);
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        #userEmailDisplay {
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (min-width: 600px) {
+            #userEmailDisplay {
+                max-width: 250px;
+            }
+        }
+
+        .btn-logout {
+            background-color: transparent;
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-logout:hover {
+            background-color: var(--accent-red-bg);
+        }
+
+        main {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 16px;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            align-content: start;
+        }
+
+        @media (min-width: 900px) {
+            main {
+                grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+                padding: 24px;
+                gap: 20px;
+            }
+        }
+
+        .dashboard-main,
+        .dashboard-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        @media (min-width: 900px) {
+            .dashboard-main,
+            .dashboard-sidebar {
+                gap: 20px;
+            }
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        @media (min-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+        }
+
+        .card-title {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            letter-spacing: -0.01em;
+            word-break: break-word;
+        }
+
+        .subtitle {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            word-break: break-word;
+        }
+
+        .banner {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-left: 4px solid var(--accent-brand);
+        }
+
+        .saldo-utama {
+            font-size: clamp(1.4rem, 6vw, 2.3rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 6px 0 12px 0;
+            letter-spacing: -0.03em;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            line-height: 1.15;
+        }
+
+        .grid-modal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            min-width: 0;
+        }
+
+        .label-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .value-text {
+            font-size: clamp(0.8rem, 3vw, 1.05rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 2px;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        .value-brand { color: var(--accent-brand); }
+        .type-deposit { color: var(--accent-brand); font-weight: 700; }
+        .type-withdraw { color: var(--accent-red); font-weight: 700; }
+
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            width: 100%;
+        }
+
+        @media (min-width: 600px) {
+            .grid-stats {
+                gap: 14px;
+            }
+        }
+
+        .card-stat {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .card-history {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .tab-group {
+            display: flex;
+            background-color: var(--bg-input);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 14px;
+            width: 100%;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            background-color: #ffffff;
+            border-color: var(--accent-brand);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .btn:active { transform: scale(0.98); }
+
+        .btn-brand {
+            background-color: var(--accent-brand);
+            color: #ffffff;
+        }
+
+        .btn-brand:hover {
+            background-color: var(--accent-brand-hover);
+        }
+
+        .btn-red {
+            background-color: var(--accent-red);
+            color: #ffffff;
+        }
+
+        .btn-red:hover {
+            background-color: var(--accent-red-hover);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 160px;
+            margin-top: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        th {
+            position: sticky;
+            top: 0;
+            background-color: #f8fafc;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 5px 8px;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1;
+        }
+
+        td {
+            padding: 5px 8px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+
+        .text-dark { color: var(--text-primary); font-weight: 700; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); padding: 15px 8px; }
+        .text-xs { font-size: 0.62rem; color: var(--text-muted); }
+
+        .badge-success {
+            background-color: var(--accent-brand-bg);
+            color: var(--accent-brand);
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(5, 150, 105, 0.2);
+            display: inline-block;
+        }
+
+        .badge-pending {
+            background-color: #fef3c7;
+            color: #d97706;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(217, 119, 6, 0.2);
+            display: inline-block;
+        }
+
+        .badge-danger {
+            background-color: var(--accent-red-bg);
+            color: var(--accent-red);
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            display: inline-block;
+        }
+
+        #custom-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+
+        .custom-modal-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            transform: scale(0.95);
+            animation: scaleUp 0.2s ease-out forwards;
+        }
+
+        .custom-modal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--accent-red-bg);
+            color: var(--accent-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 16px auto;
+            border: 2px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .custom-modal-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .custom-modal-message {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .support-chat-toggle {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1100;
+            width: 62px;
+            height: 62px;
+            border: 0;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #047857, #059669);
+            color: #ffffff;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 10px 28px rgba(4, 120, 87, 0.3), 0 0 0 5px rgba(5, 150, 105, 0.1);
+            cursor: pointer;
+            transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+        }
+
+        .support-chat-toggle:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(4, 120, 87, 0.35), 0 0 0 7px rgba(5, 150, 105, 0.1); }
+        .support-chat-toggle:focus-visible, .support-chat-close:focus-visible, .support-chat-send:focus-visible { outline: 3px solid rgba(5, 150, 105, 0.35); outline-offset: 3px; }
+        .support-chat-toggle svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .support-chat-unread { position: absolute; top: 0; right: 0; width: 13px; height: 13px; border: 2px solid var(--bg-card); border-radius: 50%; background: var(--accent-red); }
+        .support-chat-unread[hidden] { display: none; }
+
+        .support-chat-panel {
+            position: fixed;
+            right: 20px;
+            bottom: 98px;
+            z-index: 1100;
+            width: min(380px, calc(100vw - 32px));
+            height: min(560px, calc(100vh - 128px));
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.22), 0 4px 14px rgba(15, 23, 42, 0.08);
+            transform-origin: bottom right;
+            animation: supportChatEnter 180ms ease-out both;
+        }
+
+        .support-chat-panel[hidden] { display: none; }
+
+        .support-chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 16px 17px;
+            background: linear-gradient(125deg, #064e3b, #047857 72%, #059669);
+            color: #ffffff;
+        }
+
+        .support-chat-brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+        .support-chat-avatar { width: 40px; height: 40px; flex: 0 0 40px; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, 0.38); border-radius: 13px; background: rgba(255, 255, 255, 0.15); color: #fff; font-size: 0.78rem; font-weight: 800; }
+        .support-chat-heading { min-width: 0; }
+        .support-chat-kicker { display: block; margin-bottom: 2px; color: rgba(255, 255, 255, 0.76); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; }
+        .support-chat-header h2 { color: #ffffff; font-size: 0.98rem; font-weight: 800; }
+        .support-chat-header p { margin-top: 2px; color: rgba(255, 255, 255, 0.82); font-size: 0.72rem; }
+
+        .support-chat-close {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border: 0;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            color: inherit;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: background 160ms ease;
+        }
+        .support-chat-close:hover { background: rgba(255, 255, 255, 0.23); }
+        .support-chat-close svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+        .support-chat-messages {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            padding: 18px 16px;
+            background: #f3f8f5;
+            scroll-behavior: smooth;
+        }
+
+        .support-chat-welcome { width: min(100%, 290px); margin: auto; padding: 16px; border: 1px solid #dcebe2; border-radius: 16px; background: rgba(255, 255, 255, 0.84); text-align: center; box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04); }
+        .support-chat-welcome-mark { width: 42px; height: 42px; margin: 0 auto 10px; display: grid; place-items: center; border-radius: 14px; background: var(--accent-brand-bg); color: var(--accent-brand); font-size: 0.76rem; font-weight: 800; }
+        .support-chat-welcome strong { display: block; color: var(--text-primary); font-size: 0.86rem; }
+        .support-chat-welcome p { margin-top: 5px; color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
+        .support-chat-message { position: relative; max-width: 82%; padding: 10px 13px 8px; border-radius: 16px 16px 16px 4px; background: #ffffff; border: 1px solid #e1e9e4; box-shadow: 0 3px 10px rgba(15, 23, 42, 0.045); overflow-wrap: anywhere; animation: supportMessageEnter 160ms ease-out both; }
+        .support-chat-message.user { align-self: flex-end; border-color: #047857; border-radius: 16px 16px 4px 16px; background: #047857; box-shadow: 0 4px 12px rgba(4, 120, 87, 0.16); }
+        .support-chat-message.has-image { max-width: 86%; padding: 6px; background: #ffffff; border-color: #dce5df; }
+        .support-chat-message.user.has-image { background: #047857; border-color: #047857; }
+        .support-chat-image-link { display: block; max-width: min(280px, calc(100vw - 104px)); }
+        .support-chat-image { display: block; max-width: 100%; max-height: 300px; border-radius: 11px; object-fit: contain; background: #f1f5f9; }
+        .support-chat-image-fallback { display: block; padding: 8px; color: var(--accent-brand); font-size: 0.76rem; overflow-wrap: anywhere; }
+        .support-chat-message p { color: var(--text-primary); font-size: 0.84rem; line-height: 1.48; white-space: pre-wrap; }
+        .support-chat-message.user p { color: #ffffff; }
+        .support-chat-message time { display: block; margin-top: 5px; color: var(--text-muted); font-size: 0.64rem; text-align: right; }
+        .support-chat-message.user time { color: rgba(255, 255, 255, 0.76); }
+
+        .support-chat-form {
+            display: flex;
+            align-items: flex-end;
+            gap: 9px;
+            padding: 12px 13px 13px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+
+        .support-chat-input {
+            min-width: 0;
+            min-height: 44px;
+            max-height: 100px;
+            flex: 1;
+            resize: none;
+            border: 1px solid #dce5df;
+            border-radius: 14px;
+            padding: 11px 13px;
+            color: var(--text-primary);
+            background: #f7faf8;
+            font: inherit;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            outline: none;
+            transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+        }
+        .support-chat-input:focus { border-color: var(--accent-brand); background: #ffffff; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); }
+
+        .support-chat-send {
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            display: grid;
+            place-items: center;
+            border: 0;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #047857, #059669);
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(4, 120, 87, 0.18);
+            transition: transform 160ms ease, box-shadow 160ms ease;
+        }
+
+        .support-chat-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 7px 14px rgba(4, 120, 87, 0.24); }
+        .support-chat-send:disabled { opacity: 0.55; cursor: not-allowed; }
+        .support-chat-send svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        @keyframes supportChatEnter { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes supportMessageEnter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .support-chat-panel, .support-chat-message { animation: none; }
+            .support-chat-toggle, .support-chat-send { transition: none; }
+        }
+
+        @media (max-width: 480px) {
+            .support-chat-toggle { right: 16px; bottom: 16px; }
+            .support-chat-panel { right: 16px; bottom: 88px; width: calc(100vw - 32px); height: min(560px, calc(100vh - 112px)); border-radius: 17px; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 16px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer p + p { margin-top: 2px; font-size: 0.68rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-box">
+                <div class="logo-icon">BI</div>
+                <div class="logo-text">InvestasiUMKM</div>
+            </div>
+            <div class="header-actions">
+                <span id="userEmailDisplay" class="text-xs" style="font-weight: 600;">Memuat...</span>
+                <button id="logoutBtn" class="btn-logout">Keluar</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-main">
+            <!-- Banner Promo Spesial 3x Lipat -->
+            <section class="card" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #10b981;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <div style="background-color: #059669; color: #ffffff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; box-shadow: 0 4px 6px rgba(5, 150, 105, 0.2);">3X</div>
+                    <div>
+                        <h3 class="card-title" style="color: #065f46; font-size: 1.05rem;">Promo Spesial Deposit Rp 100.000</h3>
+                        <p style="font-size: 0.82rem; color: #047857; font-weight: 600; margin-top: 2px;">Lakukan setoran deposit sebesar Rp 100.000 dan dapatkan penawaran khusus saldo portofolio berkembang hingga 3x lipat!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card banner">
+                <p class="subtitle">Estimasi Total Saldo Portfolio</p>
+                <div id="display-saldo-total" class="saldo-utama" aria-live="polite">
+                    Rp 0,00
+                </div>
+
+                <div class="grid-modal">
+                    <div>
+                        <p class="label-text">Modal Pokok (Deposit)</p>
+                        <p id="display-modal" class="value-text">Rp 0</p>
+                    </div>
+                    <div>
+                        <p class="label-text">Profit / Detik</p>
+                        <p id="display-profit-detik" class="value-text value-brand">+Rp 0,0000</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid-stats">
+                <div class="card-stat">
+                    <p class="label-text">Profit / Jam</p>
+                    <p id="display-profit-jam" class="value-text">Rp 0</p>
+                </div>
+                <div class="card-stat">
+                    <p class="label-text">Profit / Hari (5%)</p>
+                    <p id="display-profit-hari" class="value-text">Rp 0</p>
+                </div>
+                <div class="card-stat">
+                    <p class="label-text">Total Profit</p>
+                    <p id="display-total-profit" class="value-text value-brand">Rp 0</p>
+                </div>
+            </section>
+
+            <section class="card card-history">
+                <h3 class="card-title">Catatan Transaksi Resmi</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Jenis</th>
+                                <th>Nominal</th>
+                                <th>Waktu</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-riwayat">
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">Memuat data transaksi...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="dashboard-sidebar">
+            <section class="card">
+                <div class="tab-group">
+                    <button id="tab-depo-btn" class="tab-btn active" onclick="switchTab('deposit')">Deposit</button>
+                    <button id="tab-wd-btn" class="tab-btn" onclick="switchTab('withdraw')">Penarikan</button>
+                </div>
+
+                <form id="form-deposit">
+                    <h3 class="card-title">Setor Deposit</h3>
+                    <p class="label-text" style="margin-bottom: 12px; font-weight: 500;">Imbal hasil 5% harian dihitung otomatis per detik.</p>
+                    <div class="form-group">
+                        <label for="input-deposit">Nominal Deposit (Rp)</label>
+                        <input type="text" inputmode="numeric" id="input-deposit" class="form-input" placeholder="Minimal Rp 10.000" required>
+                    </div>
+                    <button type="submit" class="btn btn-brand">Proses Deposit</button>
+                </form>
+
+                <form id="form-withdraw" style="display: none;">
+                    <h3 class="card-title">Penarikan Saldo</h3>
+                    <p class="label-text" style="margin-bottom: 12px; font-weight: 500;">Pencairan saldo pokok dan imbal hasil ke rekening tujuan.</p>
+                    <div class="form-group">
+                        <label for="input-withdraw">Nominal Penarikan (Rp)</label>
+                        <input type="text" inputmode="numeric" id="input-withdraw" class="form-input" placeholder="Minimal Rp 10.000" required>
+                    </div>
+                    <button type="submit" class="btn btn-red">Konfirmasi Penarikan</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <button id="support-chat-toggle" class="support-chat-toggle" type="button" aria-label="Buka chat dengan admin" aria-expanded="false" aria-controls="support-chat-panel">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>
+        <span id="support-chat-unread" class="support-chat-unread" aria-label="Balasan baru" hidden></span>
+    </button>
+    <section id="support-chat-panel" class="support-chat-panel" aria-labelledby="support-chat-title" hidden>
+        <header class="support-chat-header">
+            <div>
+                <h2 id="support-chat-title">Chat Admin</h2>
+                <p>Pesan Anda terhubung langsung ke tim admin.</p>
+            </div>
+            <button id="support-chat-close" class="support-chat-close" type="button" aria-label="Tutup chat">&times;</button>
+        </header>
+        <div id="support-chat-messages" class="support-chat-messages" aria-live="polite" aria-relevant="additions text">
+            <div class="support-chat-welcome">
+                <span class="support-chat-welcome-mark">BI</span>
+                <strong>Halo, ada yang bisa dibantu?</strong>
+                <p>Kirim pertanyaan Anda. Balasan admin akan muncul di percakapan ini.</p>
+            </div>
+        </div>
+        <form id="support-chat-form" class="support-chat-form">
+            <label class="sr-only" for="support-chat-input">Pesan untuk admin</label>
+            <textarea id="support-chat-input" class="support-chat-input" maxlength="1000" placeholder="Tulis pesan..." required></textarea>
+            <button id="support-chat-send" class="support-chat-send" type="submit" aria-label="Kirim pesan">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            </button>
+        </form>
+    </section>
+
+    <div id="custom-modal-overlay">
+        <div class="custom-modal-box">
+            <div class="custom-modal-icon">!</div>
+            <h3 id="custom-modal-title" class="custom-modal-title">Pemberitahuan Sistem</h3>
+            <p id="custom-modal-message" class="custom-modal-message">Pesan notifikasi sistem...</p>
+            <button id="custom-modal-btn" class="btn btn-brand">Mengerti</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 InvestasiUMKM &bull; Platform Investasi</p>
+        <p>Platform Transaksi Investasi berbasis Web.</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, orderBy, getDocs, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlgpm04sI7Jweytg2IzTHgp8w-VM1SMKw",
+            authDomain: "investasi-bengkulu.firebaseapp.com",
+            projectId: "investasi-bengkulu",
+            storageBucket: "investasi-bengkulu.firebasestorage.app",
+            messagingSenderId: "273258663588",
+            appId: "1:273258663588:web:a4c96b4d438a4462fca031"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        function showNotification(title, message) {
+            const overlay = document.getElementById('custom-modal-overlay');
+            const titleEl = document.getElementById('custom-modal-title');
+            const msgEl = document.getElementById('custom-modal-message');
+            
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+            overlay.style.display = 'flex';
+        }
+
+        document.getElementById('custom-modal-btn').addEventListener('click', () => {
+            document.getElementById('custom-modal-overlay').style.display = 'none';
+        });
+
+        const supportChatToggle = document.getElementById('support-chat-toggle');
+        const supportChatPanel = document.getElementById('support-chat-panel');
+        const supportChatMessages = document.getElementById('support-chat-messages');
+        const supportChatForm = document.getElementById('support-chat-form');
+        const supportChatInput = document.getElementById('support-chat-input');
+        const supportChatSend = document.getElementById('support-chat-send');
+        let stopSupportMessages = null;
+        let stopSupportChatMeta = null;
+        let supportChatUser = null;
+        let supportChatExists = false;
+
+        function formatChatTime(timestamp) {
+            return new Date(timestamp).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function renderSupportMessages(snapshot) {
+            supportChatMessages.replaceChildren();
+            if (snapshot.empty) {
+                const welcome = document.createElement('div');
+                welcome.className = 'support-chat-welcome';
+                const mark = document.createElement('span');
+                mark.className = 'support-chat-welcome-mark';
+                mark.textContent = 'BI';
+                const title = document.createElement('strong');
+                title.textContent = 'Halo, ada yang bisa dibantu?';
+                const description = document.createElement('p');
+                description.textContent = 'Kirim pertanyaan Anda. Balasan admin akan muncul di percakapan ini.';
+                welcome.append(mark, title, description);
+                supportChatMessages.appendChild(welcome);
+                return;
+            }
+
+            snapshot.forEach((messageDoc) => {
+                const message = messageDoc.data();
+                const bubble = document.createElement('article');
+                bubble.className = `support-chat-message ${message.senderRole === 'user' ? 'user' : 'admin'}`;
+                const imageUrl = message.messageType === 'image' ? getSafeImageUrl(message.imageUrl) : '';
+                if (imageUrl) {
+                    bubble.classList.add('has-image');
+                    bubble.appendChild(createSupportChatImage(imageUrl));
+                } else {
+                    const text = document.createElement('p');
+                    text.textContent = message.messageType === 'image' ? 'Gambar tidak dapat ditampilkan.' : (message.text || '');
+                    bubble.appendChild(text);
+                }
+                const time = document.createElement('time');
+                time.textContent = formatChatTime(message.createdAt || Date.now());
+                bubble.appendChild(time);
+                supportChatMessages.appendChild(bubble);
+            });
+            supportChatMessages.scrollTop = supportChatMessages.scrollHeight;
+        }
+
+        function getSafeImageUrl(value) {
+            try {
+                const url = new URL(value);
+                return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
+            } catch {
+                return '';
+            }
+        }
+
+        function createSupportChatImage(value) {
+            const safeUrl = getSafeImageUrl(value);
+            const link = document.createElement('a');
+            link.className = 'support-chat-image-link';
+            link.href = safeUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            const image = document.createElement('img');
+            image.className = 'support-chat-image';
+            image.src = safeUrl;
+            image.alt = 'Gambar dari admin';
+            image.loading = 'lazy';
+            image.referrerPolicy = 'no-referrer';
+            image.addEventListener('error', () => {
+                const fallback = document.createElement('span');
+                fallback.className = 'support-chat-image-fallback';
+                fallback.textContent = 'Gambar gagal dimuat. Buka tautan gambar.';
+                link.replaceChildren(fallback);
+            }, { once: true });
+            link.appendChild(image);
+            return link;
+        }
+
+        function setSupportChatOpen(isOpen) {
+            supportChatPanel.hidden = !isOpen;
+            supportChatToggle.setAttribute('aria-expanded', String(isOpen));
+            if (isOpen) {
+                supportChatInput.focus();
+                if (supportChatExists && supportChatUser) {
+                    setDoc(doc(db, 'supportChats', supportChatUser.uid), { unreadForUser: false }, { merge: true })
+                        .catch((error) => console.error('Gagal memperbarui status baca chat:', error));
+                    document.getElementById('support-chat-unread').hidden = true;
+                }
+            }
+        }
+
+        supportChatToggle.addEventListener('click', () => setSupportChatOpen(supportChatPanel.hidden));
+        document.getElementById('support-chat-close').addEventListener('click', () => setSupportChatOpen(false));
+
+        supportChatForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const text = supportChatInput.value.trim();
+            if (!text || !supportChatUser) return;
+
+            supportChatSend.disabled = true;
+            const uid = supportChatUser.uid;
+            const chatRef = doc(db, 'supportChats', uid);
+            const messageRef = doc(collection(db, 'supportChats', uid, 'messages'));
+            const createdAt = Date.now();
+            const batch = writeBatch(db);
+            batch.set(messageRef, { text, senderId: uid, senderRole: 'user', createdAt });
+            batch.set(chatRef, {
+                userId: uid,
+                userEmail: supportChatUser.email || '',
+                userName: supportChatUser.displayName || supportChatUser.email || 'Pengguna',
+                lastMessage: text,
+                updatedAt: createdAt,
+                status: 'open',
+                unreadForAdmin: true,
+                unreadForUser: false
+            }, { merge: true });
+
+            try {
+                await batch.commit();
+                supportChatInput.value = '';
+            } catch (error) {
+                console.error('Gagal mengirim pesan ke admin:', error);
+                showNotification('Pesan Belum Terkirim', 'Periksa koneksi Anda lalu coba kirim kembali.');
+            } finally {
+                supportChatSend.disabled = false;
+            }
+        });
+
+        window.switchTab = function(type) {
+            const formDepo = document.getElementById('form-deposit');
+            const formWd = document.getElementById('form-withdraw');
+            const btnDepo = document.getElementById('tab-depo-btn');
+            const btnWd = document.getElementById('tab-wd-btn');
+
+            if (type === 'deposit') {
+                formDepo.style.display = 'block';
+                formWd.style.display = 'none';
+                btnDepo.classList.add('active');
+                btnWd.classList.remove('active');
+            } else {
+                formDepo.style.display = 'none';
+                formWd.style.display = 'block';
+                btnWd.classList.add('active');
+                btnDepo.classList.remove('active');
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const state = {
+                modalUtama: 0,
+                baseProfit: 0,
+                lastUpdated: Date.now(),
+                rateHarian: 0.05,
+                detikDalamSehari: 86400,
+                minimalTransaksi: 10000,
+                lastDepositTime: 0
+            };
+
+            const dom = {
+                displaySaldoTotal: document.getElementById('display-saldo-total'),
+                displayModal: document.getElementById('display-modal'),
+                displayProfitDetik: document.getElementById('display-profit-detik'),
+                displayProfitJam: document.getElementById('display-profit-jam'),
+                displayProfitHari: document.getElementById('display-profit-hari'),
+                displayTotalProfit: document.getElementById('display-total-profit'),
+                tabelRiwayat: document.getElementById('tabel-riwayat'),
+                formDeposit: document.getElementById('form-deposit'),
+                formWithdraw: document.getElementById('form-withdraw'),
+                inputDeposit: document.getElementById('input-deposit'),
+                inputWithdraw: document.getElementById('input-withdraw'),
+                userEmailDisplay: document.getElementById('userEmailDisplay'),
+                logoutBtn: document.getElementById('logoutBtn')
+            };
+
+            const formatInputRibuan = (inputEl) => {
+                inputEl.addEventListener('input', (e) => {
+                    let raw = e.target.value.replace(/\D/g, '');
+                    if (raw === '') {
+                        e.target.value = '';
+                        return;
+                    }
+                    let formatted = new Intl.NumberFormat('id-ID').format(parseInt(raw, 10));
+                    e.target.value = formatted;
+                });
+            };
+
+            formatInputRibuan(dom.inputDeposit);
+            formatInputRibuan(dom.inputWithdraw);
+
+            const formatRupiah = (angka, desimal = 2) => {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: desimal,
+                    maximumFractionDigits: desimal
+                }).format(angka);
+            };
+
+            let currentUser = null;
+            let profitInterval = null;
+            let saveInterval = null;
+
+            const getTotalProfit = () => {
+                if (state.modalUtama <= 0) return state.baseProfit;
+                const now = Date.now();
+                const elapsedSeconds = Math.max(0, (now - state.lastUpdated) / 1000);
+                const profitPerHari = state.modalUtama * state.rateHarian;
+                const profitPerDetik = profitPerHari / state.detikDalamSehari;
+                return state.baseProfit + (profitPerDetik * elapsedSeconds);
+            };
+
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) {
+                    window.location.replace('../login/');
+                    return;
+                }
+                currentUser = user;
+                dom.userEmailDisplay.textContent = user.email;
+                supportChatUser = user;
+                if (stopSupportMessages) stopSupportMessages();
+                if (stopSupportChatMeta) stopSupportChatMeta();
+                stopSupportChatMeta = onSnapshot(doc(db, 'supportChats', user.uid), (chatSnapshot) => {
+                    supportChatExists = chatSnapshot.exists();
+                    const hasUnreadReply = supportChatExists && chatSnapshot.data().unreadForUser === true;
+                    document.getElementById('support-chat-unread').hidden = !hasUnreadReply;
+                    if (hasUnreadReply && !supportChatPanel.hidden) {
+                        setDoc(doc(db, 'supportChats', user.uid), { unreadForUser: false }, { merge: true })
+                            .catch((error) => console.error('Gagal memperbarui status baca chat:', error));
+                    }
+                });
+                stopSupportMessages = onSnapshot(
+                    query(collection(db, 'supportChats', user.uid, 'messages'), orderBy('createdAt', 'asc')),
+                    renderSupportMessages,
+                    (error) => {
+                        console.error('Gagal memuat chat admin:', error);
+                        supportChatMessages.innerHTML = '<p class="support-chat-empty">Chat belum dapat dimuat. Silakan coba lagi.</p>';
+                    }
+                );
+
+                // Memunculkan pop-up pemberitahuan promo 3x lipat secara otomatis
+                showNotification(
+                    'Promo Spesial gandakan hingga 3x Lipat!',
+                    'Kabar gembira! Khusus untuk deposit sebesar Rp 100.000, Kami akan memberikan penawaran khusus saldo bertambah menjadi 3x lipat. Manfaatkan kesempatan ini sekarang!'
+                );
+
+                await muatDataPortfolio(user.uid);
+                await muatRiwayat(user.uid);
+
+                onSnapshot(doc(db, "portfolios", user.uid), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        state.modalUtama = data.modalUtama || 0;
+                        state.baseProfit = data.totalProfitTerkumpul || 0;
+                        state.lastUpdated = data.lastUpdated || Date.now();
+                        if (data.rateHarian !== undefined) state.rateHarian = data.rateHarian;
+                        state.lastDepositTime = data.lastDepositTime || 0;
+
+                        updateUIStat();
+                    }
+                });
+
+                onSnapshot(query(collection(db, "transactions"), where("userId", "==", user.uid)), (snapshot) => {
+                    dom.tabelRiwayat.innerHTML = '';
+                    if (snapshot.empty) {
+                        dom.tabelRiwayat.innerHTML = `<tr><td colspan="4" class="text-center text-muted">Belum ada aktivitas transaksi.</td></tr>`;
+                        return;
+                    }
+
+                    const transactions = [];
+                    snapshot.forEach((docSnap) => {
+                        transactions.push(docSnap.data());
+                    });
+
+                    transactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                    transactions.forEach(tx => {
+                        tambahRiwayatDOM(tx.tipe, tx.jumlah, tx.waktu, tx.status);
+                    });
+                });
+
+                if (!profitInterval) {
+                    profitInterval = setInterval(updateUIStat, 1000);
+                }
+
+                if (!saveInterval) {
+                    saveInterval = setInterval(() => {
+                        simpanDataPortfolio(currentUser.uid);
+                    }, 30000);
+                }
+            });
+
+            dom.logoutBtn.addEventListener('click', async () => {
+                try {
+                    if (currentUser) {
+                        await simpanDataPortfolio(currentUser.uid);
+                    }
+                    await signOut(auth);
+                    window.location.replace('../login/');
+                } catch (error) {
+                    console.error('Gagal keluar:', error);
+                }
+            });
+
+            window.addEventListener('beforeunload', () => {
+                if (currentUser) {
+                    simpanDataPortfolio(currentUser.uid);
+                }
+            });
+
+            async function muatDataPortfolio(uid) {
+                try {
+                    const docRef = doc(db, "portfolios", uid);
+                    const docSnap = await getDoc(docRef);
+                    const now = Date.now();
+
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        state.modalUtama = data.modalUtama || 0;
+                        state.baseProfit = data.totalProfitTerkumpul || 0;
+                        state.lastUpdated = data.lastUpdated || now;
+                        if (data.rateHarian !== undefined) state.rateHarian = data.rateHarian;
+                        state.lastDepositTime = data.lastDepositTime || 0;
+                    } else {
+                        state.modalUtama = 0;
+                        state.baseProfit = 0;
+                        state.lastUpdated = now;
+                        state.rateHarian = 0.05;
+                        state.lastDepositTime = 0;
+                        await setDoc(docRef, { 
+                            modalUtama: 0, 
+                            totalProfitTerkumpul: 0, 
+                            rateHarian: 0.05,
+                            lastDepositTime: 0,
+                            lastUpdated: now
+                        });
+                    }
+                    updateUIStat();
+                } catch (error) {
+                    console.error("Gagal memuat portfolio:", error);
+                }
+            }
+
+            async function simpanDataPortfolio(uid) {
+                if (!uid) return;
+                try {
+                    const currentTotalProfit = getTotalProfit();
+                    const now = Date.now();
+                    const docRef = doc(db, "portfolios", uid);
+                    await setDoc(docRef, {
+                        modalUtama: state.modalUtama,
+                        totalProfitTerkumpul: currentTotalProfit,
+                        rateHarian: state.rateHarian,
+                        lastDepositTime: state.lastDepositTime,
+                        lastUpdated: now
+                    }, { merge: true });
+                    
+                    state.baseProfit = currentTotalProfit;
+                    state.lastUpdated = now;
+                } catch (error) {
+                    console.error("Gagal menyimpan portfolio:", error);
+                }
+            }
+
+            async function muatRiwayat(uid) {
+                try {
+                    const q = query(collection(db, "transactions"), where("userId", "==", uid));
+                    const querySnapshot = await getDocs(q);
+                    
+                    dom.tabelRiwayat.innerHTML = '';
+                    if (querySnapshot.empty) {
+                        dom.tabelRiwayat.innerHTML = `<tr><td colspan="4" class="text-center text-muted">Belum ada aktivitas transaksi.</td></tr>`;
+                        return;
+                    }
+
+                    const transactions = [];
+                    querySnapshot.forEach((docSnap) => {
+                        transactions.push(docSnap.data());
+                    });
+
+                    transactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                    transactions.forEach(tx => {
+                        tambahRiwayatDOM(tx.tipe, tx.jumlah, tx.waktu, tx.status);
+                    });
+                } catch (error) {
+                    console.error("Gagal memuat riwayat:", error);
+                    dom.tabelRiwayat.innerHTML = `<tr><td colspan="4" class="text-center text-muted">Gagal memuat riwayat.</td></tr>`;
+                }
+            }
+
+            function tambahRiwayatDOM(tipe, jumlah, waktu, status) {
+                if (dom.tabelRiwayat.children[0]?.innerText.includes('Belum ada aktivitas') || dom.tabelRiwayat.children[0]?.innerText.includes('Memuat')) {
+                    dom.tabelRiwayat.innerHTML = '';
+                }
+
+                const isDeposit = tipe === 'Deposit';
+                const classTipe = isDeposit ? 'type-deposit' : 'type-withdraw';
+                const statusText = status || 'Berhasil';
+
+                let badgeClass = 'badge-success';
+                if (statusText === 'Pending' || statusText === 'Menunggu Konfirmasi') {
+                    badgeClass = 'badge-pending';
+                } else if (statusText === 'Ditolak') {
+                    badgeClass = 'badge-danger';
+                }
+
+                const rowHtml = `
+                    <tr>
+                        <td class="${classTipe}">${tipe}</td>
+                        <td class="text-dark">${formatRupiah(jumlah, 0)}</td>
+                        <td class="text-xs">${waktu}</td>
+                        <td><span class="${badgeClass}">${statusText}</span></td>
+                    </tr>
+                `;
+
+                dom.tabelRiwayat.insertAdjacentHTML('beforeend', rowHtml);
+            }
+
+            const updateUIStat = () => {
+                const totalProfitTerkumpul = getTotalProfit();
+                const profitPerHari = state.modalUtama * state.rateHarian;
+                const profitPerDetik = profitPerHari / state.detikDalamSehari;
+                const profitPerJam = profitPerHari / 24;
+
+                dom.displayProfitDetik.textContent = `+${formatRupiah(profitPerDetik, 4)}`;
+                dom.displayProfitJam.textContent = formatRupiah(profitPerJam, 2);
+                dom.displayProfitHari.textContent = formatRupiah(profitPerHari, 0);
+                dom.displayTotalProfit.textContent = formatRupiah(totalProfitTerkumpul, 2);
+                dom.displaySaldoTotal.textContent = formatRupiah(state.modalUtama + totalProfitTerkumpul, 2);
+                dom.displayModal.textContent = formatRupiah(state.modalUtama, 0);
+            };
+
+            const prosesDeposit = async (e) => {
+                e.preventDefault();
+                if (!currentUser) return;
+
+                const inputVal = parseFloat(dom.inputDeposit.value.replace(/\./g, '')) || 0;
+
+                if (inputVal && inputVal >= state.minimalTransaksi) {
+                    await simpanDataPortfolio(currentUser.uid);
+                    window.location.replace(`../pembayaran/?nominal=${inputVal}`);
+                } else {
+                    showNotification(
+                        'Batas Minimum Deposit',
+                        `Batas minimum untuk transaksi deposit adalah ${formatRupiah(state.minimalTransaksi, 0)}. Silakan sesuaikan kembali nominal setoran Anda.`
+                    );
+                }
+            };
+
+            const prosesWithdraw = async (e) => {
+                e.preventDefault();
+                if (!currentUser) return;
+
+                const inputVal = parseFloat(dom.inputWithdraw.value.replace(/\./g, '')) || 0;
+                const totalTersedia = state.modalUtama + getTotalProfit();
+
+                if (inputVal > totalTersedia) {
+                    showNotification(
+                        'Saldo Tidak Mencukupi',
+                        'Pengajuan penarikan dana tidak dapat diproses: Saldo portofolio aktif Anda tidak mencukupi.'
+                    );
+                    return;
+                }
+
+                if (state.modalUtama > 0 && state.lastDepositTime) {
+                    const now = Date.now();
+                    const selisihWaktu = now - state.lastDepositTime;
+                    const waktu24Jam = 24 * 60 * 60 * 1000;
+
+                    if (selisihWaktu < waktu24Jam) {
+                        const sisaJam = Math.ceil((waktu24Jam - selisihWaktu) / (1000 * 60 * 60));
+                        showNotification(
+                            'Ketentuan Layanan',
+                            `Pengajuan penarikan belum dapat diproses. Berdasarkan kebijakan keamanan kami, pencairan dana baru dapat dilakukan 30 hari setelah transaksi deposit terakhir. Estimasi waktu tunggu tersisa: ± ${sisaJam} jam.`
+                        );
+                        return;
+                    }
+                }
+
+                if (inputVal && inputVal >= state.minimalTransaksi) {
+                    await simpanDataPortfolio(currentUser.uid);
+                    window.location.replace(`../penarikan/?nominal=${inputVal}`);
+                } else {
+                    showNotification(
+                        'Batas Minimum Penarikan',
+                        `Batas minimum untuk transaksi penarikan dana adalah ${formatRupiah(state.minimalTransaksi, 0)}.`
+                    );
+                }
+            };
+
+            dom.formDeposit.addEventListener('submit', prosesDeposit);
+            dom.formWithdraw.addEventListener('submit', prosesWithdraw);
+        });
+    </script>
+</body>
+</html>
