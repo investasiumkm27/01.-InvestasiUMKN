@@ -1,1 +1,655 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="googlec273590b2addbf40">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5JR1ZYEYR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-M5JR1ZYEYR');
+    </script>
+    <meta name="description" content="Halaman pembayaran deposit InvestasiUMKM melalui QRIS.">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="theme-color" content="#059669">
+    <link rel="canonical" href="https://investasibengkulu.my.id/pembayaran/">
+    <title>Pembayaran Deposit QRIS | InvestasiUMKM</title>
+    
+    <style>
+        :root {
+            --bg-main: #f4f6f8;
+            --bg-card: #ffffff;
+            --bg-input: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --accent-brand: #059669;
+            --accent-brand-hover: #047857;
+            --accent-brand-bg: #ecfdf5;
+            --accent-red: #dc2626;
+            --accent-red-bg: #fef2f2;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+        }
 
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 16px;
+            box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+        }
+
+        .header-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            background-color: #0f172a;
+            color: #ffffff;
+            font-weight: 800;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            border-left: 3px solid var(--accent-brand);
+        }
+
+        .logo-text {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .logo-text span {
+            color: var(--accent-brand);
+            font-weight: 600;
+        }
+
+        main {
+            max-width: 500px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 16px;
+            flex-grow: 1;
+        }
+
+        .card-pembayaran {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .timer-box {
+            background-color: var(--accent-red-bg);
+            color: var(--accent-red);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 16px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .nominal-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .nominal-val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-brand);
+            margin: 4px 0 16px 0;
+        }
+
+        .qris-wrapper {
+            background-color: #ffffff;
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qris-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+        }
+
+        .instructions {
+            text-align: left;
+            background-color: var(--bg-input);
+            padding: 14px;
+            border-radius: var(--radius-md);
+            margin-top: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .instructions h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .instructions ol {
+            padding-left: 18px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .instructions li {
+            margin-bottom: 4px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .btn-brand {
+            background-color: var(--accent-brand);
+            color: #ffffff;
+        }
+
+        .btn-brand:hover:not(:disabled) {
+            background-color: var(--accent-brand-hover);
+        }
+
+        .btn-brand:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--bg-input);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 16px;
+        }
+
+        .modal-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            max-width: 480px;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .modal-body {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            overflow-y: auto;
+            max-height: 260px;
+            padding-right: 8px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .modal-body p { margin-bottom: 8px; }
+        .modal-body ul { padding-left: 18px; margin-bottom: 8px; }
+
+        .modal-checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background-color: var(--bg-input);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .modal-checkbox-group input[type="checkbox"] {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent-brand);
+            cursor: pointer;
+        }
+
+        .modal-checkbox-group label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Custom Modern Notification Modal Styles */
+        #custom-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+
+        .custom-modal-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            transform: scale(0.95);
+            animation: scaleUp 0.2s ease-out forwards;
+        }
+
+        .custom-modal-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: var(--accent-brand-bg);
+            color: var(--accent-brand);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin: 0 auto 14px auto;
+            border: 2px solid rgba(5, 150, 105, 0.2);
+        }
+
+        .custom-modal-icon.error {
+            background-color: var(--accent-red-bg);
+            color: var(--accent-red);
+            border-color: rgba(220, 38, 38, 0.2);
+        }
+
+        .custom-modal-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .custom-modal-message {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-box">
+                <div class="logo-icon">BI</div>
+                <div class="logo-text">InvestasiUMKM</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="card-pembayaran">
+            <div class="timer-box">
+                Selesaikan Pembayaran Dalam: <span id="countdown">15:00</span>
+            </div>
+
+            <p class="nominal-title">Total Pembayaran Deposit</p>
+            <div id="display-nominal-transfer" class="nominal-val">Rp 0</div>
+
+            <div class="qris-wrapper">
+                <img src="QR.jpeg" alt="Kode QRIS Pembayaran" class="qris-img" id="qris-image">
+            </div>
+
+            <div class="instructions">
+                <h4>Cara Melakukan Pembayaran:</h4>
+                <ol>
+                    <li>Buka aplikasi m-Banking atau E-Wallet (BCA, Mandiri, GoPay, OVO, Dana, ShopeePay, dll).</li>
+                    <li>Pilih menu <b>QRIS</b>.</li>
+                    <li>Arahkan kamera ke kode QRIS di atas atau upload tangkapan layar ini.</li>
+                    <li>Pastikan nominal pembayaran sesuai dengan yang tertera.</li>
+                    <li>Selesaikan transaksi hingga sukses.</li>
+                </ol>
+            </div>
+
+            <div class="btn-group">
+                <button onclick="konfirmasiSelesai()" class="btn btn-brand">Saya Sudah Bayar</button>
+                <a href="../investasi/" class="btn btn-outline">Batal / Kembali</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- POP-UP SYARAT & KETENTUAN -->
+    <div id="modal-tnc" class="modal-overlay">
+        <div class="modal-card">
+            <h3 class="modal-title">Syarat & Ketentuan Deposito</h3>
+            
+            <div class="modal-body">
+                <p>Harap baca dan pahami ketentuan transaksi berikut sebelum melanjutkan pembayaran:</p>
+                <ul>
+                    <li>Nominal transfer harus sesuai persis dengan angka yang tertera pada invoice.</li>
+                    <li>Pembayaran dilakukan melalui pemindaian Kode <b>QRIS</b> resmi platform.</li>
+                    <li>Estimasi imbal hasil harian dihitung secara otomatis oleh sistem setelah deposit terverifikasi.</li>
+                    <li>Proses konfirmasi transaksi membutuhkan <b>waktu 1-5 menit kerja</b>.</li>
+                    <li>Segala bentuk kesalahan pengisian nominal atau salah transfer berada di luar tanggung jawab platform.</li>
+                    <li>Hasil deposito dapat ditarik setelah <b>5 hari berjalan</b>.</li>
+                </ul>
+                <p>Dengan melanjutkan, Anda menyatakan bersedia tunduk pada seluruh aturan yang berlaku.</p>
+            </div>
+
+            <div class="modal-checkbox-group" onclick="toggleCheckboxDirectly()">
+                <input type="checkbox" id="check-tnc" onchange="toggleButtonState()">
+                <label for="check-tnc">Saya telah membaca, memahami, dan menyetujui seluruh syarat & ketentuan di atas.</label>
+            </div>
+
+            <button id="btn-agree" class="btn btn-brand" disabled onclick="closeModal()">Setuju & Lanjutkan</button>
+        </div>
+    </div>
+
+    <!-- Custom Modern Notification Modal Overlay -->
+    <div id="custom-modal-overlay">
+        <div class="custom-modal-box">
+            <div id="custom-modal-icon" class="custom-modal-icon">✓</div>
+            <h3 id="custom-modal-title" class="custom-modal-title">Pemberitahuan Sistem</h3>
+            <p id="custom-modal-message" class="custom-modal-message">Pesan notifikasi sistem...</p>
+            <button id="custom-modal-btn" class="btn btn-brand" style="width: 100%;">Mengerti</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 InvestasiUMKM &bull; Transaksi QRIS Otomatis</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlgpm04sI7Jweytg2IzTHgp8w-VM1SMKw",
+            authDomain: "investasi-bengkulu.firebaseapp.com",
+            projectId: "investasi-bengkulu",
+            storageBucket: "investasi-bengkulu.firebasestorage.app",
+            messagingSenderId: "273258663588",
+            appId: "1:273258663588:web:a4c96b4d438a4462fca031"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let nominalTransaksi = 0;
+        let modalCallback = null;
+
+        // Helper untuk menampilkan Modal Kustom yang Elegan
+        function showNotification(title, message, isError = false, callback = null) {
+            const overlay = document.getElementById('custom-modal-overlay');
+            const titleEl = document.getElementById('custom-modal-title');
+            const msgEl = document.getElementById('custom-modal-message');
+            const iconEl = document.getElementById('custom-modal-icon');
+            
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+            modalCallback = callback;
+            
+            if (isError) {
+                iconEl.className = 'custom-modal-icon error';
+                iconEl.textContent = '!';
+            } else {
+                iconEl.className = 'custom-modal-icon';
+                iconEl.textContent = '✓';
+            }
+            
+            overlay.style.display = 'flex';
+        }
+
+        document.getElementById('custom-modal-btn').addEventListener('click', () => {
+            document.getElementById('custom-modal-overlay').style.display = 'none';
+            if (typeof modalCallback === 'function') {
+                modalCallback();
+                modalCallback = null;
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = '../login/';
+                return;
+            }
+            currentUser = user;
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            nominalTransaksi = parseFloat(urlParams.get('nominal')) || 0;
+
+            const formatRupiah = (angka) => {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(angka);
+            };
+
+            document.getElementById('display-nominal-transfer').textContent = formatRupiah(nominalTransaksi);
+
+            let waktuDetik = 15 * 60;
+            const timerElement = document.getElementById('countdown');
+
+            const timerInterval = setInterval(() => {
+                const menit = Math.floor(waktuDetik / 60);
+                const detik = waktuDetik % 60;
+
+                timerElement.textContent = `${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
+
+                if (waktuDetik <= 0) {
+                    clearInterval(timerInterval);
+                    showNotification(
+                        'Waktu Habis',
+                        'Waktu pembayaran telah habis. Silakan ulangi transaksi deposit Anda.',
+                        true,
+                        () => { window.location.replace('../investasi/'); }
+                    );
+                }
+                waktuDetik--;
+            }, 1000);
+        });
+
+        window.toggleButtonState = function() {
+            const checkbox = document.getElementById('check-tnc');
+            const btnAgree = document.getElementById('btn-agree');
+            btnAgree.disabled = !checkbox.checked;
+        }
+
+        window.toggleCheckboxDirectly = function() {
+            const checkbox = document.getElementById('check-tnc');
+            checkbox.checked = !checkbox.checked;
+            window.toggleButtonState();
+        }
+
+        document.querySelector('.modal-checkbox-group label')?.addEventListener('click', (e) => e.stopPropagation());
+        document.querySelector('#check-tnc')?.addEventListener('click', (e) => e.stopPropagation());
+
+        window.closeModal = function() {
+            const modal = document.getElementById('modal-tnc');
+            if (modal) modal.style.display = 'none';
+        }
+
+        window.konfirmasiSelesai = async function() {
+            if (!currentUser) {
+                showNotification(
+                    'Autentikasi Diperlukan',
+                    'Silakan masuk terlebih dahulu.',
+                    true,
+                    () => { window.location.href = '../login/'; }
+                );
+                return;
+            }
+
+            if (nominalTransaksi <= 0) {
+                showNotification('Kesalahan Nominal', 'Nominal transaksi tidak valid.', true);
+                return;
+            }
+
+            const btnBayar = document.querySelector('button[onclick="konfirmasiSelesai()"]');
+            if (btnBayar) {
+                btnBayar.disabled = true;
+                btnBayar.textContent = 'Menyimpan Transaksi...';
+            }
+
+            try {
+                const waktuStr = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+                
+                await addDoc(collection(db, "transactions"), {
+                    userId: currentUser.uid,
+                    tipe: 'Deposit',
+                    jumlah: nominalTransaksi,
+                    waktu: waktuStr,
+                    status: 'Pending',
+                    createdAt: new Date().toISOString()
+                });
+
+                showNotification(
+                    'Berhasil',
+                    'Konfirmasi pembayaran berhasil dikirim. Mohon tunggu verifikasi dari sistem.',
+                    false,
+                    () => { window.location.href = '../investasi/'; }
+                );
+
+            } catch (error) {
+                console.error("Gagal mengirim transaksi:", error);
+                showNotification('Kesalahan Sistem', 'Terjadi kesalahan saat mengirim transaksi. Silakan coba lagi.', true);
+                if (btnBayar) {
+                    btnBayar.disabled = false;
+                    btnBayar.textContent = 'Saya Sudah Bayar';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
