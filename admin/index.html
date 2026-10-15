@@ -1,1 +1,2483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - InvestasiUMKM</title>
+    
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --border-subtle: #e2e8f0;
+            --border-focus: #0f766e;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-light: #94a3b8;
+            --primary: #0f766e;
+            --primary-hover: #115e59;
+            --primary-light: #ccfbf1;
+            --primary-border: #5eead4;
+            --danger: #e11d48;
+            --danger-bg: #fff1f2;
+            --danger-border: #fecdd3;
+            --warning: #d97706;
+            --warning-bg: #fffbeb;
+            --success: #16a34a;
+            --success-bg: #f0fdf4;
+            --sidebar-width: 280px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
+        body.dark-theme {
+            --bg-body: #020617;
+            --bg-surface: #0f172a;
+            --bg-subtle: #1e293b;
+            --border-subtle: #334155;
+            --border-focus: #2dd4bf;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-light: #64748b;
+            --primary: #2dd4bf;
+            --primary-hover: #14b8a6;
+            --primary-light: rgba(45, 212, 191, 0.12);
+            --primary-border: rgba(45, 212, 191, 0.3);
+            --danger-bg: rgba(225, 29, 72, 0.15);
+            --danger-border: rgba(225, 29, 72, 0.3);
+            --success-bg: rgba(22, 163, 74, 0.15);
+            --warning-bg: rgba(217, 119, 6, 0.15);
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.2);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        aside.sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo-text {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .menu-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-light);
+            padding: 0 10px;
+            margin-bottom: 6px;
+            letter-spacing: 0.05em;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .menu-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .sidebar-users-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+            max-height: calc(100vh - 340px);
+            padding-right: 2px;
+        }
+
+        .sidebar-users-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-users-container::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+            border-radius: 4px;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        /* Main Wrapper */
+        .main-wrapper {
+            flex-grow: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin 0.3s ease;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            gap: 12px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .burger-btn {
+            background: none;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .burger-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .burger-btn:hover {
+            background-color: var(--bg-subtle);
+            border-color: var(--border-focus);
+        }
+
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .admin-badge {
+            font-size: 0.75rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            border: 1px solid var(--primary-border);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .admin-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* Main Content Layout */
+        main {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Stats & Analytics Dashboard Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .stat-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 22px 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary);
+            opacity: 0.8;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .stat-desc {
+            font-size: 0.775rem;
+            color: var(--text-light);
+        }
+
+        /* Chart Card */
+        .chart-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 14px;
+            height: 160px;
+            padding-top: 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            overflow-x: auto;
+            padding-bottom: 6px;
+        }
+
+        .chart-bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 50px;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .chart-bar-fill {
+            width: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--primary-hover));
+            border-radius: 6px 6px 0 0;
+            min-height: 6px;
+        }
+
+        .chart-bar-count {
+            font-size: 0.725rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .chart-bar-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Section Container */
+        .section-container {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .support-chat-layout {
+            display: grid;
+            grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.6fr);
+            min-height: 560px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .support-chat-list-panel {
+            min-width: 0;
+            border-right: 1px solid var(--border-subtle);
+            background: var(--bg-surface);
+        }
+
+        .support-chat-list-panel h3,
+        .support-chat-active-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .admin-support-chat-list { max-height: 500px; overflow-y: auto; }
+
+        .support-chat-list-item {
+            width: 100%;
+            display: block;
+            padding: 13px 15px;
+            border: 0;
+            border-bottom: 1px solid var(--border-subtle);
+            background: transparent;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .support-chat-list-item:hover,
+        .support-chat-list-item.active { background: var(--primary-light); }
+
+        .support-chat-list-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+        .support-chat-list-name { min-width: 0; overflow: hidden; color: var(--text-main); font-size: 0.82rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+        .support-chat-list-time { flex: 0 0 auto; color: var(--text-light); font-size: 0.65rem; }
+        .support-chat-list-preview { display: block; margin-top: 5px; overflow: hidden; color: var(--text-muted); font-size: 0.74rem; text-overflow: ellipsis; white-space: nowrap; }
+        .support-chat-list-unread { width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; background: var(--primary); }
+
+        .support-chat-conversation-panel { display: flex; min-width: 0; flex-direction: column; background: var(--bg-body); }
+        .support-chat-active { display: flex; min-height: 0; flex: 1; flex-direction: column; }
+        .support-chat-active[hidden] { display: none; }
+        .support-chat-active-header { display: flex; flex-direction: column; gap: 3px; background: var(--bg-surface); }
+        .support-chat-active-header span { color: var(--text-muted); font-size: 0.72rem; overflow-wrap: anywhere; }
+        .admin-support-chat-messages { display: flex; min-height: 300px; flex: 1; flex-direction: column; gap: 10px; overflow-y: auto; padding: 18px; }
+        .admin-support-chat-message { max-width: 80%; padding: 10px 13px 8px; border: 1px solid var(--border-subtle); border-radius: 16px 16px 16px 4px; background: var(--bg-surface); box-shadow: var(--shadow-sm); overflow-wrap: anywhere; }
+        .admin-support-chat-message.admin { align-self: flex-end; border-radius: 16px 16px 4px 16px; background: var(--primary-light); border-color: var(--primary-border); }
+        .admin-support-chat-message p { color: var(--text-main); font-size: 0.84rem; line-height: 1.48; white-space: pre-wrap; }
+        .admin-support-chat-message time { display: block; margin-top: 5px; color: var(--text-light); font-size: 0.65rem; text-align: right; }
+        .admin-support-chat-message-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 7px; }
+        .admin-support-chat-message-action { border: 0; padding: 3px 7px; border-radius: 5px; background: transparent; color: var(--text-muted); font: inherit; font-size: 0.68rem; cursor: pointer; }
+        .admin-support-chat-message-action:hover { background: var(--bg-subtle); color: var(--primary); }
+        .admin-support-chat-message-action.delete:hover { background: var(--danger-bg); color: var(--danger); }
+        .admin-support-chat-edit { display: flex; min-width: min(300px, 70vw); flex-direction: column; gap: 8px; }
+        .admin-support-chat-edit textarea,
+        .admin-support-chat-edit input { width: 100%; min-height: 42px; padding: 9px 10px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--bg-surface); color: var(--text-main); font: inherit; font-size: 0.82rem; }
+        .admin-support-chat-edit textarea { min-height: 84px; resize: vertical; }
+        .admin-support-chat-edit-actions { display: flex; justify-content: flex-end; gap: 7px; }
+        .admin-support-chat-image-link { display: block; max-width: min(280px, 100%); }
+        .admin-support-chat-image { display: block; max-width: 100%; max-height: 300px; border-radius: 10px; object-fit: contain; background: var(--bg-subtle); }
+        .admin-support-chat-image-fallback { display: block; color: var(--primary); font-size: 0.78rem; overflow-wrap: anywhere; }
+        .admin-support-chat-form { display: flex; align-items: flex-end; gap: 10px; padding: 14px; border-top: 1px solid var(--border-subtle); background: var(--bg-surface); }
+        .admin-support-chat-form textarea { min-width: 0; min-height: 44px; max-height: 120px; flex: 1; resize: vertical; }
+        .admin-support-chat-actions { display: flex; flex: 0 0 auto; flex-direction: column; gap: 7px; }
+        .admin-support-chat-form .btn { min-height: 40px; justify-content: center; white-space: nowrap; }
+        .support-chat-nav-count { min-width: 20px; margin-left: auto; padding: 1px 6px; border-radius: 999px; background: var(--danger); color: #fff; font-size: 0.68rem; text-align: center; }
+        .support-chat-nav-count[hidden] { display: none; }
+
+        @media (max-width: 720px) {
+            .support-chat-layout { grid-template-columns: 1fr; min-height: 620px; }
+            .support-chat-list-panel { border-right: 0; border-bottom: 1px solid var(--border-subtle); }
+            .admin-support-chat-list { max-height: 180px; }
+            .admin-support-chat-messages { min-height: 220px; }
+        }
+
+        @media (max-width: 640px) {
+            .admin-support-chat-form { flex-direction: column; align-items: stretch; gap: 9px; padding: 12px; }
+            .admin-support-chat-form textarea { width: 100%; min-height: 92px; max-height: 160px; flex: 0 0 auto; resize: vertical; font-size: 16px; }
+            .admin-support-chat-actions { width: 100%; flex-direction: row; }
+            .admin-support-chat-form .btn { min-width: 0; min-height: 42px; flex: 1; justify-content: center; }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 18px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .highlight-editor-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .highlight-editor-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .highlight-field-group {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            padding: 16px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+        }
+
+        .highlight-field-group-title {
+            grid-column: 1 / -1;
+            color: var(--text-main);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .highlight-preview {
+            position: sticky;
+            top: 92px;
+            min-width: 0;
+            padding: 20px;
+            background: linear-gradient(145deg, var(--primary-light), var(--bg-surface) 72%);
+            border: 1px solid var(--primary-border);
+            border-radius: var(--radius-md);
+        }
+
+        .highlight-preview-label {
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .highlight-preview h3 {
+            margin: 8px 0 12px;
+            color: var(--text-main);
+            font-size: 1.15rem;
+            line-height: 1.25;
+        }
+
+        .highlight-preview-copy {
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .highlight-preview-amount {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .highlight-preview-note {
+            display: block;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--primary-border);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+
+        .highlight-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .highlight-actions .btn-subtle {
+            color: var(--text-muted);
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        /* Search input wrapper */
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding-left: 38px;
+        }
+
+        .search-icon-wrapper {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .search-icon-wrapper svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* USERS LIST TABLE/GRID */
+        .users-table-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .user-row-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            transition: var(--transition);
+        }
+
+        .user-row-card:hover {
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .user-row-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+            border: 1px solid var(--primary-border);
+        }
+
+        .user-row-details {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+        }
+
+        .user-row-email {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-row-meta {
+            font-size: 0.775rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* DETAIL VIEW STYLING (SEPARATED) */
+        #user-detail-view {
+            display: none;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .detail-top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .detail-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-panel-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-box-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 12px;
+        }
+
+        .panel-box-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 0.725rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 0.04em;
+        }
+
+        .info-value {
+            font-size: 0.875rem;
+            color: var(--text-main);
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .address-box {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Transactions Table / List inside Detail View */
+        .transactions-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .tx-management-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            transition: var(--transition);
+        }
+
+        .tx-management-card:hover {
+            border-color: var(--border-focus);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 0.725rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .form-input {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-size: 0.875rem;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .form-input:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            font-size: 0.825rem;
+            color: #fff;
+            background-color: var(--primary);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-subtle {
+            background: var(--bg-subtle);
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            box-shadow: none;
+        }
+
+        .btn-subtle:hover {
+            background-color: var(--border-subtle);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background-color: #be123c;
+        }
+
+        .badge {
+            font-size: 0.725rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            display: inline-block;
+        }
+
+        .badge-deposit { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+        .badge-withdraw { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); }
+        .badge-pending { color: var(--warning); background: var(--warning-bg); border: 1px solid rgba(217, 119, 6, 0.2); }
+        .badge-berhasil { color: var(--success); background: var(--success-bg); border: 1px solid rgba(22, 163, 74, 0.2); }
+        .badge-ditolak { color: var(--danger); background: var(--danger-bg); border: 1px solid var(--danger-border); }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-sm);
+            border: 1px dashed var(--border-subtle);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 990;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            left: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+            align-items: flex-end;
+        }
+
+        .toast {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 14px 20px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            pointer-events: auto;
+            max-width: 380px;
+            width: 100%;
+            color: var(--text-main);
+            animation: slideIn 0.25s ease-out forwards;
+        }
+
+        .toast svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .toast.error { border-left-color: var(--danger); }
+        .toast.error svg { stroke: var(--danger); }
+
+        @keyframes slideIn {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        footer {
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-subtle);
+            padding: 18px 24px;
+            text-align: center;
+            font-size: 0.775rem;
+            color: var(--text-light);
+            margin-top: auto;
+        }
+
+        @media (max-width: 1024px) {
+            aside.sidebar {
+                transform: translateX(-100%);
+            }
+            aside.sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            .main-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header { padding: 12px 16px; }
+            main { padding: 16px; gap: 16px; }
+            .section-container { padding: 16px; }
+            .search-box { max-width: 100%; }
+            .admin-badge { display: none; }
+            .tx-management-card { flex-direction: column; align-items: stretch; }
+        }
+
+        /* Responsive dashboard refinements */
+        .dashboard-overview {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            padding: 4px 2px 2px;
+        }
+
+        .dashboard-overview h2 {
+            font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+            letter-spacing: -0.03em;
+        }
+
+        .dashboard-overview p {
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .overview-status {
+            color: var(--success);
+            background: var(--success-bg);
+            border: 1px solid rgba(22, 163, 74, 0.2);
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+        }
+
+        .detail-grid-layout {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+        }
+
+        .chart-card,
+        .section-container,
+        .detail-panel-box,
+        .transactions-section {
+            min-width: 0;
+        }
+
+        .chart-header h2,
+        .section-header h2 {
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 640px) {
+            .dashboard-overview {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .overview-status {
+                align-self: flex-start;
+            }
+
+            .header-actions {
+                gap: 6px;
+            }
+
+            #theme-toggle {
+                padding: 10px;
+            }
+
+            #theme-toggle span {
+                display: none;
+            }
+
+            .stat-card,
+            .chart-card,
+            .section-container,
+            .detail-panel-box,
+            .transactions-section {
+                padding: 16px;
+                border-radius: var(--radius-md);
+            }
+
+            .stat-value {
+                font-size: 1.4rem;
+            }
+
+            .chart-bars {
+                gap: 8px;
+            }
+
+            .chart-bar-item {
+                min-width: 38px;
+            }
+
+            .user-row-card {
+                padding: 14px;
+                gap: 12px;
+            }
+
+            .user-row-info {
+                width: 100%;
+            }
+
+            .user-row-card > .btn {
+                width: 100%;
+            }
+
+            .tx-management-card > div:last-child {
+                width: 100%;
+            }
+
+            .tx-management-card > div:last-child .form-input,
+            .tx-management-card > div:last-child .btn {
+                flex: 1;
+                width: 100% !important;
+            }
+
+            .detail-top-nav {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .detail-top-nav .btn {
+                width: 100%;
+            }
+
+            .highlight-editor-layout {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .highlight-preview {
+                position: static;
+            }
+
+            .highlight-field-group {
+                grid-template-columns: 1fr;
+                padding: 14px;
+            }
+
+            .highlight-field-group-title,
+            .highlight-field-group .form-group[style] {
+                grid-column: auto !important;
+            }
+
+            .highlight-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .highlight-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">BI</div>
+                <div class="logo-text">InvestasiUMKM</div>
+            </div>
+            <div class="sidebar-menu">
+                <span class="menu-label">Menu Utama</span>
+                <a href="#" class="menu-item active" id="menu-dashboard" onclick="showDashboard(event)">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    <span>Dashboard & Statistik</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-user-list" onclick="showUserList(event)">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Daftar Pengguna</span>
+                </a>
+                <a href="#" class="menu-item" id="menu-support-chat" onclick="showSupportChats(event)">
+                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>
+                    <span>Chat Pengguna</span>
+                    <span id="support-chat-nav-count" class="support-chat-nav-count" hidden>0</span>
+                </a>
+                
+                <span class="menu-label" style="margin-top: 16px;">Akses Cepat Pengguna</span>
+                <div id="sidebar-users-container" class="sidebar-users-container">
+                    <span style="font-size: 0.775rem; color: var(--text-light); padding: 6px 12px;">Memuat pengguna...</span>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <p>&copy; 2026 InvestasiUMKM</p>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header>
+                <div class="header-left">
+                    <button class="burger-btn" id="burger-toggle" title="Buka Menu">
+                        <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                    <h1 class="page-title" id="header-page-title">Dashboard & Statistik</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="theme-toggle" class="btn btn-subtle" title="Ubah Tema">
+                        <svg id="theme-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        <span id="theme-text">Tema</span>
+                    </button>
+                    <div class="admin-badge">Live Admin</div>
+                </div>
+            </header>
+
+            <!-- Main Contents -->
+            <main>
+                <!-- 1. ANALYTICS DASHBOARD VIEW -->
+                <div id="dashboard-analytics-container">
+                    <div class="dashboard-overview">
+                        <div>
+                            <h2>Ringkasan Operasional</h2>
+                            <p>Pantau pengguna, transaksi, dan konten beranda dari satu tempat.</p>
+                        </div>
+                        <span class="overview-status">Data realtime aktif</span>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-label">Total Pengguna</span>
+                            <span class="stat-value" id="stat-total-users">0</span>
+                            <span class="stat-desc">Akun terdaftar di sistem</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Total Transaksi</span>
+                            <span class="stat-value" id="stat-total-tx">0</span>
+                            <span class="stat-desc" id="stat-total-amount">Rp 0</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Transaksi Pending</span>
+                            <span class="stat-value" id="stat-pending-tx" style="color: var(--warning);">0</span>
+                            <span class="stat-desc">Menunggu konfirmasi admin</span>
+                        </div>
+                    </div>
+
+                    <div class="chart-card" style="margin-top: 24px;">
+                        <div class="chart-header">
+                            <h2>Grafik Pengguna Baru Menurut Hari</h2>
+                            <span style="font-size: 0.775rem; color: var(--text-muted);">Aktivitas 7 Hari Terakhir</span>
+                        </div>
+                        <div class="chart-bars" id="chart-daily-users"></div>
+                    </div>
+
+                    <section class="section-container" style="margin-top: 24px;">
+                        <div class="section-header">
+                            <div>
+                                <h2>Konten Highlight Beranda</h2>
+                                <p style="font-size: 0.775rem; color: var(--text-muted); margin-top: 4px;">Atur pesan utama yang tampil di halaman depan. Perubahan dapat dipratinjau sebelum disimpan.</p>
+                            </div>
+                        </div>
+                        <div class="highlight-editor-layout">
+                            <div class="highlight-editor-form">
+                                <div class="highlight-field-group">
+                                    <span class="highlight-field-group-title">Struktur Pesan</span>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-label">Label Kecil</label>
+                                        <input type="text" id="homepage-deposit-label" class="form-input" placeholder="Informasi Deposit">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-title">Judul Highlight</label>
+                                        <input type="text" id="homepage-deposit-title" class="form-input" placeholder="Mulai investasi secara terencana">
+                                    </div>
+                                </div>
+                                <div class="highlight-field-group">
+                                    <span class="highlight-field-group-title">Pesan Nominal</span>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-prefix">Teks Sebelum Nominal</label>
+                                        <input type="text" id="homepage-deposit-prefix" class="form-input" placeholder="Mulai dari">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-amount">Nominal Deposit</label>
+                                        <input type="text" id="homepage-deposit-amount" class="form-input" placeholder="Rp10.000">
+                                    </div>
+                                    <div class="form-group" style="grid-column: 1 / -1;">
+                                        <label class="form-label" for="homepage-deposit-suffix">Teks Setelah Nominal</label>
+                                        <input type="text" id="homepage-deposit-suffix" class="form-input" placeholder="dan pantau aktivitas portofolio Anda secara terstruktur.">
+                                    </div>
+                                </div>
+                                <div class="highlight-field-group">
+                                    <span class="highlight-field-group-title">Detail & Tampilan</span>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-note">Catatan Tambahan</label>
+                                        <input type="text" id="homepage-deposit-note" class="form-input" placeholder="Kelola aktivitas portofolio melalui dashboard.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-reward">Nominal Reward</label>
+                                        <input type="text" id="homepage-deposit-reward" class="form-input" placeholder="Contoh: Reward Rp50.000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-reward-color">Warna Reward</label>
+                                        <input type="color" id="homepage-deposit-reward-color" class="form-input" value="#0f172a" style="height: 42px; padding: 4px; cursor: pointer;">
+                                    </div>
+                                    <label class="form-group" style="flex-direction: row; align-items: center; gap: 10px; cursor: pointer;">
+                                        <input type="checkbox" id="homepage-deposit-reward-bold" checked style="width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer;">
+                                        <span class="form-label" style="margin: 0; cursor: pointer;">Tebalkan Nominal Reward</span>
+                                    </label>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-color">Warna Nominal</label>
+                                        <input type="color" id="homepage-deposit-color" class="form-input" value="#059669" style="height: 42px; padding: 4px; cursor: pointer;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="homepage-deposit-alignment">Posisi Teks Highlight</label>
+                                        <select id="homepage-deposit-alignment" class="form-input">
+                                            <option value="left">Rata kiri</option>
+                                            <option value="center" selected>Rata tengah</option>
+                                            <option value="right">Rata kanan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="highlight-actions">
+                                    <button class="btn" type="button" onclick="simpanKontenHighlight()">
+                                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                        Simpan Perubahan
+                                    </button>
+                                    <button class="btn btn-subtle" type="button" onclick="kosongkanKontenHighlight()">Kosongkan Semua</button>
+                                </div>
+                            </div>
+                            <div class="highlight-preview" aria-live="polite">
+                                <span class="highlight-preview-label" id="homepage-preview-label">Informasi Deposit</span>
+                                <h3 id="homepage-preview-title">Mulai investasi secara terencana</h3>
+                                <p class="highlight-preview-copy"><span id="homepage-preview-prefix">Mulai dari</span> <strong class="highlight-preview-amount" id="homepage-preview-amount">Rp10.000</strong> <span id="homepage-preview-suffix">dan pantau aktivitas portofolio Anda secara terstruktur.</span></p>
+                                <strong class="highlight-preview-note" id="homepage-preview-reward" style="color: var(--text-main);">Reward Rp50.000</strong>
+                                <span class="highlight-preview-note" id="homepage-preview-note">Kelola informasi dan aktivitas portofolio Anda melalui dashboard.</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 2. USER LIST VIEW -->
+                <div id="user-list-view" class="section-container" style="display: none;">
+                    <div class="section-header">
+                        <h2>Daftar Pengguna Terdaftar</h2>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <div class="form-group" style="margin: 0; min-width: 170px;">
+                                <select id="sort-user-date" class="form-input" onchange="renderUserListView()">
+                                    <option value="newest">Terbaru Bergabung</option>
+                                    <option value="oldest">Terlama Bergabung</option>
+                                </select>
+                            </div>
+                            <div class="search-box">
+                                <div class="search-icon-wrapper">
+                                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                </div>
+                                <input type="text" id="search-user" class="form-input" placeholder="Cari email / UID / nama...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="users-list-container" class="users-table-list">
+                        <div class="empty-state">Memuat data real-time...</div>
+                    </div>
+                </div>
+
+                <!-- 3. USER DETAIL VIEW -->
+                <div id="user-detail-view">
+                    <div class="detail-top-nav">
+                        <button class="btn btn-subtle" onclick="showUserList(event)">
+                            <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                            Kembali ke Daftar Pengguna
+                        </button>
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <span id="detail-user-email-header" style="font-weight: 700; font-size: 0.95rem; color: var(--primary);"></span>
+                            <button class="btn btn-danger" onclick="hapusPenggunaAktif()">
+                                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                Hapus Pengguna
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- GRID SECTION 1: PROFIL & ALAMAT + PORTOFOLIO -->
+                    <div class="detail-grid-layout">
+                        <!-- Profil & Alamat Pengguna -->
+                        <div class="detail-panel-box">
+                            <div class="panel-box-title">
+                                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                Informasi Profil & Alamat
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Nama Lengkap / Akun</span>
+                                <span class="info-value" id="det-fullname">-</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Email Akun</span>
+                                <span class="info-value" id="det-email">-</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Nomor WhatsApp</span>
+                                <span class="info-value" id="det-whatsapp">-</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Alamat Pengguna</span>
+                                <div class="address-box" id="det-alamat">Memuat alamat...</div>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">UID Sistem</span>
+                                <span class="info-value" id="det-uid" style="font-family: monospace; font-size: 0.75rem; color: var(--text-light);">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Portofolio & Keuangan Pengguna -->
+                        <div class="detail-panel-box">
+                            <div class="panel-box-title">
+                                <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                Portofolio & Pengaturan Saldo
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Modal Utama (Rp)</label>
+                                <input type="number" id="input-modal" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Total Profit Terkumpul (Rp)</label>
+                                <input type="number" id="input-profit" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Rate Harian (%)</label>
+                                <input type="number" step="0.01" id="input-rate" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Status Undang Teman</label>
+                                <select id="input-undang" class="form-input">
+                                    <option value="belum">Belum (Blokir WD)</option>
+                                    <option value="sudah">Sudah (Buka WD)</option>
+                                </select>
+                            </div>
+                            <button class="btn" style="margin-top: 4px;" onclick="simpanPortfolioAktif()">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                Simpan Perubahan Portofolio
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- GRID SECTION 2: DAFTAR TRANSAKSI -->
+                    <div class="transactions-section">
+                        <div class="panel-box-title">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                            Riwayat & Manajemen Transaksi Pengguna
+                        </div>
+                        <div id="det-transactions-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                    </div>
+                </div>
+
+                <section id="support-chat-view" class="section-container" style="display: none;">
+                    <div class="section-header">
+                        <div>
+                            <h2>Percakapan Pengguna</h2>
+                            <p style="margin-top: 4px; color: var(--text-muted); font-size: 0.78rem;">Pesan masuk dan balasan diperbarui secara realtime.</p>
+                        </div>
+                    </div>
+                    <div class="support-chat-layout">
+                        <aside class="support-chat-list-panel">
+                            <h3>Daftar Chat</h3>
+                            <div id="admin-support-chat-list" class="admin-support-chat-list">
+                                <div class="empty-state">Memuat percakapan...</div>
+                            </div>
+                        </aside>
+                        <section class="support-chat-conversation-panel" aria-label="Isi percakapan">
+                            <div id="admin-support-chat-empty" class="empty-state" style="margin: auto;">Pilih percakapan untuk membaca pesan.</div>
+                            <div id="admin-support-chat-active" class="support-chat-active" hidden>
+                                <div class="support-chat-active-header">
+                                    <strong id="admin-support-chat-name">Pengguna</strong>
+                                    <span id="admin-support-chat-email"></span>
+                                </div>
+                                <div id="admin-support-chat-messages" class="admin-support-chat-messages" aria-live="polite" aria-relevant="additions text"></div>
+                                <form id="admin-support-chat-form" class="admin-support-chat-form">
+                                    <label class="sr-only" for="admin-support-chat-input">Balasan untuk pengguna</label>
+                                    <textarea id="admin-support-chat-input" class="form-input" maxlength="1000" placeholder="Tulis balasan atau tempel tautan gambar..." required></textarea>
+                                    <div class="admin-support-chat-actions">
+                                        <button id="admin-support-chat-send" class="btn" type="submit" name="messageType" value="text">Kirim</button>
+                                        <button class="btn btn-subtle" type="submit" name="messageType" value="image" title="Kirim tautan HTTPS sebagai gambar">Kirim Gambar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <p>InvestasiUMKM &bull; Secure Real-Time Admin Panel Dashboard v3.1</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getFirestore, collection, doc, getDoc, updateDoc, setDoc, deleteDoc, deleteField, onSnapshot, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlgpm04sI7Jweytg2IzTHgp8w-VM1SMKw",
+            authDomain: "investasi-bengkulu.firebaseapp.com",
+            projectId: "investasi-bengkulu",
+            storageBucket: "investasi-bengkulu.firebasestorage.app",
+            messagingSenderId: "273258663588",
+            appId: "1:273258663588:web:a4c96b4d438a4462fca031"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let usersData = {};
+        let portfoliosData = {};
+        let txDataMap = {};
+        let searchQuery = '';
+        let selectedUserId = null;
+        let supportChatsData = {};
+        let selectedSupportChatId = null;
+        let stopSelectedSupportMessages = null;
+        let activeSupportMessages = [];
+        const homepageDepositDefaults = {
+            depositLabel: 'Informasi Deposit',
+            depositTitle: 'Mulai investasi secara terencana',
+            depositPrefix: 'Mulai dari',
+            depositAmount: 'Rp10.000',
+            depositSuffix: 'dan pantau aktivitas portofolio Anda secara terstruktur.',
+            depositReward: '',
+            depositRewardColor: '#0f172a',
+            depositRewardBold: true,
+            depositNote: 'Kelola informasi dan aktivitas portofolio Anda melalui dashboard.',
+            depositAmountColor: '#059669',
+            depositAlignment: 'center'
+        };
+
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const burgerToggle = document.getElementById('burger-toggle');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('mobile-open');
+            sidebarOverlay.classList.toggle('active');
+        }
+
+        burgerToggle.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const savedTheme = localStorage.getItem('admin_theme') || 'light';
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeIcon.innerHTML = `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`;
+            themeText.textContent = 'Terang';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('admin_theme', isDark ? 'dark' : 'light');
+            if (isDark) {
+                themeIcon.innerHTML = `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`;
+                themeText.textContent = 'Terang';
+            } else {
+                themeIcon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+                themeText.textContent = 'Tema';
+            }
+        });
+
+        document.getElementById('search-user').addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            renderUserListView();
+        });
+
+        window.showDashboard = function(e) {
+            e.preventDefault();
+            selectedUserId = null;
+            searchQuery = '';
+            document.getElementById('search-user').value = '';
+            document.getElementById('dashboard-analytics-container').style.display = 'block';
+            document.getElementById('user-list-view').style.display = 'none';
+            document.getElementById('user-detail-view').style.display = 'none';
+            document.getElementById('support-chat-view').style.display = 'none';
+            document.getElementById('header-page-title').textContent = 'Dashboard & Statistik';
+            setActiveMenu('menu-dashboard');
+            renderSidebarUsers();
+            if (window.innerWidth <= 1024 && sidebar.classList.contains('mobile-open')) toggleSidebar();
+        }
+
+        window.showUserList = function(e) {
+            e.preventDefault();
+            selectedUserId = null;
+            searchQuery = '';
+            document.getElementById('search-user').value = '';
+            document.getElementById('dashboard-analytics-container').style.display = 'none';
+            document.getElementById('user-list-view').style.display = 'flex';
+            document.getElementById('user-detail-view').style.display = 'none';
+            document.getElementById('support-chat-view').style.display = 'none';
+            document.getElementById('header-page-title').textContent = 'Daftar Pengguna Terdaftar';
+            setActiveMenu('menu-user-list');
+            renderUserListView();
+            renderSidebarUsers();
+            if (window.innerWidth <= 1024 && sidebar.classList.contains('mobile-open')) toggleSidebar();
+        }
+
+        function setActiveMenu(menuId) {
+            document.querySelectorAll('.sidebar-menu > a').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(menuId);
+            if (target) target.classList.add('active');
+        }
+
+        window.showSupportChats = function(e) {
+            e.preventDefault();
+            selectedUserId = null;
+            document.getElementById('dashboard-analytics-container').style.display = 'none';
+            document.getElementById('user-list-view').style.display = 'none';
+            document.getElementById('user-detail-view').style.display = 'none';
+            document.getElementById('support-chat-view').style.display = 'flex';
+            document.getElementById('header-page-title').textContent = 'Chat Pengguna';
+            setActiveMenu('menu-support-chat');
+            renderSupportChatList();
+            if (window.innerWidth <= 1024 && sidebar.classList.contains('mobile-open')) toggleSidebar();
+        }
+
+        function showToast(message, isError = false) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            const iconSvg = isError 
+                ? `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
+                : `<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+            toast.innerHTML = `${iconSvg}<span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 250);
+            }, 3000);
+        }
+
+        function renderHomepageContent(settings = {}) {
+            const values = { ...homepageDepositDefaults, ...settings };
+            document.getElementById('homepage-deposit-label').value = values.depositLabel;
+            document.getElementById('homepage-deposit-title').value = values.depositTitle;
+            document.getElementById('homepage-deposit-prefix').value = values.depositPrefix;
+            document.getElementById('homepage-deposit-amount').value = values.depositAmount;
+            document.getElementById('homepage-deposit-suffix').value = values.depositSuffix;
+            document.getElementById('homepage-deposit-reward').value = values.depositReward;
+            document.getElementById('homepage-deposit-reward-color').value = values.depositRewardColor;
+            document.getElementById('homepage-deposit-reward-bold').checked = values.depositRewardBold !== false;
+            document.getElementById('homepage-deposit-note').value = values.depositNote;
+            document.getElementById('homepage-deposit-color').value = values.depositAmountColor;
+            document.getElementById('homepage-deposit-alignment').value = values.depositAlignment;
+            updateHomepagePreview(values);
+        }
+
+        function updateHomepagePreview(settings = null) {
+            const values = settings || {
+                depositLabel: document.getElementById('homepage-deposit-label').value,
+                depositTitle: document.getElementById('homepage-deposit-title').value,
+                depositPrefix: document.getElementById('homepage-deposit-prefix').value,
+                depositAmount: document.getElementById('homepage-deposit-amount').value,
+                depositSuffix: document.getElementById('homepage-deposit-suffix').value,
+                depositReward: document.getElementById('homepage-deposit-reward').value,
+                depositRewardColor: document.getElementById('homepage-deposit-reward-color').value,
+                depositRewardBold: document.getElementById('homepage-deposit-reward-bold').checked,
+                depositNote: document.getElementById('homepage-deposit-note').value,
+                depositAmountColor: document.getElementById('homepage-deposit-color').value,
+                depositAlignment: document.getElementById('homepage-deposit-alignment').value
+            };
+            const textFields = [
+                ['homepage-preview-label', values.depositLabel],
+                ['homepage-preview-title', values.depositTitle],
+                ['homepage-preview-prefix', values.depositPrefix],
+                ['homepage-preview-amount', values.depositAmount],
+                ['homepage-preview-suffix', values.depositSuffix],
+                ['homepage-preview-reward', values.depositReward],
+                ['homepage-preview-note', values.depositNote]
+            ];
+
+            textFields.forEach(([id, value]) => {
+                const element = document.getElementById(id);
+                const text = String(value || '').trim();
+                element.textContent = text;
+                element.style.display = text ? '' : 'none';
+            });
+            const rewardPreview = document.getElementById('homepage-preview-reward');
+            rewardPreview.style.color = values.depositRewardColor || homepageDepositDefaults.depositRewardColor;
+            rewardPreview.style.fontWeight = values.depositRewardBold === false ? '500' : '700';
+            document.querySelector('.highlight-preview').style.textAlign = ['left', 'center', 'right'].includes(values.depositAlignment) ? values.depositAlignment : homepageDepositDefaults.depositAlignment;
+            document.getElementById('homepage-preview-amount').style.color = values.depositAmountColor || homepageDepositDefaults.depositAmountColor;
+        }
+
+        window.kosongkanKontenHighlight = function() {
+            ['label', 'title', 'prefix', 'amount', 'suffix', 'reward', 'note'].forEach((field) => {
+                document.getElementById(`homepage-deposit-${field}`).value = '';
+            });
+            updateHomepagePreview();
+            simpanKontenHighlight();
+        }
+
+        window.simpanKontenHighlight = async function() {
+            const settings = {
+                depositLabel: document.getElementById('homepage-deposit-label').value.trim(),
+                depositTitle: document.getElementById('homepage-deposit-title').value.trim(),
+                depositPrefix: document.getElementById('homepage-deposit-prefix').value.trim(),
+                depositAmount: document.getElementById('homepage-deposit-amount').value.trim(),
+                depositSuffix: document.getElementById('homepage-deposit-suffix').value.trim(),
+                depositReward: document.getElementById('homepage-deposit-reward').value.trim(),
+                depositRewardColor: document.getElementById('homepage-deposit-reward-color').value || homepageDepositDefaults.depositRewardColor,
+                depositRewardBold: document.getElementById('homepage-deposit-reward-bold').checked,
+                depositNote: document.getElementById('homepage-deposit-note').value.trim(),
+                depositAmountColor: document.getElementById('homepage-deposit-color').value || homepageDepositDefaults.depositAmountColor,
+                depositAlignment: document.getElementById('homepage-deposit-alignment').value || homepageDepositDefaults.depositAlignment,
+                updatedAt: new Date().toISOString()
+            };
+
+            try {
+                await setDoc(doc(db, 'siteSettings', 'homepage'), settings, { merge: true });
+                showToast('Konten highlight beranda berhasil diperbarui!');
+            } catch (error) {
+                showToast('Gagal menyimpan konten beranda.', true);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ['label', 'title', 'prefix', 'amount', 'suffix', 'reward', 'note', 'color', 'reward-color', 'reward-bold', 'alignment'].forEach((field) => {
+                document.getElementById(`homepage-deposit-${field}`).addEventListener('input', () => updateHomepagePreview());
+            });
+            document.getElementById('homepage-deposit-alignment').addEventListener('change', () => updateHomepagePreview());
+            inisialisasiRealtimeAdmin();
+        });
+
+        function inisialisasiRealtimeAdmin() {
+            onSnapshot(doc(db, 'siteSettings', 'homepage'), (snapshot) => {
+                renderHomepageContent(snapshot.exists() ? snapshot.data() : homepageDepositDefaults);
+            }, () => {
+                renderHomepageContent(homepageDepositDefaults);
+            });
+
+            onSnapshot(collection(db, "users"), (snapshot) => {
+                usersData = {};
+                snapshot.forEach(docSnap => { usersData[docSnap.id] = docSnap.data(); });
+                renderAnalytics();
+                renderUserListView();
+                renderSidebarUsers();
+                if (selectedUserId && !usersData[selectedUserId]) {
+                    showUserList(new Event('click'));
+                } else if (selectedUserId) {
+                    renderUserDetailView();
+                }
+            });
+
+            onSnapshot(collection(db, "portfolios"), (snapshot) => {
+                portfoliosData = {};
+                snapshot.forEach(docSnap => { portfoliosData[docSnap.id] = docSnap.data(); });
+                renderAnalytics();
+                if (selectedUserId) renderUserDetailView();
+            });
+
+            onSnapshot(collection(db, "transactions"), (snapshot) => {
+                txDataMap = {};
+                snapshot.forEach(txDoc => {
+                    const tx = txDoc.data();
+                    const uid = tx.userId;
+                    if (!txDataMap[uid]) txDataMap[uid] = [];
+                    txDataMap[uid].push({ id: txDoc.id, ...tx });
+                });
+                renderAnalytics();
+                if (selectedUserId) renderUserDetailView();
+            });
+
+            onSnapshot(query(collection(db, 'supportChats'), orderBy('updatedAt', 'desc')), (snapshot) => {
+                supportChatsData = {};
+                snapshot.forEach((chatDoc) => { supportChatsData[chatDoc.id] = chatDoc.data(); });
+                renderSupportChatList();
+            }, (error) => {
+                console.error('Gagal memuat daftar chat:', error);
+                document.getElementById('admin-support-chat-list').innerHTML = '<div class="empty-state">Chat tidak dapat dimuat. Periksa izin Firestore.</div>';
+            });
+        }
+
+        function formatSupportChatTime(timestamp) {
+            if (!timestamp) return '';
+            return new Date(timestamp).toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function renderSupportChatList() {
+            const container = document.getElementById('admin-support-chat-list');
+            if (!container) return;
+            const chatEntries = Object.entries(supportChatsData);
+            const unreadCount = chatEntries.filter(([, chat]) => chat.unreadForAdmin).length;
+            const unreadBadge = document.getElementById('support-chat-nav-count');
+            unreadBadge.textContent = unreadCount > 99 ? '99+' : String(unreadCount);
+            unreadBadge.hidden = unreadCount === 0;
+
+            if (chatEntries.length === 0) {
+                container.innerHTML = '<div class="empty-state">Belum ada pesan dari pengguna.</div>';
+                return;
+            }
+
+            container.replaceChildren();
+            chatEntries.forEach(([uid, chat]) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `support-chat-list-item ${selectedSupportChatId === uid ? 'active' : ''}`;
+                const top = document.createElement('span');
+                top.className = 'support-chat-list-top';
+                const name = document.createElement('span');
+                name.className = 'support-chat-list-name';
+                name.textContent = chat.userName || chat.userEmail || uid;
+                const time = document.createElement('time');
+                time.className = 'support-chat-list-time';
+                time.textContent = formatSupportChatTime(chat.updatedAt);
+                top.append(name, time);
+                const preview = document.createElement('span');
+                preview.className = 'support-chat-list-preview';
+                preview.textContent = chat.lastMessage || 'Belum ada pesan';
+                button.append(top, preview);
+                if (chat.unreadForAdmin) {
+                    const unread = document.createElement('span');
+                    unread.className = 'support-chat-list-unread';
+                    unread.setAttribute('aria-label', 'Pesan belum dibaca');
+                    top.appendChild(unread);
+                }
+                button.addEventListener('click', () => openSupportChat(uid));
+                container.appendChild(button);
+            });
+        }
+
+        function renderAdminSupportMessages(snapshot) {
+            activeSupportMessages = snapshot.docs.map((messageDoc) => ({ id: messageDoc.id, data: messageDoc.data() }));
+            renderAdminSupportMessageList(activeSupportMessages);
+        }
+
+        function renderAdminSupportMessageList(messages) {
+            const container = document.getElementById('admin-support-chat-messages');
+            container.replaceChildren();
+            if (messages.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'empty-state';
+                empty.textContent = 'Belum ada pesan di percakapan ini.';
+                container.appendChild(empty);
+                return;
+            }
+
+            messages.forEach(({ id, data: message }) => {
+                const bubble = document.createElement('article');
+                bubble.className = `admin-support-chat-message ${message.senderRole === 'admin' ? 'admin' : 'user'}`;
+                if (message.messageType === 'image' && getSafeImageUrl(message.imageUrl)) {
+                    bubble.classList.add('has-image');
+                    bubble.appendChild(createSupportChatImage(message.imageUrl));
+                } else {
+                    const text = document.createElement('p');
+                    text.textContent = message.text || '';
+                    bubble.appendChild(text);
+                }
+                const time = document.createElement('time');
+                time.textContent = `${message.senderRole === 'admin' ? 'Admin' : 'Pengguna'} · ${formatSupportChatTime(message.createdAt)}`;
+                bubble.appendChild(time);
+                const actions = document.createElement('div');
+                actions.className = 'admin-support-chat-message-actions';
+                const editButton = document.createElement('button');
+                editButton.type = 'button';
+                editButton.className = 'admin-support-chat-message-action';
+                editButton.textContent = 'Edit';
+                editButton.addEventListener('click', () => beginSupportMessageEdit(id, message));
+                const deleteButton = document.createElement('button');
+                deleteButton.type = 'button';
+                deleteButton.className = 'admin-support-chat-message-action delete';
+                deleteButton.textContent = 'Hapus';
+                deleteButton.addEventListener('click', () => deleteSupportMessage(id));
+                actions.append(editButton, deleteButton);
+                bubble.appendChild(actions);
+                container.appendChild(bubble);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function beginSupportMessageEdit(messageId, message) {
+            const messageIndex = activeSupportMessages.findIndex((entry) => entry.id === messageId);
+            const currentMessage = activeSupportMessages[messageIndex];
+            if (!currentMessage) return;
+
+            const container = document.getElementById('admin-support-chat-messages');
+            const bubbles = Array.from(container.querySelectorAll('.admin-support-chat-message'));
+            const bubble = bubbles[messageIndex];
+            if (!bubble) return;
+
+            const editor = document.createElement('form');
+            editor.className = 'admin-support-chat-edit';
+            const isImage = message.messageType === 'image';
+            const field = document.createElement(isImage ? 'input' : 'textarea');
+            if (isImage) field.type = 'url';
+            field.required = true;
+            field.value = isImage ? (message.imageUrl || '') : (message.text || '');
+            field.placeholder = isImage ? 'https://tautan-gambar...' : 'Tulis pesan...';
+
+            const actions = document.createElement('div');
+            actions.className = 'admin-support-chat-edit-actions';
+            const cancelButton = document.createElement('button');
+            cancelButton.type = 'button';
+            cancelButton.className = 'admin-support-chat-message-action';
+            cancelButton.textContent = 'Batal';
+            cancelButton.addEventListener('click', () => renderAdminSupportMessageList(activeSupportMessages));
+            const saveButton = document.createElement('button');
+            saveButton.type = 'submit';
+            saveButton.className = 'admin-support-chat-message-action';
+            saveButton.textContent = 'Simpan';
+            actions.append(cancelButton, saveButton);
+            editor.append(field, actions);
+            editor.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const value = field.value.trim();
+                const imageUrl = isImage ? getSafeImageUrl(value) : '';
+                if (!value || (isImage && !imageUrl)) {
+                    showToast(isImage ? 'Tautan gambar harus menggunakan HTTPS.' : 'Pesan tidak boleh kosong.', true);
+                    return;
+                }
+
+                saveButton.disabled = true;
+                const updatedAt = Date.now();
+                const batch = writeBatch(db);
+                const messageRef = doc(db, 'supportChats', selectedSupportChatId, 'messages', messageId);
+                batch.update(messageRef, isImage
+                    ? { imageUrl, editedAt: updatedAt }
+                    : { text: value, messageType: 'text', imageUrl: deleteField(), editedAt: updatedAt });
+
+                if (messageIndex === activeSupportMessages.length - 1) {
+                    batch.set(doc(db, 'supportChats', selectedSupportChatId), {
+                        lastMessage: isImage ? 'Gambar' : value,
+                        updatedAt,
+                        unreadForUser: true
+                    }, { merge: true });
+                }
+
+                try {
+                    await batch.commit();
+                    showToast('Pesan berhasil diperbarui.');
+                } catch (error) {
+                    console.error('Gagal mengedit pesan chat:', error);
+                    showToast('Pesan gagal diperbarui. Periksa izin Firestore.', true);
+                    saveButton.disabled = false;
+                }
+            });
+            bubble.replaceChildren(editor);
+            field.focus();
+        }
+
+        async function deleteSupportMessage(messageId) {
+            const messageIndex = activeSupportMessages.findIndex((entry) => entry.id === messageId);
+            const currentMessage = activeSupportMessages[messageIndex];
+            if (!currentMessage || !window.confirm('Hapus pesan ini dari percakapan?')) return;
+
+            const batch = writeBatch(db);
+            batch.delete(doc(db, 'supportChats', selectedSupportChatId, 'messages', messageId));
+            if (messageIndex === activeSupportMessages.length - 1) {
+                const previousMessage = activeSupportMessages[messageIndex - 1]?.data;
+                batch.set(doc(db, 'supportChats', selectedSupportChatId), {
+                    lastMessage: previousMessage
+                        ? (previousMessage.messageType === 'image' ? 'Gambar' : (previousMessage.text || ''))
+                        : '',
+                    updatedAt: Date.now()
+                }, { merge: true });
+            }
+
+            try {
+                await batch.commit();
+                showToast('Pesan berhasil dihapus.');
+            } catch (error) {
+                console.error('Gagal menghapus pesan chat:', error);
+                showToast('Pesan gagal dihapus. Periksa izin Firestore.', true);
+            }
+        }
+
+        function getSafeImageUrl(value) {
+            try {
+                const url = new URL(value);
+                return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
+            } catch {
+                return '';
+            }
+        }
+
+        function createSupportChatImage(value) {
+            const safeUrl = getSafeImageUrl(value);
+            const link = document.createElement('a');
+            link.className = 'admin-support-chat-image-link';
+            link.href = safeUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            const image = document.createElement('img');
+            image.className = 'admin-support-chat-image';
+            image.src = safeUrl;
+            image.alt = 'Gambar dari percakapan';
+            image.loading = 'lazy';
+            image.referrerPolicy = 'no-referrer';
+            image.addEventListener('error', () => {
+                const fallback = document.createElement('span');
+                fallback.className = 'admin-support-chat-image-fallback';
+                fallback.textContent = 'Gambar gagal dimuat. Buka tautan gambar.';
+                link.replaceChildren(fallback);
+            }, { once: true });
+            link.appendChild(image);
+            return link;
+        }
+
+        async function openSupportChat(uid) {
+            selectedSupportChatId = uid;
+            const chat = supportChatsData[uid] || {};
+            document.getElementById('admin-support-chat-empty').hidden = true;
+            document.getElementById('admin-support-chat-active').hidden = false;
+            document.getElementById('admin-support-chat-name').textContent = chat.userName || 'Pengguna';
+            document.getElementById('admin-support-chat-email').textContent = `${chat.userEmail || ''} · UID ${uid}`;
+            renderSupportChatList();
+
+            if (stopSelectedSupportMessages) stopSelectedSupportMessages();
+            stopSelectedSupportMessages = onSnapshot(
+                query(collection(db, 'supportChats', uid, 'messages'), orderBy('createdAt', 'asc')),
+                renderAdminSupportMessages,
+                (error) => {
+                    console.error('Gagal memuat pesan chat:', error);
+                    document.getElementById('admin-support-chat-messages').innerHTML = '<div class="empty-state">Pesan tidak dapat dimuat.</div>';
+                }
+            );
+
+            try {
+                await setDoc(doc(db, 'supportChats', uid), { unreadForAdmin: false }, { merge: true });
+            } catch (error) {
+                console.error('Gagal memperbarui status baca chat:', error);
+            }
+        }
+
+        document.getElementById('admin-support-chat-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const input = document.getElementById('admin-support-chat-input');
+            const sendButton = event.submitter;
+            const messageType = sendButton?.value === 'image' ? 'image' : 'text';
+            const value = input.value.trim();
+            const uid = selectedSupportChatId;
+            if (!value || !uid) return;
+
+            const imageUrl = messageType === 'image' ? getSafeImageUrl(value) : '';
+            if (messageType === 'image' && !imageUrl) {
+                showToast('Masukkan tautan gambar HTTPS yang valid.', true);
+                return;
+            }
+
+            sendButton.disabled = true;
+            const createdAt = Date.now();
+            const chatRef = doc(db, 'supportChats', uid);
+            const messageRef = doc(collection(db, 'supportChats', uid, 'messages'));
+            const batch = writeBatch(db);
+            const messageText = messageType === 'image' ? '' : value;
+            batch.set(messageRef, {
+                text: messageText,
+                ...(messageType === 'image' ? { messageType: 'image', imageUrl } : {}),
+                senderId: 'admin',
+                senderRole: 'admin',
+                createdAt
+            });
+            batch.set(chatRef, {
+                lastMessage: messageType === 'image' ? 'Gambar' : messageText,
+                updatedAt: createdAt,
+                status: 'open',
+                unreadForAdmin: false,
+                unreadForUser: true
+            }, { merge: true });
+
+            try {
+                await batch.commit();
+                input.value = '';
+            } catch (error) {
+                console.error('Gagal mengirim balasan chat:', error);
+                showToast('Balasan gagal dikirim. Periksa izin Firestore.', true);
+            } finally {
+                sendButton.disabled = false;
+            }
+        });
+
+        function renderSidebarUsers() {
+            const container = document.getElementById('sidebar-users-container');
+            if (!container) return;
+
+            let userIds = Object.keys(usersData);
+            if (userIds.length === 0) {
+                container.innerHTML = `<span style="font-size: 0.775rem; color: var(--text-light); padding: 6px 12px;">Belum ada pengguna.</span>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            userIds.forEach(uid => {
+                const u = usersData[uid] || {};
+                const displayName = u.email || u.fullname || uid.substring(0, 10) + '...';
+                const isSelected = selectedUserId === uid;
+
+                const item = document.createElement('a');
+                item.href = '#';
+                item.className = `menu-item ${isSelected ? 'active' : ''}`;
+                item.style.fontSize = '0.8rem';
+                item.style.padding = '8px 12px';
+                item.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${displayName}">${displayName}</span>
+                `;
+                item.onclick = (e) => {
+                    e.preventDefault();
+                    selectUser(uid);
+                    if (window.innerWidth <= 1024) toggleSidebar();
+                };
+                container.appendChild(item);
+            });
+        }
+
+        window.selectUser = function(uid) {
+            selectedUserId = uid;
+            document.querySelectorAll('.sidebar-users-container .menu-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('dashboard-analytics-container').style.display = 'none';
+            document.getElementById('user-list-view').style.display = 'none';
+            document.getElementById('support-chat-view').style.display = 'none';
+            document.getElementById('user-detail-view').style.display = 'flex';
+            renderUserDetailView();
+            renderSidebarUsers();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderAnalytics() {
+            const totalUsersCount = Object.keys(usersData).length;
+            let totalTxCount = 0;
+            let totalTxAmount = 0;
+            let pendingTxCount = 0;
+            const daysMap = {};
+
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const dateStr = d.toISOString().split('T')[0];
+                const label = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+                daysMap[dateStr] = { label: label, count: 0 };
+            }
+
+            Object.values(usersData).forEach(u => {
+                const rawDate = u.createdAt || u.tanggal || u.joinedAt || '';
+                if (rawDate) {
+                    try {
+                        const dateStr = new Date(rawDate).toISOString().split('T')[0];
+                        if (daysMap[dateStr]) daysMap[dateStr].count++;
+                    } catch(e) {}
+                }
+            });
+
+            Object.values(txDataMap).forEach(txList => {
+                txList.forEach(tx => {
+                    totalTxCount++;
+                    totalTxAmount += Number(tx.jumlah || 0);
+                    if ((tx.status || '').toLowerCase() === 'pending') pendingTxCount++;
+                });
+            });
+
+            document.getElementById('stat-total-users').textContent = totalUsersCount;
+            document.getElementById('stat-total-tx').textContent = totalTxCount;
+            document.getElementById('stat-total-amount').textContent = `Total: Rp ${totalTxAmount.toLocaleString('id-ID')}`;
+            document.getElementById('stat-pending-tx').textContent = pendingTxCount;
+
+            const chartBarsEl = document.getElementById('chart-daily-users');
+            if (chartBarsEl) {
+                chartBarsEl.innerHTML = '';
+                const maxCount = Math.max(...Object.values(daysMap).map(d => d.count), 1);
+                Object.values(daysMap).forEach(day => {
+                    const heightPercent = Math.max((day.count / maxCount) * 100, 8);
+                    chartBarsEl.innerHTML += `
+                        <div class="chart-bar-item">
+                            <span class="chart-bar-count">${day.count}</span>
+                            <div class="chart-bar-fill" style="height: ${heightPercent}%;"></div>
+                            <span class="chart-bar-label">${day.label}</span>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function renderUserListView() {
+            const container = document.getElementById('users-list-container');
+            if (!container) return;
+
+            let userIds = Object.keys(usersData);
+            if (userIds.length === 0) {
+                container.innerHTML = `<div class="empty-state">Belum ada pengguna terdaftar.</div>`;
+                return;
+            }
+
+            if (searchQuery) {
+                userIds = userIds.filter(uid => {
+                    const u = usersData[uid] || {};
+                    return uid.toLowerCase().includes(searchQuery) || 
+                           (u.email || '').toLowerCase().includes(searchQuery) || 
+                           (u.fullname || '').toLowerCase().includes(searchQuery) ||
+                           (u.alamat || u.address || '').toLowerCase().includes(searchQuery);
+                });
+            }
+
+            const sortOrder = document.getElementById('sort-user-date')?.value || 'newest';
+            userIds.sort((a, b) => {
+                const userA = usersData[a] || {};
+                const userB = usersData[b] || {};
+                
+                const dateA = new Date(userA.createdAt || userA.tanggal || userA.joinedAt || 0).getTime();
+                const dateB = new Date(userB.createdAt || userB.tanggal || userB.joinedAt || 0).getTime();
+
+                if (sortOrder === 'oldest') {
+                    return dateA - dateB;
+                } else {
+                    return dateB - dateA;
+                }
+            });
+
+            if (userIds.length === 0) {
+                container.innerHTML = `<div class="empty-state">Tidak ditemukan pengguna yang cocok dengan pencarian.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            userIds.forEach(uid => {
+                const u = usersData[uid] || {};
+                const name = u.fullname || u.email || 'Tanpa Nama';
+                const initial = name.charAt(0).toUpperCase();
+                const addressText = u.alamat || u.address || 'Alamat belum diisi';
+                
+                const rawJoinDate = u.createdAt || u.tanggal || u.joinedAt;
+                const formattedDate = rawJoinDate ? new Date(rawJoinDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Tanggal tidak tercatat';
+
+                container.innerHTML += `
+                    <div class="user-row-card">
+                        <div class="user-row-info">
+                            <div class="user-avatar">${initial}</div>
+                            <div class="user-row-details">
+                                <span class="user-row-email">${name}</span>
+                                <div class="user-row-meta">
+                                    <span>UID: ${uid.substring(0, 10)}...</span>
+                                    <span>&bull;</span>
+                                    <span>📅 ${formattedDate}</span>
+                                    <span>&bull;</span>
+                                    <span style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${addressText}">📍 ${addressText}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="selectUser('${uid}')">
+                            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            Kelola Pengguna
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function renderUserDetailView() {
+            if (!selectedUserId) return;
+            const u = usersData[selectedUserId] || {};
+            const p = portfoliosData[selectedUserId] || { modalUtama: 0, totalProfitTerkumpul: 0, rateHarian: 0.05, statusUndangTeman: 'belum' };
+            const userTxs = txDataMap[selectedUserId] || [];
+            userTxs.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+            document.getElementById('header-page-title').textContent = `Detail Pengguna: ${u.email || u.fullname || selectedUserId}`;
+            document.getElementById('detail-user-email-header').textContent = u.email || u.fullname || '';
+
+            document.getElementById('det-fullname').textContent = u.fullname || '-';
+            document.getElementById('det-email').textContent = u.email || '-';
+            document.getElementById('det-whatsapp').textContent = u.whatsapp || u.phone || u.noWhatsApp || u.noWa || '-';
+            document.getElementById('det-alamat').textContent = u.alamat || u.address || 'Belum ada alamat yang terdaftar.';
+            document.getElementById('det-uid').textContent = selectedUserId;
+
+            document.getElementById('input-modal').value = p.modalUtama || 0;
+            document.getElementById('input-profit').value = p.totalProfitTerkumpul || 0;
+            document.getElementById('input-rate').value = p.rateHarian !== undefined ? p.rateHarian : 0.05;
+            document.getElementById('input-undang').value = p.statusUndangTeman === 'sudah' ? 'sudah' : 'belum';
+
+            const txContainer = document.getElementById('det-transactions-container');
+            if (userTxs.length === 0) {
+                txContainer.innerHTML = `<div class="empty-state">Tidak ada riwayat transaksi untuk pengguna ini.</div>`;
+                return;
+            }
+
+            txContainer.innerHTML = '';
+            userTxs.forEach(tx => {
+                const statusVal = tx.status || 'Pending';
+                const tipeLower = (tx.tipe || '').toLowerCase();
+                let badgeCls = 'badge';
+                if (tipeLower.includes('deposit')) badgeCls += ' badge-deposit';
+                else if (tipeLower.includes('penarikan')) badgeCls += ' badge-withdraw';
+
+                txContainer.innerHTML += `
+                    <div class="tx-management-card">
+                        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; flex-grow: 1;">
+                            <span class="${badgeCls}">${tx.tipe || 'Tx'}</span>
+                            <div>
+                                <strong style="font-size: 0.9rem;">Rp ${Number(tx.jumlah || 0).toLocaleString('id-ID')}</strong>
+                                ${tx.bank ? `<span style="color: var(--text-muted); font-size: 0.775rem;">(${tx.bank})</span>` : ''}
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <input type="text" id="waktu-${tx.id}" value="${tx.waktu || ''}" class="form-input" style="width: 110px;" placeholder="Waktu">
+                            <select id="status-${tx.id}" class="form-input" style="width: 105px;">
+                                <option value="Pending" ${statusVal === 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="Berhasil" ${statusVal === 'Berhasil' ? 'selected' : ''}>Berhasil</option>
+                                <option value="Ditolak" ${statusVal === 'Ditolak' ? 'selected' : ''}>Ditolak</option>
+                            </select>
+                            <button class="btn" onclick="simpanTransaksi('${tx.id}')">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.simpanPortfolioAktif = async function() {
+            if (!selectedUserId) return;
+            const modalBaru = parseFloat(document.getElementById('input-modal').value) || 0;
+            const profitBaru = parseFloat(document.getElementById('input-profit').value) || 0;
+            const rateBaru = parseFloat(document.getElementById('input-rate').value) || 0.05;
+            const statusUndangBaru = document.getElementById('input-undang').value;
+
+            try {
+                await updateDoc(doc(db, "portfolios", selectedUserId), {
+                    modalUtama: modalBaru,
+                    totalProfitTerkumpul: profitBaru,
+                    rateHarian: rateBaru,
+                    statusUndangTeman: statusUndangBaru,
+                    updatedAt: new Date().toISOString()
+                });
+                showToast('Portofolio & status undang teman berhasil diperbarui!');
+            } catch (error) {
+                showToast('Gagal memperbarui portofolio.', true);
+            }
+        }
+
+        window.simpanTransaksi = async function(txId) {
+            const waktuBaru = document.getElementById(`waktu-${txId}`).value.trim();
+            const statusBaru = document.getElementById(`status-${txId}`).value;
+
+            try {
+                const txRef = doc(db, "transactions", txId);
+                const txSnap = await getDoc(txRef);
+                if (!txSnap.exists()) return showToast('Transaksi tidak ditemukan.', true);
+
+                const txData = txSnap.data();
+                const statusLama = txData.status;
+
+                await updateDoc(txRef, { waktu: waktuBaru, status: statusBaru });
+
+                if (statusBaru === 'Berhasil' && statusLama !== 'Berhasil') {
+                    const uid = txData.userId;
+                    const jumlahTx = Number(txData.jumlah) || 0;
+                    const pRef = doc(db, "portfolios", uid);
+                    const pSnap = await getDoc(pRef);
+
+                    let modal = 0, profit = 0, rate = 0.05, statusUndang = 'belum';
+                    if (pSnap.exists()) {
+                        modal = Number(pSnap.data().modalUtama) || 0;
+                        profit = Number(pSnap.data().totalProfitTerkumpul) || 0;
+                        if (pSnap.data().rateHarian !== undefined) rate = Number(pSnap.data().rateHarian);
+                        if (pSnap.data().statusUndangTeman !== undefined) statusUndang = pSnap.data().statusUndangTeman;
+                    }
+
+                    if (txData.tipe === 'Deposit') {
+                        modal += jumlahTx;
+                    } else if (txData.tipe === 'Penarikan') {
+                        let sisa = jumlahTx;
+                        if (modal >= sisa) { modal -= sisa; sisa = 0; }
+                        else { sisa -= modal; modal = 0; if (profit >= sisa) { profit -= sisa; sisa = 0; } else { profit = 0; } }
+                    }
+
+                    await setDoc(pRef, { modalUtama: modal, totalProfitTerkumpul: profit, rateHarian: rate, statusUndangTeman: statusUndang, updatedAt: new Date().toISOString() }, { merge: true });
+                }
+
+                showToast('Status transaksi berhasil diperbarui!');
+            } catch (error) {
+                showToast('Gagal: ' + error.message, true);
+            }
+        }
+
+        window.hapusPenggunaAktif = async function() {
+            if (!selectedUserId) return;
+            if (!confirm("Apakah Anda yakin ingin menghapus pengguna ini beserta seluruh data portofolio dan riwayat transaksinya?")) return;
+
+            const uidToDelete = selectedUserId;
+            try {
+                // 1. Hapus dokumen profil pengguna
+                await deleteDoc(doc(db, "users", uidToDelete));
+
+                // 2. Hapus dokumen portofolio jika ada
+                try {
+                    await deleteDoc(doc(db, "portfolios", uidToDelete));
+                } catch(e) {}
+
+                // 3. Hapus seluruh riwayat transaksi milik pengguna ini
+                const userTxs = txDataMap[uidToDelete] || [];
+                for (const tx of userTxs) {
+                    try {
+                        await deleteDoc(doc(db, "transactions", tx.id));
+                    } catch(e) {}
+                }
+
+                showToast('Pengguna berhasil dihapus dari sistem.');
+                showUserList(new Event('click'));
+            } catch (error) {
+                showToast('Gagal menghapus pengguna: ' + error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>
